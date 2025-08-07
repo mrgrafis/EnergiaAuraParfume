@@ -166,7 +166,7 @@
             text-align: center;
             color: var(--color-text-light);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative; /* Penting untuk penempatan tombol hapus */
+            position: relative;
         }
         .product-card:hover {
             transform: translateY(-5px);
@@ -581,7 +581,7 @@
                         })
                         .then(() => {
                             alert('Produk berhasil dihapus! Halaman akan dimuat ulang.');
-                            window.location.reload(); // Muat ulang halaman untuk menampilkan data terbaru
+                            window.location.reload();
                         })
                         .catch(error => {
                             console.error('Error deleting product:', error);
