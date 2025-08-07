@@ -8,14 +8,14 @@
     <style>
         /* --- Definisi Variabel Warna --- */
         :root {
-            --color-primary: #000000; /* Hitam */
-            --color-secondary: #DAA520; /* Emas */
-            --color-tertiary: #FFFFFF; /* Putih */
-            --color-text-light: #F0F0F0; /* Abu-abu terang untuk teks di latar gelap */
-            --color-text-dark: #333333; /* Abu-abu gelap untuk teks di latar terang */
-            --color-background: #f4f4f4; /* Latar belakang halaman umum */
-            --color-dark-grey-bg: #1a1a1a; /* Latar belakang gelap untuk form/elemen tertentu */
-            --color-light-border: #555; /* Border terang untuk elemen gelap */
+            --color-primary: #000000;
+            --color-secondary: #DAA520;
+            --color-tertiary: #FFFFFF;
+            --color-text-light: #F0F0F0;
+            --color-text-dark: #333333;
+            --color-background: #f4f4f4;
+            --color-dark-grey-bg: #1a1a1a;
+            --color-light-border: #555;
             --color-danger: #dc3545;
         }
         /* --- Global Styles --- */
@@ -28,359 +28,4083 @@
             color: var(--color-text-dark);
             line-height: 1.6;
             scroll-behavior: smooth;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            overflow-x: hidden;
         }
         header {
             background-color: var(--color-primary);
             color: var(--color-tertiary);
+            padding: 40px 0;
             text-align: center;
-            padding: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             position: relative;
+            z-index: 10;
         }
-        h1 {
+        .logo-container {
+            position: absolute;
+            top: 17px;
+            left: 60px;
+            z-index: 11;
+            width: 135px;
+            height: 135px;
+        }
+        .logo-container img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        header h1 {
             font-family: 'Merriweather', serif;
-            font-size: 2.5rem;
+            font-size: 3.5em;
             margin: 0;
-        }
-        header .logo {
-            font-size: 1.2rem;
             letter-spacing: 2px;
-            font-weight: 300;
+            color: var(--color-secondary);
+            text-transform: uppercase;
+        }
+        nav {
+            background-color: var(--color-primary);
+            padding: 15px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--color-secondary);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: var(--color-tertiary);
+            text-decoration: none;
+            padding: 10px 25px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1em;
+        }
+        nav a:hover, nav a.active-nav {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+        }
+        .catalog-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: var(--color-tertiary);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: var(--color-text-dark);
+        }
+        .catalog-container h2 {
+            font-family: 'Merriweather', serif;
+            text-align: center;
+            color: var(--color-primary);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .add-button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .add-product-btn {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .add-product-btn:hover {
+            background-color: #c98c00;
         }
         .filter-controls {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             gap: 15px;
-            flex-wrap: wrap;
-            padding: 20px 0;
-            background-color: var(--color-dark-grey-bg);
-            color: var(--color-text-light);
-            border-bottom: 1px solid var(--color-light-border);
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: var(--color-background);
+            border-radius: 8px;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
         }
-        .filter-controls select, .filter-controls input {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid var(--color-light-border);
-            background-color: var(--color-primary);
-            color: var(--color-tertiary);
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1rem;
+        .filter-controls label {
+            font-weight: bold;
+            color: var(--color-text-dark);
+            margin-right: 5px;
+            align-self: center;
         }
+        .filter-controls select,
         .filter-controls input[type="text"] {
-            min-width: 200px;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 200px;
+            max-width: 100%;
         }
-        .catalog {
+        .filter-controls input[type="text"] { flex-grow: 1; }
+        .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 30px 0;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
         }
         .product-card {
-            background-color: var(--color-tertiary);
+            background-color: var(--color-dark-grey-bg);
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            color: var(--color-text-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* Penting untuk penempatan tombol hapus */
         }
         .product-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
-        .product-info {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .product-info h3 {
+        .product-card h3 {
             font-family: 'Merriweather', serif;
-            font-size: 1.5rem;
-            margin-top: 0;
-            color: var(--color-primary);
-        }
-        .product-info p {
-            margin: 5px 0;
-            color: var(--color-text-dark);
-        }
-        .product-info .price {
-            font-weight: bold;
             color: var(--color-secondary);
-            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            min-height: 2em;
         }
-        .product-info .description {
-            font-size: 0.9rem;
-            margin-top: 10px;
-            flex-grow: 1;
+        .product-card p {
+            font-size: 0.95em;
+            margin-bottom: 10px;
         }
-        .product-info .value {
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 10px;
+        .product-card strong { color: var(--color-secondary); }
+        .order-now-btn {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 15px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
         }
-        .product-info .delete-btn {
+        .order-now-btn:hover {
+            background-color: #c98c00;
+            transform: translateY(-2px);
+        }
+        /* --- Tombol Hapus Baru --- */
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
             background-color: var(--color-danger);
             color: var(--color-tertiary);
             border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            line-height: 1;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.2s ease;
         }
-        .product-info .delete-btn:hover {
-            background-color: #c82333;
+        .delete-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
         }
+        /* --- Pagination Styles --- */
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-top: 30px;
             gap: 10px;
-            padding: 20px 0;
-            background-color: var(--color-background);
+            flex-wrap: wrap;
         }
         .pagination button {
             background-color: var(--color-primary);
             color: var(--color-tertiary);
-            border: none;
             padding: 10px 15px;
+            border: 1px solid var(--color-secondary);
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1em;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .pagination button:hover:not(:disabled) {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        .pagination button.active {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            font-weight: bold;
         }
         .pagination button:disabled {
-            background-color: #888;
+            background-color: #ccc;
+            color: #666;
             cursor: not-allowed;
-        }
-        .pagination .page-info {
-            font-size: 1.1rem;
+            border-color: #ccc;
         }
         footer {
-            text-align: center;
-            padding: 20px;
             background-color: var(--color-primary);
             color: var(--color-text-light);
-            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+            font-size: 0.9em;
         }
-        /* Responsif */
-        @media (max-width: 768px) {
-            .filter-controls {
-                flex-direction: column;
-                align-items: center;
+        @media (max-width: 992px) {
+            .catalog-container { max-width: 90%; }
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
             }
+        }
+        @media (max-width: 768px) {
+            header { padding: 30px 0; }
+            header h1 { font-size: 2.5em; margin-left: 100px; text-align: left; }
+            .logo-container { top: 15px; left: 15px; width: 70px; height: 70px; }
+            nav { padding: 10px 0; }
+            nav a { padding: 8px 15px; margin: 0 5px; font-size: 1em; }
+            .catalog-container h2 { font-size: 2em; }
+            .filter-controls { flex-direction: column; gap: 10px; }
+            .filter-controls select,
+            .filter-controls input[type="text"] { width: 100%; }
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 15px;
+            }
+            .product-card { padding: 20px; }
+            .product-card h3 { font-size: 1.3em; }
+        }
+        @media (max-width: 480px) {
+            header { padding: 20px 0; }
+            header h1 { font-size: 1.8em; margin-left: 90px; }
+            .logo-container { top: 10px; left: 10px; width: 50px; height: 50px; }
+            nav { flex-direction: column; padding: 10px; }
+            nav a { margin: 5px auto; width: 90%; font-size: 0.95em; }
+            .catalog-container { padding: 15px; }
+            .catalog-container h2 { font-size: 1.8em; }
+            .product-grid { grid-template-columns: 1fr; gap: 15px; }
+            .product-card h3 { font-size: 1.2em; }
+            .product-card p { font-size: 0.85em; }
+            .order-now-btn { width: 100%; }
+            .pagination button { padding: 8px 12px; font-size: 0.9em; }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <div class="logo">ENERGIA AURA PARFUME</div>
-            <h1>Katalog Produk</h1>
-        </div>
+        <h1>Energia Aura Parfume</h1>
     </header>
 
-    <div class="filter-controls">
-        <select id="category-filter">
-            <option value="all">Semua Kategori</option>
-            <option value="Unisex">Unisex</option>
-            <option value="Men">Pria</option>
-            <option value="Women">Wanita</option>
-        </select>
-        <select id="aroma-filter">
-            <option value="all">Semua Aroma</option>
-            <option value="Fresh">Fresh</option>
-            <option value="Floral">Floral</option>
-            <option value="Spicy">Spicy</option>
-            <option value="Woody">Woody</option>
-            <option value="Sweet">Sweet</option>
-            <option value="Fruity">Fruity</option>
-            <option value="Citrus">Citrus</option>
-            <option value="Aquatic">Aquatic</option>
-        </select>
-        <select id="personality-filter">
-            <option value="all">Semua Kepribadian</option>
-            <option value="Elegant">Elegant</option>
-            <option value="Romantic">Romantic</option>
-            <option value="Confident">Confident</option>
-            <option value="Energetic">Energetic</option>
-            <option value="Calm">Calm</option>
-            <option value="Seductive">Seductive</option>
-            <option value="Fresh">Fresh</option>
-        </select>
-        <input type="text" id="search-filter" placeholder="Cari parfum...">
-    </div>
+    <nav>
+        <a href="index.html">Beranda</a>
+        <a href="katalog.html" class="active-nav">Katalog</a>
+        <a href="pemesanan.html">Pesan Sekarang</a>
+	    <a href="index.html#contact">Kontak</a>
+    </nav>
 
-    <div class="container">
-        <div id="catalog-list" class="catalog">
-            <p id="loading-message">Memuat produk...</p>
+    <main>
+        <div class="catalog-container">
+            <h2>Katalog Parfum Unggulan</h2>
+
+            <div class="add-button-container">
+                <a href="tambah_parfum.html" class="add-product-btn">Tambahkan Produk Baru</a>
+            </div>
+
+            <div class="filter-controls">
+                <label for="categoryFilter">Kategori:</label>
+                <select id="categoryFilter">
+                    <option value="all">Semua</option>
+                    <option value="Pria">Pria</option>
+                    <option value="Wanita">Wanita</option>
+                    <option value="Unisex">Unisex</option>
+                    <option value="Pasangan">Pasangan</option>
+                </select>
+
+                <label for="aromaFilter">Aroma (Notes):</label>
+                <select id="aromaFilter">
+                    <option value="all">Semua Aroma</option>
+                    <option value="Fresh">Fresh</option>
+                    <option value="Spicy">Spicy</option>
+                    <option value="Fruity">Fruity</option>
+                    <option value="Amber">Amber</option>
+                    <option value="Woody">Woody</option>
+                    <option value="Blackcurrant">Blackcurrant</option>
+                    <option value="Tangerine">Tangerine</option>
+                    <option value="Rose">Rose</option>
+                    <option value="Leather">Leather</option>
+                    <option value="Floral">Floral</option>
+                    <option value="Sweet">Sweet</option>
+                    <option value="Powdery">Powdery</option>
+                    <option value="Warm">Warm</option>
+                    <option value="Musky">Musky</option>
+                    <option value="Indian Jasmine">Indian Jasmine</option>
+                    <option value="White Flowers">White Flowers</option>
+                    <option value="Sandalwood">Sandalwood</option>
+                    <option value="Aromatic">Aromatic</option>
+                    <option value="Aquatic">Aquatic</option>
+                    <option value="Green">Green</option>
+                    <option value="Citrus">Citrus</option>
+                    <option value="Oriental">Oriental</option>
+                </select>
+
+                <label for="personalityFilter">Karakteristik:</label>
+                <select id="personalityFilter">
+                    <option value="all">Semua Karakteristik</option>
+                    <option value="Kharismatik">Kharismatik</option>
+                    <option value="Maskulin">Maskulin</option>
+                    <option value="Percaya Diri">Percaya Diri</option>
+                    <option value="Ceria">Ceria</option>
+                    <option value="Modern">Modern</option>
+                    <option value="Elegan">Elegan</option>
+                    <option value="Feminin">Feminin</option>
+                    <option value="Memikat">Memikat</option>
+                    <option value="Sensual">Sensual</option>
+                    <option value="Harmonis">Harmonis</option>
+                    <option value="Romantis">Romantis</option>
+                    <option value="Eksotis">Eksotis</option>
+                    <option value="Misterius">Misterius</option>
+                    <option value="Energetic">Energetic</option>
+                    <option value="Confident">Confident</option>
+                    <option value="Dynamic">Dynamic</option>
+                    <option value="Sporty">Sporty</option>
+                    <option value="Vibrant">Vibrant</option>
+                    <option value="Classic">Classic</option>
+                    <option value="Refined">Refined</option>
+                    <option value="Sophisticated">Sophisticated</option>
+                    <option value="Unique">Unique</option>
+                    <option value="Bold">Bold</option>
+                    <option value="Clean">Clean</option>
+                    <option value="Refreshing">Refreshing</option>
+                    <option value="Strong">Strong</option>
+                    <option value="Charming">Charming</option>
+                    <option value="Seductive">Seductive</option>
+                    <option value="Intense">Intense</option>
+                    <option value="Cool">Cool</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Comforting">Comforting</option>
+                    <option value="Timeless">Timeless</option>
+                    <option value="Light">Light</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Pleasant">Pleasant</option>
+                </select>
+
+                <label for="searchFilter">Cari Parfum (Nama/Deskripsi):</label>
+                <input type="text" id="searchFilter" placeholder="Ketik kata kunci...">
+            </div>
+
+            <div class="product-grid" id="productGrid">
+            </div>
+
+            <div class="pagination" id="pagination">
+            </div>
         </div>
-        <div id="pagination-controls" class="pagination">
-            <button id="prev-page" disabled>Sebelumnya</button>
-            <span id="page-info" class="page-info">Halaman 1 dari 1</span>
-            <button id="next-page" disabled>Berikutnya</button>
-        </div>
-    </div>
+    </main>
 
     <footer>
-        <p>&copy; 2025 Energia Aura Parfume. Semua Hak Dilindungi.</p>
+        <p>&copy; 2024 Energia Aura Parfume. All rights reserved.</p>
     </footer>
 
     <script>
-        const webAppUrl = "URL_WEB_https://script.google.com/macros/s/AKfycbxRSNuKk2g8p-rHOunBBbrg4sy8NEi1Tv-uxo0XXmBxBfQD0pAS7VoX9xXw6czIUEZg/exec"; // <-- GANTI DENGAN URL DARI LANGKAH 3!
-        const catalogList = document.getElementById('catalog-list');
-        const categoryFilter = document.getElementById('category-filter');
-        const aromaFilter = document.getElementById('aroma-filter');
-        const personalityFilter = document.getElementById('personality-filter');
-        const searchFilter = document.getElementById('search-filter');
-        const prevPageBtn = document.getElementById('prev-page');
-        const nextPageBtn = document.getElementById('next-page');
-        const pageInfoSpan = document.getElementById('page-info');
+        document.addEventListener('DOMContentLoaded', function() {
+            const productGrid = document.getElementById('productGrid');
+            const paginationContainer = document.getElementById('pagination');
+            const categoryFilter = document.getElementById('categoryFilter');
+            const aromaFilter = document.getElementById('aromaFilter');
+            const personalityFilter = document.getElementById('personalityFilter');
+            const searchFilter = document.getElementById('searchFilter');
 
-        let allProductsData = [];
-        let filteredProducts = [];
-        let currentPage = 1;
-        const productsPerPage = 8;
+            const accessCode = "12345"; // Kode akses untuk menghapus
 
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchDataFromSheets();
-        });
+            // Data parfum awal
+            const initialProductsData = [
+                {
+    "name": "Abercrombie Fierce Confidence Man",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Citrus",
+    "personality": "Confident, Modern, Casual",
+    "description": "Aroma woody aromatik dengan sentuhan citrus yang menyegarkan, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura percaya diri dan karisma yang kuat.",
+    "value": "abercrombie-fierce-confidence-man"
+  },
+  {
+    "name": "Adidas Adventure Explorer",
+    "category": "Pria",
+    "notes": "Spicy, Citrus, Woody",
+    "personality": "Adventurous, Energetic, Bold",
+    "description": "Perpaduan aroma rempah, citrus, dan kayu yang cocok untuk jiwa petualang yang berani.",
+    "idealFor": "Aktivitas outdoor, berpetualang.",
+    "enhances": "Dapat memancarkan aura petualangan dan keberanian yang tak terbatas.",
+    "value": "adidas-adventure-explorer"
+  },
+  {
+    "name": "Adidas Deep Energy",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Aromatic",
+    "personality": "Energetic, Intense, Masculine",
+    "description": "Aroma pedas dan kayu yang intens, memancarkan energi maskulin yang kuat.",
+    "idealFor": "Olahraga, malam hari.",
+    "enhances": "Dapat memancarkan aura maskulin yang intens dan penuh semangat.",
+    "value": "adidas-deep-energy"
+  },
+  {
+    "name": "Adidas Fair Play Special 2008",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Sporty, Fresh, Playful",
+    "description": "Aroma citrus aromatik yang segar dan ceria, memberikan semangat sportif.",
+    "idealFor": "Olahraga, siang hari.",
+    "enhances": "Dapat memancarkan aura sportif, ceria, dan penuh kebahagiaan.",
+    "value": "adidas-fair-play-special-2008"
+  },
+  {
+    "name": "Adidas Pure Game",
+    "category": "Pria",
+    "notes": "Woody, Aromatic",
+    "personality": "Strong, Confident",
+    "description": "Aroma woody aromatik yang kuat dan penuh percaya diri.",
+    "idealFor": "Olahraga, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kekuatan dan kepercayaan diri yang murni.",
+    "value": "adidas-pure-game"
+  },
+  {
+    "name": "Adidas Team Force",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Team Player, Dynamic, Fresh",
+    "description": "Aroma citrus aromatik yang menyegarkan, cocok untuk pria dinamis yang selalu bersemangat.",
+    "idealFor": "Kerja tim, aktivitas sehari-hari.",
+    "enhances": "Dapat memancarkan aura kolaborasi dan semangat tim yang dinamis.",
+    "value": "adidas-team-force"
+  },
+  {
+    "name": "Aigner Black Man",
+    "category": "Pria",
+    "notes": "Leather, Woody, Spicy",
+    "personality": "Elegant, Sophisticated, Mysterious",
+    "description": "Aroma kulit, kayu, dan rempah yang elegan, maskulin, dan misterius.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura elegan, canggih, dan misterius.",
+    "value": "aigner-black-man"
+  },
+  {
+    "name": "Aigner Clear Day Man",
+    "category": "Pria",
+    "notes": "Citrus, Green, Aromatic",
+    "personality": "Fresh, Optimistic, Clean",
+    "description": "Aroma citrus, hijau, dan aromatik yang segar dan bersih, memberikan kesan optimis.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura optimisme dan kesegaran yang bersih.",
+    "value": "aigner-clear-day-man"
+  },
+  {
+    "name": "Aigner Evolution Man",
+    "category": "Pria",
+    "notes": "Spicy, Fruity, Woody",
+    "personality": "Evolving, Modern, Versatile",
+    "description": "Perpaduan aroma rempah, buah, dan kayu yang modern dan serbaguna.",
+    "idealFor": "Sehari-hari, berbagai kesempatan.",
+    "enhances": "Dapat memancarkan aura adaptabilitas dan modernitas yang terus berkembang.",
+    "value": "aigner-evolution-man"
+  },
+  {
+    "name": "Aigner In Leather Man",
+    "category": "Pria",
+    "notes": "Leather, Woody, Oriental",
+    "personality": "Bold, Masculine, Classic",
+    "description": "Aroma kulit yang kuat dengan sentuhan oriental dan kayu, untuk pria yang berani dan klasik.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura maskulin yang berani dan karismatik.",
+    "value": "aigner-in-leather-man"
+  },
+  {
+    "name": "Aigner Man Two",
+    "category": "Pria",
+    "notes": "Fruity, Aromatic, Amber",
+    "personality": "Charming, Modern, Refined",
+    "description": "Aroma buah yang memikat, aromatik, dan amber yang modern dan berkelas.",
+    "idealFor": "Sehari-hari, kencan.",
+    "enhances": "Dapat memancarkan aura pesona dan kehalusan yang memikat.",
+    "value": "aigner-man-two"
+  },
+  {
+    "name": "Aigner No 1",
+    "category": "Pria",
+    "notes": "Leather, Spicy, Woody",
+    "personality": "Classic, Timeless, Elegant",
+    "description": "Aroma kulit, rempah, dan kayu yang klasik, abadi, dan elegan.",
+    "idealFor": "Acara formal, kantor.",
+    "enhances": "Dapat memancarkan aura wibawa yang klasik dan elegan.",
+    "value": "aigner-no-1"
+  },
+  {
+    "name": "Aigner No 1 Sport",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Sporty, Energetic, Fresh",
+    "description": "Aroma citrus, rempah, dan kayu yang segar, cocok untuk pria aktif dan bersemangat.",
+    "idealFor": "Olahraga, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan semangat yang tak kenal lelah.",
+    "value": "aigner-no-1-sport"
+  },
+  {
+    "name": "Aigner Suede Edition Man",
+    "category": "Pria",
+    "notes": "Suede, Woody, Aromatic",
+    "personality": "Sophisticated, Smooth, Unique",
+    "description": "Aroma suede, kayu, dan aromatik yang halus, canggih, dan unik.",
+    "idealFor": "Malam hari, acara khusus.",
+    "enhances": "Dapat memancarkan aura kecanggihan yang halus dan unik.",
+    "value": "aigner-suede-edition-man"
+  },
+  {
+    "name": "Aigner White Man",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Clean, Fresh, Bright",
+    "description": "Aroma citrus, rempah, dan kayu yang bersih, segar, dan cerah.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kebersihan dan kecerahan yang positif.",
+    "value": "aigner-white-man"
+  },
+  {
+    "name": "Aigner X Limited",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Bold, Mysterious, Limited Edition",
+    "description": "Aroma rempah, kayu, dan oriental yang berani dan misterius, edisi terbatas.",
+    "idealFor": "Malam hari, kolektor.",
+    "enhances": "Dapat memancarkan aura eksklusif yang berani dan penuh misteri.",
+    "value": "aigner-x-limited"
+  },
+  {
+    "name": "Angel Scheleser Man",
+    "category": "Pria",
+    "notes": "Citrus, Woody, Aquatic",
+    "personality": "Fresh, Modern, Elegant",
+    "description": "Aroma citrus yang segar dengan sentuhan kayu dan aquatic yang modern dan elegan.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan keeleganan yang modern.",
+    "value": "angel-scheleser-man"
+  },
+  {
+    "name": "Antonio Banderas Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Seductive, Confident, Masculine",
+    "description": "Perpaduan rempah, kayu, dan oriental yang memancarkan daya tarik maskulin yang menggoda dan penuh percaya diri.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura menggoda dan daya tarik maskulin.",
+    "value": "antonio-banderas-man"
+  },
+  {
+    "name": "Armaf Club de Nuit Intense Man",
+    "category": "Pria",
+    "notes": "Fruity, Smoky, Woody",
+    "personality": "Bold, Luxurious, Mysterious",
+    "description": "Aroma buah yang kuat dipadukan dengan sentuhan smoky dan kayu, menciptakan kesan mewah dan misterius.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura mewah dan keberanian yang kuat.",
+    "value": "armaf-club-de-nuit-intense-man"
+  },
+  {
+    "name": "Azzaro Chrome",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Clean, Fresh, Calm",
+    "description": "Aroma citrus yang bersih dan segar dengan sentuhan aquatic dan woody, memberikan kesan tenang dan rileks.",
+    "idealFor": "Sehari-hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang abadi.",
+    "value": "azzaro-chrome"
+  },
+  {
+    "name": "Azzaro Desible",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Intense, Energetic, Bold",
+    "description": "Aroma rempah dan oriental yang intens dengan dasar kayu, cocok untuk pria yang penuh energi dan berani.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura energi dan intensitas yang berani.",
+    "value": "azzaro-desible"
+  },
+  {
+    "name": "Azzaro The Most Wanted",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Gourmand",
+    "personality": "Charismatic, Powerful, Seductive",
+    "description": "Aroma rempah, kayu, dan sentuhan gourmand yang karismatik dan kuat, memancarkan daya tarik yang tak tertahankan.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura karisma dan daya pikat yang kuat.",
+    "value": "azzaro-the-most-wanted"
+  },
+  {
+    "name": "Benetton Cold",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Cool, Fresh, Casual",
+    "description": "Aroma citrus dan aromatik yang sejuk dan menyegarkan, memberikan kesan santai dan kasual.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang santai.",
+    "value": "benetton-cold"
+  },
+  {
+    "name": "Benetton Sport",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Sporty, Dynamic, Energetic",
+    "description": "Aroma citrus yang energik dengan sentuhan rempah dan kayu, cocok untuk pria yang aktif dan dinamis.",
+    "idealFor": "Olahraga, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura semangat dan energi sportif.",
+    "value": "benetton-sport"
+  },
+  {
+    "name": "Black Kenneth Cole Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Musky",
+    "personality": "Sophisticated, Urban, Confident",
+    "description": "Aroma rempah, kayu, dan musk yang canggih, memancarkan kepercayaan diri pria urban yang modern.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura kecanggihan dan percaya diri yang elegan.",
+    "value": "black-kenneth-cole-man"
+  },
+  {
+    "name": "Body Shop Kistna",
+    "category": "Pria",
+    "notes": "Green, Aromatic, Woody",
+    "personality": "Natural, Fresh, Earthy",
+    "description": "Aroma hijau dan aromatik yang alami, dengan sentuhan woody, memberikan kesan segar seperti berada di alam terbuka.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura alami dan ketenangan yang damai.",
+    "value": "body-shop-kistna"
+  },
+  {
+    "name": "Body Shop White Musk Man",
+    "category": "Pria",
+    "notes": "Musky, Floral, Woody",
+    "personality": "Clean, Soft, Elegant",
+    "description": "Aroma musk yang lembut dengan sentuhan floral dan woody, memberikan kesan bersih dan elegan.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura bersih dan keanggunan yang lembut.",
+    "value": "body-shop-white-musk-man"
+  },
+  {
+    "name": "Burberry Brit for Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Classic, Sophisticated, Effortless",
+    "description": "Aroma rempah, kayu, dan oriental yang klasik dan canggih, cocok untuk gaya hidup yang santai namun berkelas.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura klasik dan kecanggihan yang mudah.",
+    "value": "burberry-brit-for-man"
+  },
+  {
+    "name": "Burberry Classic Man",
+    "category": "Pria",
+    "notes": "Aromatic, Woody, Musky",
+    "personality": "Timeless, Refined, Confident",
+    "description": "Aroma aromatik, woody, dan musky yang abadi, memancarkan kepercayaan diri dan kehalusan yang berkelas.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kepercayaan diri yang abadi.",
+    "value": "burberry-classic-man"
+  },
+  {
+    "name": "Burberry London For Man",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Leather",
+    "personality": "Elegant, Warm, Urban",
+    "description": "Aroma rempah dan oriental yang hangat dengan sentuhan kulit, mencerminkan gaya hidup pria urban yang elegan.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura kehangatan dan keeleganan yang khas.",
+    "value": "burberry-london-for-man"
+  },
+  {
+    "name": "Burberry Mr Burberry",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Spicy",
+    "personality": "Modern, Charismatic, Refined",
+    "description": "Aroma woody dan aromatik yang modern dengan sentuhan rempah, menciptakan kesan karismatik dan berkelas.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura karisma dan kehalusan yang modern.",
+    "value": "burberry-mr-burberry"
+  },
+  {
+    "name": "Burberry Summer Man",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Fresh, Energetic, Joyful",
+    "description": "Aroma citrus dan aromatik yang segar dan ceria, menangkap esensi musim panas yang penuh energi.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kegembiraan dan kesegaran yang hidup.",
+    "value": "burberry-summer-man"
+  },
+  {
+    "name": "Burberry The Beat for Man",
+    "category": "Pria",
+    "notes": "Woody, Spicy, Citrus",
+    "personality": "Dynamic, Cool, Modern",
+    "description": "Aroma woody dan rempah yang dinamis dengan sentuhan citrus yang dingin, cocok untuk pria modern yang penuh gaya.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura dinamis dan gaya yang modern.",
+    "value": "burberry-the-beat-for-man"
+  },
+  {
+    "name": "Burberry Weekend Man",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Fresh",
+    "personality": "Relaxed, Easygoing, Bright",
+    "description": "Aroma citrus dan aromatik yang segar dan santai, sempurna untuk akhir pekan yang cerah dan bebas.",
+    "idealFor": "Akhir pekan, santai.",
+    "enhances": "Dapat memancarkan aura relaksasi dan keceriaan yang santai.",
+    "value": "burberry-weekend-man"
+  },
+{
+    "name": "Bvlgari Aqua",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Woody",
+    "personality": "Fresh, Dynamic, Energetic",
+    "description": "Aroma aquatic yang segar dengan perpaduan citrus dan woody, memberikan kesan dinamis dan penuh energi.",
+    "idealFor": "Siang hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang tak terbatas.",
+    "value": "bvlgari-aqua"
+  },
+  {
+    "name": "Bvlgari Aqua Amara",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Intense, Fresh, Bold",
+    "description": "Aroma citrus yang intens dengan sentuhan aquatic dan woody, menciptakan kesan segar yang berani.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura energi dan keberanian yang intens.",
+    "value": "bvlgari-aqua-amara"
+  },
+  {
+    "name": "Bvlgari Aqua Atlantique",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Amber",
+    "personality": "Powerful, Mysterious, Deep",
+    "description": "Aroma aquatic yang kuat dengan sentuhan woody dan amber, memberikan kesan misterius dan mendalam.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura kekuatan dan daya pikat yang misterius.",
+    "value": "bvlgari-aqua-atlantique"
+  },
+  {
+    "name": "Bvlgari Aqua Marine",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Aromatic",
+    "personality": "Clean, Vibrant, Refreshing",
+    "description": "Aroma aquatic yang bersih dan hidup dengan sentuhan citrus dan aromatik, sangat menyegarkan.",
+    "idealFor": "Sehari-hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kebersihan dan semangat yang menyegarkan.",
+    "value": "bvlgari-aqua-marine"
+  },
+  {
+    "name": "Bvlgari Aqua Marine Tonic",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Herbal",
+    "personality": "Energizing, Lively, Crisp",
+    "description": "Aroma citrus dan aquatic yang energik dengan sentuhan herbal, memberikan kesan hidup dan tajam.",
+    "idealFor": "Siang hari, aktivitas santai.",
+    "enhances": "Dapat memancarkan aura energi dan semangat yang membangkitkan.",
+    "value": "bvlgari-aqua-marine-tonic"
+  },
+  {
+    "name": "Bvlgari Black",
+    "category": "Pria",
+    "notes": "Smoky, Leather, Vanilla",
+    "personality": "Urban, Modern, Mysterious",
+    "description": "Aroma smoky dan kulit yang unik dengan sentuhan vanila, cocok untuk pria urban yang modern dan misterius.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura misteri dan modernitas yang kuat.",
+    "value": "bvlgari-black"
+  },
+  {
+    "name": "Bvlgari Blv Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Fresh",
+    "personality": "Sensual, Charming, Elegant",
+    "description": "Aroma rempah dan woody yang sensual dan segar, memberikan kesan menawan dan elegan.",
+    "idealFor": "Sehari-hari, kencan.",
+    "enhances": "Dapat memancarkan aura pesona dan keanggunan yang sensual.",
+    "value": "bvlgari-blv-man"
+  },
+  {
+    "name": "Bvlgari Blv Note Pour Home",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Warm, Sophisticated, Unique",
+    "description": "Aroma rempah, woody, dan oriental yang hangat, memberikan kesan canggih dan unik.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura kehangatan dan kecanggihan yang berbeda.",
+    "value": "bvlgari-blv-note-pour-homme"
+  },
+  {
+    "name": "Bvlgari Extreme",
+    "category": "Pria",
+    "notes": "Citrus, Woody, Aromatic",
+    "personality": "Intense, Dynamic, Bold",
+    "description": "Aroma citrus dan woody yang intens, cocok untuk pria yang dinamis dan berani.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura keberanian dan dinamisme yang kuat.",
+    "value": "bvlgari-extreme"
+  },
+  {
+    "name": "Bvlgari Man 2010",
+    "category": "Pria",
+    "notes": "Woody, Oriental, Spicy",
+    "personality": "Elegant, Masculine, Modern",
+    "description": "Aroma woody dan oriental yang elegan dengan sentuhan rempah, memancarkan maskulinitas modern.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura maskulin dan keanggunan yang modern.",
+    "value": "bvlgari-man-2010"
+  },
+  {
+    "name": "Bvlgari Man in Black",
+    "category": "Pria",
+    "notes": "Spicy, Leather, Woody",
+    "personality": "Bold, Intense, Seductive",
+    "description": "Aroma rempah, kulit, dan woody yang berani dan intens, menciptakan kesan menggoda dan kuat.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura keberanian dan daya pikat yang kuat.",
+    "value": "bvlgari-man-in-black"
+  },
+  {
+    "name": "Bvlgari Orient Man in Black",
+    "category": "Pria",
+    "notes": "Oriental, Spicy, Woody",
+    "personality": "Exotic, Mysterious, Luxurious",
+    "description": "Aroma oriental dan rempah yang eksotis dengan sentuhan woody, memberikan kesan misterius dan mewah.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura eksotisme dan kemewahan yang misterius.",
+    "value": "bvlgari-orient-man-in-black"
+  },
+  {
+    "name": "Bvlgari Pour Homme Soir",
+    "category": "Pria",
+    "notes": "Woody, Amber, Spicy",
+    "personality": "Elegant, Calm, Refined",
+    "description": "Aroma woody dan amber yang elegan dengan sentuhan rempah, memberikan kesan tenang dan berkelas.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura ketenangan dan kehalusan yang elegan.",
+    "value": "bvlgari-pour-homme-soir"
+  },
+  {
+    "name": "Bvlgari Rain Man Essence Man",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Musky",
+    "personality": "Clean, Fresh, Pure",
+    "description": "Aroma aquatic dan woody yang bersih, dengan sentuhan musk, memberikan kesan murni dan segar seperti hujan.",
+    "idealFor": "Siang hari, santai.",
+    "enhances": "Dapat memancarkan aura kebersihan dan kemurnian yang menenangkan.",
+    "value": "bvlgari-rain-man-essence-man"
+  },
+  {
+    "name": "Bvlgari White Pour Homme",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Tea",
+    "personality": "Fresh, Clean, Timeless",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan teh, memberikan kesan bersih dan abadi.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan keanggunan yang tak lekang oleh waktu.",
+    "value": "bvlgari-white-pour-homme"
+  },
+  {
+    "name": "Bvlgari Wood Essence",
+    "category": "Pria",
+    "notes": "Woody, Spicy, Resin",
+    "personality": "Natural, Strong, Modern",
+    "description": "Aroma woody yang kuat dengan sentuhan rempah dan resin, mencerminkan kekuatan alam yang modern.",
+    "idealFor": "Sehari-hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura kekuatan alam dan ketahanan yang modern.",
+    "value": "bvlgari-wood-essence"
+  },
+{
+    "name": "CH 212 H2O Man",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Woody",
+    "personality": "Fresh, Energetic, Urban",
+    "description": "Aroma aquatic yang segar dengan sentuhan citrus dan kayu, memberikan kesan dinamis dan modern ala perkotaan.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang cerah.",
+    "value": "ch-212-h2o-man"
+  },
+  {
+    "name": "CH 212 Heroes 2021",
+    "category": "Pria",
+    "notes": "Fruity, Aromatic, Woody",
+    "personality": "Youthful, Playful, Bold",
+    "description": "Aroma buah yang ceria dipadukan dengan aromatik dan kayu, cocok untuk pria muda yang berani dan suka bermain.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura keremajaan dan keberanian yang menyenangkan.",
+    "value": "ch-212-heroes-2021"
+  },
+  {
+    "name": "CH 212 Heroes Forever",
+    "category": "Pria",
+    "notes": "Floral, Fresh, Woody",
+    "personality": "Timeless, Confident, Modern",
+    "description": "Aroma floral dan segar dengan sentuhan kayu, menciptakan kesan modern yang abadi dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, berbagai kesempatan.",
+    "enhances": "Dapat memancarkan aura kepercayaan diri dan keabadian yang memukau.",
+    "value": "ch-212-heroes-forever"
+  },
+  {
+    "name": "CH 212 Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Fresh",
+    "personality": "Urban, Sophisticated, Confident",
+    "description": "Aroma rempah dan kayu yang canggih dengan sentuhan segar, mencerminkan karakter pria urban yang berkelas.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura kecanggihan dan kepercayaan diri yang kuat.",
+    "value": "ch-212-man"
+  },
+  {
+    "name": "CH 212 Sexy Man",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Vanilla",
+    "personality": "Seductive, Mysterious, Warm",
+    "description": "Aroma rempah dan oriental yang hangat dengan sentuhan vanila, menciptakan daya tarik sensual dan misterius.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura menggoda dan daya pikat yang misterius.",
+    "value": "ch-212-sexy-man"
+  },
+  {
+    "name": "CH 212 Surf Man",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Musky",
+    "personality": "Relaxed, Fresh, Adventurous",
+    "description": "Aroma aquatic yang segar dengan sentuhan kayu dan musk, memberikan kesan santai seperti berada di pantai.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura santai dan semangat petualangan yang segar.",
+    "value": "ch-212-surf-man"
+  },
+  {
+    "name": "CH 212 VIP Black Man",
+    "category": "Pria",
+    "notes": "Aromatic, Absinthe, Spicy",
+    "personality": "Party-goer, Bold, Mysterious",
+    "description": "Aroma aromatik dan absinthe yang berani dengan sentuhan rempah, cocok untuk pria yang suka berpesta dan misterius.",
+    "idealFor": "Malam hari, clubbing.",
+    "enhances": "Dapat memancarkan aura berani dan daya pikat yang intens.",
+    "value": "ch-212-vip-black-man"
+  },
+  {
+    "name": "CH 212 VIP Black Own the Party",
+    "category": "Pria",
+    "notes": "Fruity, Absinthe, Musky",
+    "personality": "Dominant, Confident, Playful",
+    "description": "Aroma buah dan absinthe yang unik dengan sentuhan musk, memancarkan kepercayaan diri untuk menjadi pusat perhatian pesta.",
+    "idealFor": "Pesta, malam hari.",
+    "enhances": "Dapat memancarkan aura dominasi dan kepercayaan diri di setiap pesta.",
+    "value": "ch-212-vip-black-own-the-party"
+  },
+  {
+    "name": "CH 212 VIP Man",
+    "category": "Pria",
+    "notes": "Spicy, Vodka, Woody",
+    "personality": "Exclusive, Confident, Playful",
+    "description": "Aroma rempah dan vodka yang eksklusif dengan sentuhan kayu, menciptakan kesan pria yang penuh percaya diri dan menyenangkan.",
+    "idealFor": "Malam hari, acara sosial.",
+    "enhances": "Dapat memancarkan aura eksklusif dan percaya diri yang memikat.",
+    "value": "ch-212-vip-man"
+  },
+  {
+    "name": "CH 212 VIP Man Party Fever",
+    "category": "Pria",
+    "notes": "Citrus, Ginger, Woody",
+    "personality": "Energetic, Lively, Playful",
+    "description": "Aroma citrus dan jahe yang energik dengan sentuhan kayu, cocok untuk suasana pesta yang meriah dan penuh semangat.",
+    "idealFor": "Pesta, festival.",
+    "enhances": "Dapat memancarkan aura energi dan semangat pesta yang tak terbatas.",
+    "value": "ch-212-vip-man-party-fever"
+  },
+  {
+    "name": "CH 212 VIP Wins Men",
+    "category": "Pria",
+    "notes": "Fruity, Aromatic, Woody",
+    "personality": "Victorious, Optimistic, Confident",
+    "description": "Aroma buah dan aromatik yang optimis dengan sentuhan kayu, mencerminkan semangat seorang pemenang.",
+    "idealFor": "Sehari-hari, aktivitas penting.",
+    "enhances": "Dapat memancarkan aura kemenangan dan optimisme yang kuat.",
+    "value": "ch-212-vip-wins-men"
+  },
+  {
+    "name": "CH 212 Wins Men",
+    "category": "Pria",
+    "notes": "Green, Spicy, Woody",
+    "personality": "Fresh, Dynamic, Ambitious",
+    "description": "Aroma hijau dan rempah yang segar dengan sentuhan kayu, cocok untuk pria yang dinamis dan ambisius.",
+    "idealFor": "Olahraga, kerja.",
+    "enhances": "Dapat memancarkan aura dinamisme dan ambisi untuk meraih kemenangan.",
+    "value": "ch-212-wins-men"
+  },
+  {
+    "name": "CH Aqua for Man",
+    "category": "Pria",
+    "notes": "Aquatic, Fresh, Woody",
+    "personality": "Clean, Calm, Pure",
+    "description": "Aroma aquatic yang bersih dan segar dengan sentuhan kayu, memberikan kesan murni dan menenangkan.",
+    "idealFor": "Siang hari, santai.",
+    "enhances": "Dapat memancarkan aura ketenangan dan kebersihan yang murni.",
+    "value": "ch-aqua-for-man"
+  },
+  {
+    "name": "CH Bad Boy Extreme",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Leather",
+    "personality": "Rebellious, Intense, Bold",
+    "description": "Aroma rempah dan oriental yang intens dengan sentuhan kulit, cocok untuk pria yang berani dan pemberontak.",
+    "idealFor": "Malam hari, acara khusus.",
+    "enhances": "Dapat memancarkan aura keberanian dan daya pikat yang ekstrem.",
+    "value": "ch-bad-boy-extreme"
+  },
+  {
+    "name": "CH Bad Boy",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Aromatic",
+    "personality": "Rebellious, Confident, Charming",
+    "description": "Aroma rempah dan woody yang karismatik, mencerminkan dualitas pria modern yang berani namun menawan.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura pemberontak dan karisma yang kuat.",
+    "value": "ch-bad-boy"
+  },
+  {
+    "name": "CH Chic Man",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Elegant, Sophisticated, Stylish",
+    "description": "Aroma rempah dan aromatik yang elegan dengan sentuhan kayu, cocok untuk pria yang berkelas dan penuh gaya.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kecanggihan yang stylish.",
+    "value": "ch-chic-man"
+  },
+  {
+    "name": "CH Kings",
+    "category": "Pria",
+    "notes": "Woody, Oriental, Spicy",
+    "personality": "Powerful, Majestic, Confident",
+    "description": "Aroma woody dan oriental yang kuat dengan sentuhan rempah, memberikan kesan dominasi dan kepercayaan diri seorang raja.",
+    "idealFor": "Malam hari, acara penting.",
+    "enhances": "Dapat memancarkan aura kekuatan dan wibawa yang agung.",
+    "value": "ch-kings"
+  },
+  {
+    "name": "CH Man Sport",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Aquatic",
+    "personality": "Sporty, Fresh, Energetic",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan aquatic, sempurna untuk pria yang aktif dan sporty.",
+    "idealFor": "Olahraga, siang hari.",
+    "enhances": "Dapat memancarkan aura semangat dan kesegaran yang sporty.",
+    "value": "ch-man-sport"
+  },
+  {
+    "name": "CH Marine",
+    "category": "Pria",
+    "notes": "Aquatic, Salty, Woody",
+    "personality": "Fresh, Free, Relaxed",
+    "description": "Aroma aquatic dan salty yang segar dengan sentuhan kayu, memberikan kesan bebas dan santai seperti di lautan.",
+    "idealFor": "Siang hari, liburan.",
+    "enhances": "Dapat memancarkan aura kebebasan dan ketenangan yang santai.",
+    "value": "ch-marine"
+  },
+  {
+    "name": "CH Sport Man",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Dynamic, Strong, Active",
+    "description": "Aroma citrus dan rempah yang dinamis dengan sentuhan kayu, cocok untuk pria yang aktif dan kuat.",
+    "idealFor": "Olahraga, aktivitas luar ruangan.",
+    "enhances": "Dapat memancarkan aura kekuatan dan dinamisme yang aktif.",
+    "value": "ch-sport-man"
+  },
+{
+    "name": "Chanel Allure Homme Sport Eau Extreme",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Musky",
+    "personality": "Intense, Confident, Dynamic",
+    "description": "Aroma woody aromatik yang intens dengan sentuhan musk, cocok untuk pria yang percaya diri dan dinamis.",
+    "idealFor": "Olahraga, malam hari.",
+    "enhances": "Dapat memancarkan aura kepercayaan diri dan kekuatan yang ekstrem.",
+    "value": "chanel-allure-homme-sport-eau-extreme"
+  },
+  {
+    "name": "Chanel Allure Homme Sport",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Energetic, Fresh, Sporty",
+    "description": "Aroma citrus dan rempah yang segar dengan sentuhan woody, sempurna untuk pria yang aktif dan sporty.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura kesegaran dan semangat yang energik.",
+    "value": "chanel-allure-homme-sport"
+  },
+  {
+    "name": "Chanel Allure Man",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Elegant, Sophisticated, Timeless",
+    "description": "Aroma rempah, oriental, dan woody yang elegan, menciptakan kesan canggih dan abadi.",
+    "idealFor": "Acara formal, kantor.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kecanggihan yang tak lekang oleh waktu.",
+    "value": "chanel-allure-man"
+  },
+  {
+    "name": "Chanel Bleu de Chanel EDP",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Citrus",
+    "personality": "Modern, Independent, Mysterious",
+    "description": "Aroma woody aromatik dengan sentuhan citrus yang modern, cocok untuk pria yang mandiri dan misterius.",
+    "idealFor": "Malam hari, berbagai kesempatan.",
+    "enhances": "Dapat memancarkan aura misteri dan kemandirian yang elegan.",
+    "value": "chanel-bleu-de-chanel-edp"
+  },
+  {
+    "name": "Chanel Blue",
+    "category": "Pria",
+    "notes": "Woody, Citrus, Incense",
+    "personality": "Sophisticated, Adventurous, Urban",
+    "description": "Aroma woody dan citrus yang canggih dengan sentuhan incense, memberikan kesan petualangan urban yang berkelas.",
+    "idealFor": "Malam hari, acara kasual.",
+    "enhances": "Dapat memancarkan aura petualangan dan kecanggihan modern.",
+    "value": "chanel-blue"
+  },
+  {
+    "name": "Chopard Mobile Vetiver",
+    "category": "Pria",
+    "notes": "Woody, Green, Earthy",
+    "personality": "Natural, Calm, Refined",
+    "description": "Aroma woody dan hijau yang alami dengan sentuhan earthy, memberikan kesan tenang dan berkelas.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura ketenangan dan kehalusan yang alami.",
+    "value": "chopard-mobile-vetiver"
+  },
+  {
+    "name": "Chopart Miglia 1000",
+    "category": "Pria",
+    "notes": "Spicy, Leather, Woody",
+    "personality": "Classic, Adventurous, Masculine",
+    "description": "Aroma rempah, kulit, dan woody yang klasik, cocok untuk pria yang maskulin dan suka berpetualang.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura maskulin dan semangat petualangan yang klasik.",
+    "value": "chopart-miglia-1000"
+  },
+  {
+    "name": "Christian Audigier Villain",
+    "category": "Pria",
+    "notes": "Spicy, Citrus, Woody",
+    "personality": "Rebellious, Bold, Mysterious",
+    "description": "Aroma rempah dan citrus yang berani dengan sentuhan woody, menciptakan kesan pemberontak dan misterius.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura pemberontak dan daya pikat yang misterius.",
+    "value": "christian-audigier-villain"
+  },
+  {
+    "name": "Christian Dior Fahrenheit",
+    "category": "Pria",
+    "notes": "Floral, Woody, Leather",
+    "personality": "Unique, Timeless, Masculine",
+    "description": "Aroma floral dan woody yang unik dengan sentuhan kulit, ikonik dan abadi dalam maskulinitasnya.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura keunikan dan maskulinitas yang kuat.",
+    "value": "christian-dior-fahrenheit"
+  },
+  {
+    "name": "Christian Dior Fahrenheit Absolute",
+    "category": "Pria",
+    "notes": "Incense, Oud, Myrrh",
+    "personality": "Intense, Mysterious, Dark",
+    "description": "Aroma incense, oud, dan myrrh yang intens, memberikan kesan misterius dan gelap yang kuat.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura misteri dan intensitas yang mendalam.",
+    "value": "christian-dior-fahrenheit-absolute"
+  },
+  {
+    "name": "Christian Dior Higher",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Modern, Fresh, Optimistic",
+    "description": "Aroma citrus dan rempah yang modern dengan sentuhan woody, memberikan kesan segar dan optimis.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura optimisme dan kesegaran yang modern.",
+    "value": "christian-dior-higher"
+  },
+  {
+    "name": "Christian Dior Homme Intens",
+    "category": "Pria",
+    "notes": "Floral, Woody, Musky",
+    "personality": "Elegant, Sophisticated, Seductive",
+    "description": "Aroma floral dan woody yang intens dengan sentuhan musk, menciptakan kesan elegan, canggih, dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura keanggunan dan daya pikat yang sensual.",
+    "value": "christian-dior-homme-intens"
+  },
+  {
+    "name": "Christian Dior Homme Sport",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Sporty, Energetic, Dynamic",
+    "description": "Aroma citrus dan rempah yang energik dengan sentuhan woody, cocok untuk pria yang sporty dan dinamis.",
+    "idealFor": "Olahraga, sehari-hari.",
+    "enhances": "Dapat memancarkan aura semangat dan dinamisme yang sporty.",
+    "value": "christian-dior-homme-sport"
+  },
+  {
+    "name": "Christian Dior Sauvage",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Wild, Confident, Modern",
+    "description": "Aroma rempah dan aromatik yang liar dengan sentuhan woody, memancarkan kepercayaan diri pria modern yang bebas.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura keberanian dan kepercayaan diri yang tak terkekang.",
+    "value": "christian-dior-sauvage"
+  },
+  {
+    "name": "Christian Dior Sauvage Exilir",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Licorice",
+    "personality": "Intense, Powerful, Mysterious",
+    "description": "Aroma rempah dan woody yang intens dengan sentuhan licorice, memberikan kesan kuat dan misterius.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura kekuatan dan misteri yang mendalam.",
+    "value": "christian-dior-sauvage-exilir"
+  },
+  {
+    "name": "Christian Ronaldo Legachy Sheer Seven",
+    "category": "Pria",
+    "notes": "Fruity, Aromatic, Woody",
+    "personality": "Fresh, Confident, Modern",
+    "description": "Aroma buah dan aromatik yang segar dengan sentuhan woody, cocok untuk pria modern yang percaya diri.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura kesegaran dan kepercayaan diri yang positif.",
+    "value": "christian-ronaldo-legachy-sheer-seven"
+  },
+{
+    "name": "Cigar",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Tobacco",
+    "personality": "Masculine, Classic, Strong",
+    "description": "Aroma rempah dan kayu yang kuat dengan sentuhan tembakau, memberikan kesan maskulin dan klasik.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura maskulin dan kekuatan yang berwibawa.",
+    "value": "cigar"
+  },
+  {
+    "name": "CK Crave for Man",
+    "category": "Pria",
+    "notes": "Spicy, Fresh, Aromatic",
+    "personality": "Energetic, Modern, Casual",
+    "description": "Aroma rempah dan segar yang modern, cocok untuk pria yang bersemangat dan kasual.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura energi dan semangat yang modern.",
+    "value": "ck-crave-for-man"
+  },
+  {
+    "name": "CK Electric",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Musky",
+    "personality": "Vibrant, Lively, Dynamic",
+    "description": "Aroma citrus dan aromatik yang hidup dengan sentuhan musk, memberikan kesan dinamis dan bersemangat.",
+    "idealFor": "Siang hari, pesta.",
+    "enhances": "Dapat memancarkan aura kegembiraan dan vitalitas yang cerah.",
+    "value": "ck-electric"
+  },
+  {
+    "name": "CK Encounter Him",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Rum",
+    "personality": "Mysterious, Seductive, Confident",
+    "description": "Aroma rempah dan kayu yang misterius dengan sentuhan rum, menciptakan daya pikat yang menggoda dan penuh percaya diri.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "ck-encounter-him"
+  },
+  {
+    "name": "CK Escape for Man",
+    "category": "Pria",
+    "notes": "Fruity, Aquatic, Woody",
+    "personality": "Adventurous, Fresh, Free",
+    "description": "Aroma buah dan aquatic yang segar dengan sentuhan kayu, cocok untuk jiwa petualang yang bebas.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kebebasan dan semangat petualangan yang segar.",
+    "value": "ck-escape-for-man"
+  },
+  {
+    "name": "CK Eternity Air Male",
+    "category": "Pria",
+    "notes": "Aromatic, Ozonic, Citrus",
+    "personality": "Clean, Fresh, Calm",
+    "description": "Aroma aromatik dan ozonic yang bersih dengan sentuhan citrus, memberikan kesan tenang dan segar seperti udara.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura ketenangan dan kebersihan yang murni.",
+    "value": "ck-eternity-air-male"
+  },
+  {
+    "name": "CK Eternity Annyversary 25 Th Edition Man",
+    "category": "Pria",
+    "notes": "Aromatic, Citrus, Woody",
+    "personality": "Timeless, Elegant, Celebratory",
+    "description": "Aroma aromatik, citrus, dan woody yang abadi, merayakan keanggunan dan kesempurnaan.",
+    "idealFor": "Acara spesial, kantor.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kepercayaan diri yang abadi.",
+    "value": "ck-eternity-annyversary-25th-edition-man"
+  },
+  {
+    "name": "CK Eternity Aqua",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Woody",
+    "personality": "Fresh, Casual, Relaxed",
+    "description": "Aroma aquatic yang segar dengan sentuhan citrus dan kayu, memberikan kesan santai dan kasual.",
+    "idealFor": "Sehari-hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang santai.",
+    "value": "ck-eternity-aqua"
+  },
+  {
+    "name": "CK Eternity Man",
+    "category": "Pria",
+    "notes": "Aromatic, Fresh, Woody",
+    "personality": "Classic, Romantic, Confident",
+    "description": "Aroma aromatik yang segar dengan sentuhan kayu, ikonik dalam keromantisan dan kepercayaan dirinya.",
+    "idealFor": "Sehari-hari, kencan.",
+    "enhances": "Dapat memancarkan aura romantis dan kehangatan yang abadi.",
+    "value": "ck-eternity-man"
+  },
+  {
+    "name": "CK Eternity Now Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Spontaneous, Modern, Energetic",
+    "description": "Aroma rempah dan woody yang spontan dengan sentuhan oriental, cocok untuk pria modern yang penuh energi.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura energi dan spontanitas yang modern.",
+    "value": "ck-eternity-now-man"
+  },
+  {
+    "name": "CK Eternity Summer 2014 Man",
+    "category": "Pria",
+    "notes": "Citrus, Tropical, Woody",
+    "personality": "Joyful, Fresh, Carefree",
+    "description": "Aroma citrus dan tropis yang ceria dengan sentuhan woody, menangkap esensi musim panas yang riang.",
+    "idealFor": "Siang hari, liburan.",
+    "enhances": "Dapat memancarkan aura keceriaan dan kebebasan yang riang.",
+    "value": "ck-eternity-summer-2014-man"
+  },
+  {
+    "name": "CK Euphoria Deep",
+    "category": "Pria",
+    "notes": "Spicy, Leather, Woody",
+    "personality": "Intense, Mysterious, Sophisticated",
+    "description": "Aroma rempah dan kulit yang intens dengan sentuhan woody, memberikan kesan misterius dan canggih.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan kedalaman yang intens.",
+    "value": "ck-euphoria-deep"
+  },
+  {
+    "name": "CK Euphoria Man",
+    "category": "Pria",
+    "notes": "Spicy, Ginger, Woody",
+    "personality": "Seductive, Confident, Modern",
+    "description": "Aroma rempah dan jahe yang menggoda dengan sentuhan woody, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura menggoda dan kepercayaan diri yang modern.",
+    "value": "ck-euphoria-man"
+  },
+  {
+    "name": "CK Free",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Fruity",
+    "personality": "Relaxed, Free, Casual",
+    "description": "Aroma woody dan aromatik yang santai dengan sentuhan buah, memberikan kesan bebas dan kasual.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura kebebasan dan ketenangan yang santai.",
+    "value": "ck-free"
+  },
+  {
+    "name": "CK Free Blue",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Musky",
+    "personality": "Fresh, Calm, Optimistic",
+    "description": "Aroma aquatic yang segar dengan sentuhan citrus dan musk, memberikan kesan tenang dan optimis.",
+    "idealFor": "Sehari-hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan optimisme yang cerah.",
+    "value": "ck-free-blue"
+  },
+  {
+    "name": "CK In 2 U Heat Him",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Intense, Energetic, Bold",
+    "description": "Aroma rempah dan woody yang intens dengan sentuhan oriental, cocok untuk pria yang penuh energi dan berani.",
+    "idealFor": "Malam hari, pesta.",
+    "enhances": "Dapat memancarkan aura energi dan intensitas yang berani.",
+    "value": "ck-in-2-u-heat-him"
+  },
+  {
+    "name": "CK In 2 U Him",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Youthful, Spontaneous, Casual",
+    "description": "Aroma citrus dan aromatik yang ceria dengan sentuhan kayu, cocok untuk pria muda yang spontan dan kasual.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura keceriaan dan spontanitas yang modern.",
+    "value": "ck-in-2-u-him"
+  },
+  {
+    "name": "CK Obsession Man",
+    "category": "Pria",
+    "notes": "Spicy, Amber, Woody",
+    "personality": "Sensual, Mysterious, Intense",
+    "description": "Aroma rempah dan amber yang sensual dengan sentuhan woody, menciptakan obsesi yang misterius dan intens.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura sensual dan misteri yang mendalam.",
+    "value": "ck-obsession-man"
+  },
+  {
+    "name": "CK One Shock Him",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Musky",
+    "personality": "Rebellious, Bold, Modern",
+    "description": "Aroma rempah dan oriental yang berani dengan sentuhan musk, cocok untuk pria modern yang pemberontak.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura pemberontak dan keberanian yang modern.",
+    "value": "ck-one-shock-him"
+  },
+  {
+    "name": "Coach Man EDP",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Leather",
+    "personality": "Sophisticated, Urban, Confident",
+    "description": "Aroma rempah dan woody yang canggih dengan sentuhan kulit, mencerminkan kepercayaan diri pria urban yang modern.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura kecanggihan dan kepercayaan diri yang elegan.",
+    "value": "coach-man-edp"
+  },
+  {
+    "name": "CR 7",
+    "category": "Pria",
+    "notes": "Spicy, Fruity, Woody",
+    "personality": "Energetic, Dynamic, Confident",
+    "description": "Aroma rempah dan buah yang energik dengan sentuhan kayu, cocok untuk pria dinamis dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura energi dan dinamisme yang kuat.",
+    "value": "cr-7"
+  },
+  {
+    "name": "CR 7 Legacy",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Musky",
+    "personality": "Powerful, Timeless, Inspiring",
+    "description": "Aroma rempah dan aromatik yang kuat dengan sentuhan musk, menciptakan warisan yang abadi dan menginspirasi.",
+    "idealFor": "Acara spesial, kantor.",
+    "enhances": "Dapat memancarkan aura kekuatan dan inspirasi yang tak lekang oleh waktu.",
+    "value": "cr-7-legacy"
+  },
+{
+    "name": "Creed Aventus",
+    "category": "Pria",
+    "notes": "Fruity, Smoky, Woody",
+    "personality": "Confident, Bold, Sophisticated",
+    "description": "Aroma buah yang berani dipadukan dengan smoky dan woody, menciptakan kesan canggih dan penuh kepercayaan diri.",
+    "idealFor": "Acara spesial, kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura dominasi dan kesuksesan yang kuat.",
+    "value": "creed-aventus"
+  },
+  {
+    "name": "David Beckham Intimately Her",
+    "category": "Wanita",
+    "notes": "Floral, White Floral, Musky",
+    "personality": "Elegant, Feminine, Intimate",
+    "description": "Aroma floral yang lembut dan feminin dengan sentuhan musk, memberikan kesan elegan dan intim.",
+    "idealFor": "Sehari-hari, kencan.",
+    "enhances": "Dapat memancarkan aura keanggunan dan keintiman yang lembut.",
+    "value": "david-beckham-intimately-her"
+  },
+  {
+    "name": "Davidoff Cool Water Games",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Playful, Fresh, Energetic",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan woody, cocok untuk pria yang suka bermain dan bersemangat.",
+    "idealFor": "Siang hari, santai.",
+    "enhances": "Dapat memancarkan aura keceriaan dan energi yang menyegarkan.",
+    "value": "davidoff-cool-water-games"
+  },
+  {
+    "name": "Davidoff Cool Water Man",
+    "category": "Pria",
+    "notes": "Aquatic, Aromatic, Green",
+    "personality": "Fresh, Classic, Calm",
+    "description": "Aroma aquatic yang segar dengan sentuhan aromatik dan hijau, memberikan kesan tenang dan klasik.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang tak lekang oleh waktu.",
+    "value": "davidoff-cool-water-man"
+  },
+  {
+    "name": "Davidoff Cool Water Reborn",
+    "category": "Pria",
+    "notes": "Aromatic, Citrus, Aquatic",
+    "personality": "Reborn, Fresh, Dynamic",
+    "description": "Aroma aromatik dan citrus yang segar dengan sentuhan aquatic, merepresentasikan kelahiran kembali yang dinamis.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan semangat yang baru.",
+    "value": "davidoff-cool-water-reborn"
+  },
+  {
+    "name": "Davidoff Cool Water Wave",
+    "category": "Pria",
+    "notes": "Aquatic, Salty, Woody",
+    "personality": "Adventurous, Free, Energetic",
+    "description": "Aroma aquatic dan salty yang segar dengan sentuhan kayu, memberikan kesan bebas dan bersemangat seperti ombak.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kebebasan dan energi yang tak terbatas.",
+    "value": "davidoff-cool-water-wave"
+  },
+  {
+    "name": "Davidoff Coolwater Night Dive Man",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Amber",
+    "personality": "Mysterious, Intense, Calm",
+    "description": "Aroma aquatic dan woody yang misterius dengan sentuhan amber, cocok untuk malam hari yang tenang dan intens.",
+    "idealFor": "Malam hari, acara kasual.",
+    "enhances": "Dapat memancarkan aura misteri dan ketenangan yang mendalam.",
+    "value": "davidoff-coolwater-night-dive-man"
+  },
+  {
+    "name": "Davidoff Hot Water Night",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Seductive, Warm, Mysterious",
+    "description": "Aroma rempah dan oriental yang hangat dengan sentuhan woody, menciptakan daya tarik sensual dan misterius.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura kehangatan dan daya pikat yang menggoda.",
+    "value": "davidoff-hot-water-night"
+  },
+  {
+    "name": "Davidoff Run Wild EDT",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Free, Adventurous, Natural",
+    "description": "Aroma rempah dan aromatik yang bebas dengan sentuhan kayu, cocok untuk jiwa petualang yang alami.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kebebasan dan semangat petualangan yang tak terkekang.",
+    "value": "davidoff-run-wild-edt"
+  },
+  {
+    "name": "Davidoff Run Wild For Him",
+    "category": "Pria",
+    "notes": "Fruity, Oriental, Woody",
+    "personality": "Wild, Confident, Modern",
+    "description": "Aroma buah dan oriental yang liar dengan sentuhan kayu, memancarkan kepercayaan diri pria modern yang bebas.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura keberanian dan kepercayaan diri yang liar.",
+    "value": "davidoff-run-wild-for-him"
+  },
+  {
+    "name": "Davidoff Silver Shadow",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Amber",
+    "personality": "Elegant, Sophisticated, Mysterious",
+    "description": "Aroma rempah dan oriental yang elegan dengan sentuhan amber, memberikan kesan canggih dan misterius.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura misteri dan keanggunan yang berkelas.",
+    "value": "davidoff-silver-shadow"
+  },
+  {
+    "name": "De Marly Pegasus Parfume for Man",
+    "category": "Pria",
+    "notes": "Aromatic, Almond, Vanilla",
+    "personality": "Elegant, Unique, Powerful",
+    "description": "Aroma aromatik dan almond yang unik dengan sentuhan vanila, menciptakan kesan elegan dan kuat.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura keunikan dan kekuatan yang abadi.",
+    "value": "de-marly-pegasus-parfume-for-man"
+  },
+  {
+    "name": "Dear Boyfriend Aviator Black Suit",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Stylish, Confident, Modern",
+    "description": "Aroma rempah dan aromatik yang stylish dengan sentuhan kayu, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura gaya dan kepercayaan diri yang kuat.",
+    "value": "dear-boyfriend-aviator-black-suit"
+  },
+  {
+    "name": "Diesel Bad for Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Tobacco",
+    "personality": "Rebellious, Bold, Seductive",
+    "description": "Aroma rempah dan woody yang berani dengan sentuhan tembakau, menciptakan kesan pemberontak dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura pemberontak dan daya pikat yang kuat.",
+    "value": "diesel-bad-for-man"
+  },
+  {
+    "name": "Diesel Only the Brave",
+    "category": "Pria",
+    "notes": "Spicy, Citrus, Woody",
+    "personality": "Brave, Strong, Confident",
+    "description": "Aroma rempah dan citrus yang kuat dengan sentuhan kayu, cocok untuk pria yang berani dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura keberanian dan kekuatan yang tak tertandingi.",
+    "value": "diesel-only-the-brave"
+  },
+  {
+    "name": "Diesel Only the Brave Tattoo",
+    "category": "Pria",
+    "notes": "Spicy, Tobacco, Oriental",
+    "personality": "Rebellious, Unique, Mysterious",
+    "description": "Aroma rempah dan tembakau yang unik dengan sentuhan oriental, memberikan kesan pemberontak dan misterius.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura keunikan dan keberanian yang misterius.",
+    "value": "diesel-only-the-brave-tattoo"
+  },
+  {
+    "name": "DKNY Be Delicious Man",
+    "category": "Pria",
+    "notes": "Fruity, Woody, Aquatic",
+    "personality": "Fresh, Urban, Playful",
+    "description": "Aroma buah dan woody yang segar dengan sentuhan aquatic, cocok untuk pria urban yang ceria.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura keceriaan dan kesegaran yang modern.",
+    "value": "dkny-be-delicious-man"
+  },
+  {
+    "name": "Drakkar Noir Guy Laroche",
+    "category": "Pria",
+    "notes": "Aromatic, Woody, Spicy",
+    "personality": "Masculine, Classic, Powerful",
+    "description": "Aroma aromatik dan woody yang klasik dengan sentuhan rempah, ikonik dalam kekuatan maskulinitasnya.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura maskulin dan wibawa yang kuat.",
+    "value": "drakkar-noir-guy-laroche"
+  },
+  {
+    "name": "Dsquared2 Green Wood 2019",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Green",
+    "personality": "Natural, Fresh, Modern",
+    "description": "Aroma woody dan aromatik yang alami dengan sentuhan hijau, memberikan kesan segar dan modern.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura alami dan kesegaran yang positif.",
+    "value": "dsquared2-green-wood-2019"
+  },
+{
+    "name": "Dunhill Black",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Spicy",
+    "personality": "Sophisticated, Mysterious, Confident",
+    "description": "Aroma woody aromatik yang canggih dengan sentuhan rempah, memberikan kesan misterius dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura kecanggihan dan misteri yang kuat.",
+    "value": "dunhill-black"
+  },
+  {
+    "name": "Dunhill Blue",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Fresh, Casual, Relaxed",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan woody, cocok untuk pria yang santai dan kasual.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang santai.",
+    "value": "dunhill-blue"
+  },
+  {
+    "name": "Dunhill Custom Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Fruity",
+    "personality": "Modern, Confident, Refined",
+    "description": "Aroma rempah dan woody yang modern dengan sentuhan buah, cocok untuk pria yang percaya diri dan berkelas.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura modernitas dan kepercayaan diri yang berkelas.",
+    "value": "dunhill-custom-man"
+  },
+  {
+    "name": "Dunhill Fresh Man",
+    "category": "Pria",
+    "notes": "Green, Aromatic, Woody",
+    "personality": "Fresh, Clean, Natural",
+    "description": "Aroma hijau dan aromatik yang segar dengan sentuhan woody, memberikan kesan bersih dan alami.",
+    "idealFor": "Sehari-hari, pagi hari.",
+    "enhances": "Dapat memancarkan aura kebersihan dan kesegaran yang alami.",
+    "value": "dunhill-fresh-man"
+  },
+  {
+    "name": "Dunhill Icon",
+    "category": "Pria",
+    "notes": "Spicy, Neroli, Woody",
+    "personality": "Elegant, Sophisticated, Iconic",
+    "description": "Aroma rempah dan neroli yang elegan dengan sentuhan woody, menciptakan kesan ikonik dan canggih.",
+    "idealFor": "Acara formal, kantor.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kecanggihan yang ikonik.",
+    "value": "dunhill-icon"
+  },
+  {
+    "name": "Dunhill London Man",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Classic, Warm, Refined",
+    "description": "Aroma rempah dan oriental yang hangat dengan sentuhan woody, cocok untuk pria yang klasik dan berkelas.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura kehangatan dan kehalusan yang berkelas.",
+    "value": "dunhill-london-man"
+  },
+  {
+    "name": "Dunhill Pursuit",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Spicy",
+    "personality": "Adventurous, Confident, Masculine",
+    "description": "Aroma woody aromatik yang berani dengan sentuhan rempah, cocok untuk pria maskulin yang suka berpetualang.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura maskulin dan semangat petualangan yang kuat.",
+    "value": "dunhill-pursuit"
+  },
+  {
+    "name": "Dunhill Red",
+    "category": "Pria",
+    "notes": "Spicy, Fruity, Woody",
+    "personality": "Bold, Energetic, Passionate",
+    "description": "Aroma rempah dan buah yang berani dengan sentuhan woody, cocok untuk pria yang bersemangat dan penuh gairah.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura keberanian dan gairah yang intens.",
+    "value": "dunhill-red"
+  },
+  {
+    "name": "Dunhill Signature Collection British Leather",
+    "category": "Pria",
+    "notes": "Leather, Woody, Aromatic",
+    "personality": "Classic, Elegant, Sophisticated",
+    "description": "Aroma kulit dan woody yang klasik dengan sentuhan aromatik, menciptakan kesan elegan dan canggih ala Inggris.",
+    "idealFor": "Acara formal, kantor.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kecanggihan yang abadi.",
+    "value": "dunhill-signature-collection-british-leather"
+  },
+  {
+    "name": "Dunhill X Centric",
+    "category": "Pria",
+    "notes": "Spicy, Fruity, Woody",
+    "personality": "Unique, Modern, Bold",
+    "description": "Aroma rempah dan buah yang unik dengan sentuhan woody, cocok untuk pria modern yang berani tampil beda.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura keunikan dan keberanian yang modern.",
+    "value": "dunhill-x-centric"
+  },
+  {
+    "name": "Ermenegildo Zegna Essence Florentine Iris",
+    "category": "Pria",
+    "notes": "Floral, Powdery, Woody",
+    "personality": "Elegant, Refined, Luxurious",
+    "description": "Aroma floral dan powdery yang elegan dengan sentuhan woody, memberikan kesan mewah dan berkelas.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kemewahan yang halus.",
+    "value": "ermenegildo-zegna-essence-florentine-iris"
+  },
+  {
+    "name": "Esprit Life - Male",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Fresh, Casual, Lively",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan woody, cocok untuk pria yang santai dan penuh semangat.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan semangat yang hidup.",
+    "value": "esprit-life-male"
+  },
+  {
+    "name": "Escada Magnetism Man",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Seductive, Mysterious, Intense",
+    "description": "Aroma rempah dan oriental yang intens dengan sentuhan woody, menciptakan daya tarik sensual dan misterius.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura magnetisme dan daya pikat yang kuat.",
+    "value": "escada-magnetism-man"
+  },
+  {
+    "name": "Escada Moon Sparkle Man",
+    "category": "Pria",
+    "notes": "Fruity, Citrus, Woody",
+    "personality": "Playful, Energetic, Joyful",
+    "description": "Aroma buah dan citrus yang ceria dengan sentuhan woody, cocok untuk pria yang bersemangat dan menyenangkan.",
+    "idealFor": "Siang hari, liburan.",
+    "enhances": "Dapat memancarkan aura keceriaan dan energi yang menyegarkan.",
+    "value": "escada-moon-sparkle-man"
+  },
+  {
+    "name": "Escada Pour Homme Sport",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Sporty, Fresh, Dynamic",
+    "description": "Aroma citrus dan rempah yang segar dengan sentuhan woody, cocok untuk pria yang sporty dan dinamis.",
+    "idealFor": "Olahraga, sehari-hari.",
+    "enhances": "Dapat memancarkan aura semangat dan dinamisme yang sporty.",
+    "value": "escada-pour-homme-sport"
+  },
+  {
+    "name": "Escada Sentimen Man",
+    "category": "Pria",
+    "notes": "Spicy, Citrus, Woody",
+    "personality": "Romantic, Charming, Sensual",
+    "description": "Aroma rempah dan citrus yang romantis dengan sentuhan woody, cocok untuk pria yang menawan dan sensual.",
+    "idealFor": "Kencan, malam hari.",
+    "enhances": "Dapat memancarkan aura romantis dan pesona yang memikat.",
+    "value": "escada-sentimen-man"
+  },
+  {
+    "name": "Estee Lauder Pleasure Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Aromatic",
+    "personality": "Fresh, Confident, Modern",
+    "description": "Aroma rempah dan woody yang segar dengan sentuhan aromatik, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan kepercayaan diri yang positif.",
+    "value": "estee-lauder-pleasure-man"
+  },
+{
+    "name": "Ferrari Black",
+    "category": "Pria",
+    "notes": "Fruity, Citrus, Spicy",
+    "personality": "Classic, Confident, Modern",
+    "description": "Aroma buah dan citrus yang klasik dengan sentuhan rempah, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura klasik dan kepercayaan diri yang kuat.",
+    "value": "ferrari-black"
+  },
+  {
+    "name": "Ferrari Black New",
+    "category": "Pria",
+    "notes": "Aromatic, Citrus, Woody",
+    "personality": "Fresh, Dynamic, Urban",
+    "description": "Aroma aromatik dan citrus yang segar dengan sentuhan woody, memberikan kesan dinamis dan modern ala perkotaan.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang cerah.",
+    "value": "ferrari-black-new"
+  },
+  {
+    "name": "Ferrari Black Shine",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Elegant, Sophisticated, Radiant",
+    "description": "Aroma citrus dan aromatik yang elegan dengan sentuhan woody, memberikan kesan canggih dan bercahaya.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kecanggihan yang elegan.",
+    "value": "ferrari-black-shine"
+  },
+  {
+    "name": "Ferrari Leather Essence Man",
+    "category": "Pria",
+    "notes": "Leather, Spicy, Woody",
+    "personality": "Bold, Luxurious, Masculine",
+    "description": "Aroma kulit yang kuat dengan sentuhan rempah dan kayu, cocok untuk pria yang berani dan maskulin.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura maskulin dan kemewahan yang kuat.",
+    "value": "ferrari-leather-essence-man"
+  },
+  {
+    "name": "Ferrari Red",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Spicy",
+    "personality": "Energetic, Passionate, Dynamic",
+    "description": "Aroma citrus dan aromatik yang energik dengan sentuhan rempah, cocok untuk pria yang penuh gairah dan dinamis.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura semangat dan gairah yang tak terbatas.",
+    "value": "ferrari-red"
+  },
+  {
+    "name": "Ferrari Scuderia Forte 2017",
+    "category": "Pria",
+    "notes": "Spicy, Apple, Woody",
+    "personality": "Strong, Confident, Modern",
+    "description": "Aroma rempah dan apel yang kuat dengan sentuhan woody, mencerminkan kekuatan dan kepercayaan diri pria modern.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura kekuatan dan kepercayaan diri yang modern.",
+    "value": "ferrari-scuderia-forte-2017"
+  },
+  {
+    "name": "Ferrari Scuderia",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Spicy",
+    "personality": "Sporty, Energetic, Dynamic",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan rempah, cocok untuk pria yang sporty dan dinamis.",
+    "idealFor": "Olahraga, siang hari.",
+    "enhances": "Dapat memancarkan aura semangat dan dinamisme yang sporty.",
+    "value": "ferrari-scuderia"
+  },
+  {
+    "name": "Giorgio Armani Acqua Di Gio Essenza",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Woody",
+    "personality": "Intense, Fresh, Elegant",
+    "description": "Aroma aquatic yang intens dengan perpaduan citrus dan woody, memberikan kesan segar dan elegan.",
+    "idealFor": "Sehari-hari, acara formal.",
+    "enhances": "Dapat memancarkan aura kesegaran dan keanggunan yang intens.",
+    "value": "giorgio-armani-acqua-di-gio-essenza"
+  },
+  {
+    "name": "Giorgio Armani Acqua Di Gio",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Aromatic",
+    "personality": "Classic, Fresh, Calm",
+    "description": "Aroma aquatic yang segar dengan sentuhan citrus dan aromatik, ikonik dalam kesegaran dan ketenangannya.",
+    "idealFor": "Sehari-hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang abadi.",
+    "value": "giorgio-armani-acqua-di-gio"
+  },
+  {
+    "name": "Giorgio Armani Acqua Di Gio Absolute",
+    "category": "Pria",
+    "notes": "Woody, Aquatic, Oriental",
+    "personality": "Bold, Masculine, Modern",
+    "description": "Aroma woody dan aquatic yang berani dengan sentuhan oriental, cocok untuk pria maskulin yang modern.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura maskulin dan keberanian yang modern.",
+    "value": "giorgio-armani-acqua-di-gio-absolute"
+  },
+  {
+    "name": "Giorgio Armani Acqua Di Gio Fraich",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Green",
+    "personality": "Crisp, Fresh, Lively",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan hijau, memberikan kesan hidup dan tajam.",
+    "idealFor": "Siang hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang cerah.",
+    "value": "giorgio-armani-acqua-di-gio-fraich"
+  },
+  {
+    "name": "Giorgio Armani Acqua Di Gio Man",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Woody",
+    "personality": "Fresh, Confident, Timeless",
+    "description": "Aroma aquatic dan citrus yang segar dengan sentuhan woody, cocok untuk pria yang percaya diri dan abadi.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan kepercayaan diri yang abadi.",
+    "value": "giorgio-armani-acqua-di-gio-man"
+  },
+  {
+    "name": "Giorgio Armani Acqua Di Gio Profondo Man",
+    "category": "Pria",
+    "notes": "Aquatic, Aromatic, Woody",
+    "personality": "Deep, Mysterious, Confident",
+    "description": "Aroma aquatic dan aromatik yang mendalam dengan sentuhan woody, memberikan kesan misterius dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura misteri dan kedalaman yang kuat.",
+    "value": "giorgio-armani-acqua-di-gio-profondo-man"
+  },
+  {
+    "name": "Giorgio Armani Attitude",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Coffee",
+    "personality": "Bold, Intense, Seductive",
+    "description": "Aroma rempah dan oriental yang berani dengan sentuhan kopi, menciptakan daya tarik yang intens dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura keberanian dan daya pikat yang kuat.",
+    "value": "giorgio-armani-attitude"
+  },
+  {
+    "name": "Giorgio Armani Basi in Blue Man",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Fresh, Clean, Calm",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan woody, memberikan kesan bersih dan tenang.",
+    "idealFor": "Sehari-hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang abadi.",
+    "value": "giorgio-armani-basi-in-blue-man"
+  },
+  {
+    "name": "Giorgio Armani Black Code",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Leather",
+    "personality": "Seductive, Mysterious, Elegant",
+    "description": "Aroma rempah dan oriental yang sensual dengan sentuhan kulit, menciptakan kesan misterius dan elegan.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "giorgio-armani-black-code"
+  },
+  {
+    "name": "Giorgio Armani City Glam Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Fresh",
+    "personality": "Urban, Stylish, Confident",
+    "description": "Aroma rempah dan woody yang stylish dengan sentuhan segar, cocok untuk pria urban yang penuh percaya diri.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura gaya dan kepercayaan diri yang modern.",
+    "value": "giorgio-armani-city-glam-man"
+  },
+  {
+    "name": "Giorgio Armani Code Profumo",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Tonka Bean",
+    "personality": "Intense, Seductive, Luxurious",
+    "description": "Aroma rempah dan oriental yang intens dengan sentuhan tonka bean, menciptakan kesan mewah dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura intensitas dan kemewahan yang memikat.",
+    "value": "giorgio-armani-code-profumo"
+  },
+  {
+    "name": "Giorgio Armani Code Sport",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Aquatic",
+    "personality": "Sporty, Energetic, Modern",
+    "description": "Aroma citrus dan rempah yang energik dengan sentuhan aquatic, cocok untuk pria yang sporty dan modern.",
+    "idealFor": "Olahraga, siang hari.",
+    "enhances": "Dapat memancarkan aura semangat dan energi yang modern.",
+    "value": "giorgio-armani-code-sport"
+  },
+  {
+    "name": "Giorgio Armani Code Summer 2010 Pour Homme",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Fresh, Casual, Lively",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan woody, cocok untuk suasana musim panas yang ceria.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan keceriaan yang hidup.",
+    "value": "giorgio-armani-code-summer-2010-pour-homme"
+  },
+  {
+    "name": "Giorgio Armani Emporio White For Men",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Clean, Fresh, Pure",
+    "description": "Aroma citrus dan aquatic yang bersih dengan sentuhan woody, memberikan kesan murni dan segar.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kebersihan dan kesegaran yang murni.",
+    "value": "giorgio-armani-emporio-white-for-men"
+  },
+  {
+    "name": "Giorgio Armani Mania Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Elegant, Sensual, Confident",
+    "description": "Aroma rempah dan woody yang elegan dengan sentuhan oriental, cocok untuk pria yang sensual dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kepercayaan diri yang sensual.",
+    "value": "giorgio-armani-mania-man"
+  },
+  {
+    "name": "Giorgio Armani My Way Man",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Adventurous, Modern, Confident",
+    "description": "Aroma citrus dan aromatik yang modern dengan sentuhan woody, cocok untuk pria yang berani dan percaya diri.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura petualangan dan kepercayaan diri yang modern.",
+    "value": "giorgio-armani-my-way-man"
+  },
+  {
+    "name": "Giorgio Armani Sensi Man",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Sensual, Mysterious, Warm",
+    "description": "Aroma rempah dan oriental yang sensual dengan sentuhan woody, menciptakan kesan misterius dan hangat.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura sensual dan misteri yang mendalam.",
+    "value": "giorgio-armani-sensi-man"
+  },
+  {
+    "name": "Givenchy Gentleman EDP Reserve Privee",
+    "category": "Pria",
+    "notes": "Woody, Amber, Iris",
+    "personality": "Elegant, Sophisticated, Luxurious",
+    "description": "Aroma woody dan amber yang elegan dengan sentuhan iris, memberikan kesan mewah dan canggih.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura kemewahan dan keanggunan yang eksklusif.",
+    "value": "givenchy-gentleman-edp-reserve-privee"
+  },
+  {
+    "name": "Givenchy Gentleman Society",
+    "category": "Pria",
+    "notes": "Woody, Spicy, Floral",
+    "personality": "Modern, Confident, Stylish",
+    "description": "Aroma woody dan rempah yang modern dengan sentuhan floral, cocok untuk pria yang stylish dan penuh percaya diri.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura modernitas dan kepercayaan diri yang berkelas.",
+    "value": "givenchy-gentleman-society"
+  },
+  {
+    "name": "Givenchy Gentleman",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Leather",
+    "personality": "Classic, Masculine, Elegant",
+    "description": "Aroma rempah, woody, dan kulit yang klasik, cocok untuk pria yang maskulin dan elegan.",
+    "idealFor": "Acara formal, kantor.",
+    "enhances": "Dapat memancarkan aura maskulin dan keanggunan yang abadi.",
+    "value": "givenchy-gentleman"
+  },
+{
+    "name": "Green Wood",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Citrus",
+    "personality": "Natural, Fresh, Modern",
+    "description": "Aroma woody dan aromatik yang alami dengan sentuhan citrus, memberikan kesan segar dan modern.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura alami dan kesegaran yang positif.",
+    "value": "green-wood"
+  },
+  {
+    "name": "Gucci Guilty Black Man",
+    "category": "Pria",
+    "notes": "Spicy, Green, Aromatic",
+    "personality": "Bold, Mysterious, Rebellious",
+    "description": "Aroma rempah dan hijau yang berani dengan sentuhan aromatik, cocok untuk pria yang misterius dan pemberontak.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura keberanian dan misteri yang kuat.",
+    "value": "gucci-guilty-black-man"
+  },
+  {
+    "name": "Gucci Guilty Pour Homme 2022",
+    "category": "Pria",
+    "notes": "Aromatic, Woody, Spicy",
+    "personality": "Modern, Confident, Refined",
+    "description": "Aroma aromatik dan woody yang modern dengan sentuhan rempah, cocok untuk pria yang penuh percaya diri dan berkelas.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura modernitas dan kepercayaan diri yang berkelas.",
+    "value": "gucci-guilty-pour-homme-2022"
+  },
+  {
+    "name": "Gucci Rush Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Intense, Energetic, Bold",
+    "description": "Aroma rempah dan woody yang intens dengan sentuhan oriental, cocok untuk pria yang penuh energi dan berani.",
+    "idealFor": "Malam hari, pesta.",
+    "enhances": "Dapat memancarkan aura energi dan intensitas yang berani.",
+    "value": "gucci-rush-man"
+  },
+  {
+    "name": "Gucci Sport Man",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Sporty, Fresh, Dynamic",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan woody, cocok untuk pria yang sporty dan dinamis.",
+    "idealFor": "Olahraga, siang hari.",
+    "enhances": "Dapat memancarkan aura semangat dan dinamisme yang sporty.",
+    "value": "gucci-sport-man"
+  },
+  {
+    "name": "Guess Man",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Fresh, Casual, Charming",
+    "description": "Aroma citrus dan rempah yang segar dengan sentuhan woody, memberikan kesan menawan dan kasual.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura kesegaran dan pesona yang menarik.",
+    "value": "guess-man"
+  },
+  {
+    "name": "Guess Seductive Noir Male",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Tonka Bean",
+    "personality": "Seductive, Mysterious, Intense",
+    "description": "Aroma rempah dan oriental yang sensual dengan sentuhan tonka bean, menciptakan kesan misterius dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "guess-seductive-noir-male"
+  },
+  {
+    "name": "Hermes H24 For Men",
+    "category": "Pria",
+    "notes": "Green, Aromatic, Metallic",
+    "personality": "Modern, Fresh, Unique",
+    "description": "Aroma hijau dan aromatik yang modern dengan sentuhan metallic, memberikan kesan segar dan unik.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura modernitas dan keunikan yang segar.",
+    "value": "hermes-h24-for-men"
+  },
+  {
+    "name": "Honour Amouage Man",
+    "category": "Pria",
+    "notes": "Spicy, Incense, Woody",
+    "personality": "Noble, Elegant, Mysterious",
+    "description": "Aroma rempah dan incense yang mulia dengan sentuhan woody, cocok untuk pria yang elegan dan misterius.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan misteri yang mendalam.",
+    "value": "honour-amouage-man"
+  },
+  {
+    "name": "Hugo Boss Army Man",
+    "category": "Pria",
+    "notes": "Green, Aromatic, Woody",
+    "personality": "Strong, Disciplined, Confident",
+    "description": "Aroma hijau dan aromatik yang kuat dengan sentuhan woody, cocok untuk pria yang berdisiplin dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kekuatan dan disiplin yang kokoh.",
+    "value": "hugo-boss-army-man"
+  },
+  {
+    "name": "Hugo Boss Bottle",
+    "category": "Pria",
+    "notes": "Fruity, Woody, Vanilla",
+    "personality": "Classic, Confident, Modern",
+    "description": "Aroma buah dan woody yang klasik dengan sentuhan vanila, ikonik dalam kepercayaan dirinya.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura klasik dan kepercayaan diri yang abadi.",
+    "value": "hugo-boss-bottle"
+  },
+  {
+    "name": "Hugo Boss Bottle Night",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Musky",
+    "personality": "Mysterious, Seductive, Elegant",
+    "description": "Aroma woody aromatik yang misterius dengan sentuhan musk, cocok untuk malam hari yang elegan dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "hugo-boss-bottle-night"
+  },
+  {
+    "name": "Hugo Boss Bottle Tonic",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Fresh, Energetic, Optimistic",
+    "description": "Aroma citrus dan rempah yang segar dengan sentuhan woody, memberikan kesan energik dan optimis.",
+    "idealFor": "Siang hari, kantor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan optimisme yang cerah.",
+    "value": "hugo-boss-bottle-tonic"
+  },
+  {
+    "name": "Hugo Boss Bottled",
+    "category": "Pria",
+    "notes": "Fruity, Woody, Spicy",
+    "personality": "Confident, Modern, Sophisticated",
+    "description": "Aroma buah dan woody yang berkelas dengan sentuhan rempah, cocok untuk pria modern yang canggih.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura kecanggihan dan kepercayaan diri yang abadi.",
+    "value": "hugo-boss-bottled"
+  },
+  {
+    "name": "Hugo Boss Bottled Infinite",
+    "category": "Pria",
+    "notes": "Aromatic, Woody, Apple",
+    "personality": "Free, Adventurous, Fresh",
+    "description": "Aroma aromatik dan woody yang bebas dengan sentuhan apel, cocok untuk pria yang suka berpetualang dan segar.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kebebasan dan semangat yang tak terbatas.",
+    "value": "hugo-boss-bottled-infinite"
+  },
+  {
+    "name": "Hugo Boss Bottled Oud",
+    "category": "Pria",
+    "notes": "Oud, Spicy, Woody",
+    "personality": "Luxurious, Intense, Exotic",
+    "description": "Aroma oud yang intens dengan sentuhan rempah dan woody, menciptakan kesan mewah dan eksotis.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura kemewahan dan intensitas yang eksklusif.",
+    "value": "hugo-boss-bottled-oud"
+  },
+  {
+    "name": "Hugo Boss Dark Blue",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Citrus",
+    "personality": "Mysterious, Confident, Urban",
+    "description": "Aroma rempah dan woody yang misterius dengan sentuhan citrus, cocok untuk pria urban yang penuh percaya diri.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura misteri dan kepercayaan diri yang kuat.",
+    "value": "hugo-boss-dark-blue"
+  },
+  {
+    "name": "Hugo Boss Elements",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Natural, Fresh, Balanced",
+    "description": "Aroma citrus dan aromatik yang alami dengan sentuhan woody, memberikan kesan seimbang dan segar.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura alami dan keseimbangan yang tenang.",
+    "value": "hugo-boss-elements"
+  },
+  {
+    "name": "Hugo Boss Energize",
+    "category": "Pria",
+    "notes": "Spicy, Citrus, Woody",
+    "personality": "Energetic, Bold, Dynamic",
+    "description": "Aroma rempah dan citrus yang energik dengan sentuhan woody, cocok untuk pria yang berani dan dinamis.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura energi dan dinamisme yang kuat.",
+    "value": "hugo-boss-energize"
+  },
+  {
+    "name": "Hugo Boss Extreme",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Green",
+    "personality": "Intense, Strong, Confident",
+    "description": "Aroma woody dan aromatik yang intens dengan sentuhan hijau, cocok untuk pria yang kuat dan penuh percaya diri.",
+    "idealFor": "Olahraga, malam hari.",
+    "enhances": "Dapat memancarkan aura kekuatan dan intensitas yang ekstrem.",
+    "value": "hugo-boss-extreme"
+  },
+  {
+    "name": "Hugo Boss Iced",
+    "category": "Pria",
+    "notes": "Aquatic, Mint, Woody",
+    "personality": "Cool, Fresh, Invigorating",
+    "description": "Aroma aquatic dan mint yang sejuk dengan sentuhan woody, memberikan kesan segar dan membangkitkan semangat.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang dingin.",
+    "value": "hugo-boss-iced"
+  },
+  {
+    "name": "Hugo Boss In Motion",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Aromatic",
+    "personality": "Dynamic, Energetic, Confident",
+    "description": "Aroma rempah dan woody yang dinamis dengan sentuhan aromatik, cocok untuk pria yang bersemangat dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura dinamisme dan energi yang tak terbatas.",
+    "value": "hugo-boss-in-motion"
+  },
+  {
+    "name": "Hugo Boss In Motion Black",
+    "category": "Pria",
+    "notes": "Incense, Spicy, Woody",
+    "personality": "Mysterious, Intense, Seductive",
+    "description": "Aroma incense dan rempah yang misterius dengan sentuhan woody, menciptakan kesan intens dan menggoda.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "hugo-boss-in-motion-black"
+  },
+  {
+    "name": "Hugo Boss In Motion Blue",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Woody",
+    "personality": "Fresh, Calm, Relaxed",
+    "description": "Aroma aquatic dan citrus yang segar dengan sentuhan woody, memberikan kesan tenang dan santai.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang damai.",
+    "value": "hugo-boss-in-motion-blue"
+  },
+  {
+    "name": "Hugo Boss In Motion Electric",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Energetic, Modern, Bold",
+    "description": "Aroma rempah dan aromatik yang energik dengan sentuhan woody, cocok untuk pria modern yang berani.",
+    "idealFor": "Sehari-hari, pesta.",
+    "enhances": "Dapat memancarkan aura energi dan keberanian yang modern.",
+    "value": "hugo-boss-in-motion-electric"
+  },
+  {
+    "name": "Hugo Boss In Motion Green",
+    "category": "Pria",
+    "notes": "Green, Aromatic, Woody",
+    "personality": "Natural, Fresh, Optimistic",
+    "description": "Aroma hijau dan aromatik yang alami dengan sentuhan woody, memberikan kesan segar dan optimis.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura alami dan optimisme yang positif.",
+    "value": "hugo-boss-in-motion-green"
+  },
+  {
+    "name": "Hugo Boss In Motion IV",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Intense, Seductive, Warm",
+    "description": "Aroma rempah dan oriental yang intens dengan sentuhan woody, menciptakan kesan hangat dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura intensitas dan kehangatan yang sensual.",
+    "value": "hugo-boss-in-motion-iv"
+  },
+  {
+    "name": "Hugo Boss Now",
+    "category": "Pria",
+    "notes": "Aromatic, Mint, Woody",
+    "personality": "Fresh, Modern, Confident",
+    "description": "Aroma aromatik dan mint yang segar dengan sentuhan woody, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan kepercayaan diri yang modern.",
+    "value": "hugo-boss-now"
+  },
+  {
+    "name": "Hugo Boss Orange Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Fruity",
+    "personality": "Casual, Optimistic, Energetic",
+    "description": "Aroma rempah dan woody yang kasual dengan sentuhan buah, cocok untuk pria yang optimis dan bersemangat.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura optimisme dan energi yang positif.",
+    "value": "hugo-boss-orange-man"
+  },
+  {
+    "name": "Hugo Boss Pure",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Citrus",
+    "personality": "Clean, Fresh, Simple",
+    "description": "Aroma aquatic dan woody yang bersih dengan sentuhan citrus, memberikan kesan murni dan sederhana.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kebersihan dan kesegaran yang murni.",
+    "value": "hugo-boss-pure"
+  },
+  {
+    "name": "Hugo Boss Red Man",
+    "category": "Pria",
+    "notes": "Spicy, Fruity, Woody",
+    "personality": "Bold, Energetic, Passionate",
+    "description": "Aroma rempah dan buah yang berani dengan sentuhan woody, cocok untuk pria yang penuh gairah dan bersemangat.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura keberanian dan gairah yang intens.",
+    "value": "hugo-boss-red-man"
+  },
+  {
+    "name": "Hugo Boss Selection",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Elegant, Sophisticated, Confident",
+    "description": "Aroma rempah dan aromatik yang elegan dengan sentuhan woody, cocok untuk pria yang canggih dan penuh percaya diri.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kecanggihan yang berkelas.",
+    "value": "hugo-boss-selection"
+  },
+  {
+    "name": "Hugo Boss Soul",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Mysterious, Seductive, Deep",
+    "description": "Aroma rempah dan oriental yang misterius dengan sentuhan woody, menciptakan kesan sensual dan mendalam.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "hugo-boss-soul"
+  },
+  {
+    "name": "Hugo Boss Strong",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Spicy",
+    "personality": "Powerful, Strong, Confident",
+    "description": "Aroma woody dan aromatik yang kuat dengan sentuhan rempah, cocok untuk pria yang berkuasa dan penuh percaya diri.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura kekuatan dan wibawa yang kokoh.",
+    "value": "hugo-boss-strong"
+  },
+  {
+    "name": "Hugo Boss The Scent For Him Magnetic",
+    "category": "Pria",
+    "notes": "Fruity, Ambery, Woody",
+    "personality": "Magnetic, Seductive, Intense",
+    "description": "Aroma buah dan ambery yang memikat dengan sentuhan woody, menciptakan daya tarik yang intens dan tak tertahankan.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura magnetisme dan daya pikat yang kuat.",
+    "value": "hugo-boss-the-scent-for-him-magnetic"
+  },
+  {
+    "name": "Hugo Boss The Scent Intense Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Leather",
+    "personality": "Intense, Seductive, Masculine",
+    "description": "Aroma rempah dan woody yang intens dengan sentuhan kulit, cocok untuk pria yang menggoda dan maskulin.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura intensitas dan daya pikat yang sensual.",
+    "value": "hugo-boss-the-scent-intense-man"
+  },
+  {
+    "name": "Hugo Boss The Scent Man",
+    "category": "Pria",
+    "notes": "Spicy, Fruity, Leather",
+    "personality": "Charming, Confident, Seductive",
+    "description": "Aroma rempah dan buah yang menawan dengan sentuhan kulit, cocok untuk pria yang penuh pesona dan percaya diri.",
+    "idealFor": "Sehari-hari, kencan.",
+    "enhances": "Dapat memancarkan aura pesona dan daya pikat yang kuat.",
+    "value": "hugo-boss-the-scent-man"
+  },
+  {
+    "name": "Hugo Boss The Scent Prive Accord",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Cacao",
+    "personality": "Luxurious, Mysterious, Confident",
+    "description": "Aroma rempah dan oriental yang mewah dengan sentuhan cacao, menciptakan kesan misterius dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura kemewahan dan misteri yang eksklusif.",
+    "value": "hugo-boss-the-scent-prive-accord"
+  },
+  {
+    "name": "Hugo Boss Urban Journey 2018",
+    "category": "Pria",
+    "notes": "Citrus, Woody, Aquatic",
+    "personality": "Urban, Adventurous, Modern",
+    "description": "Aroma citrus dan woody yang modern dengan sentuhan aquatic, cocok untuk pria urban yang suka berpetualang.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura petualangan dan modernitas yang segar.",
+    "value": "hugo-boss-urban-journey-2018"
+  },
+  {
+    "name": "Hugo Boss Xy For Him",
+    "category": "Pria",
+    "notes": "Green, Aromatic, Woody",
+    "personality": "Modern, Fresh, Simple",
+    "description": "Aroma hijau dan aromatik yang modern dengan sentuhan woody, memberikan kesan segar dan sederhana.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura modernitas dan kesederhanaan yang segar.",
+    "value": "hugo-boss-xy-for-him"
+  },
+  {
+    "name": "Ice Mint",
+    "category": "Pria",
+    "notes": "Mint, Citrus, Woody",
+    "personality": "Cool, Fresh, Invigorating",
+    "description": "Aroma mint dan citrus yang sejuk dengan sentuhan woody, memberikan kesan segar dan membangkitkan semangat.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang dingin.",
+    "value": "ice-mint"
+  },
+  {
+    "name": "Iron Man Pure Sport",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Sporty, Strong, Energetic",
+    "description": "Aroma citrus dan aromatik yang kuat dengan sentuhan woody, cocok untuk pria yang sporty dan bersemangat.",
+    "idealFor": "Olahraga, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kekuatan dan energi yang murni.",
+    "value": "iron-man-pure-sport"
+  },
+  {
+    "name": "Issey Miyake Man",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Fresh, Calm, Timeless",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan woody, memberikan kesan tenang dan abadi.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang abadi.",
+    "value": "issey-miyake-man"
+  },
+  {
+    "name": "Issey Miyake Fusion D'issey",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Mineral",
+    "personality": "Intense, Modern, Unique",
+    "description": "Aroma rempah dan woody yang intens dengan sentuhan mineral, menciptakan kesan modern dan unik.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura intensitas dan keunikan yang modern.",
+    "value": "issey-miyake-fusion-dissey"
+  },
+  {
+    "name": "Issey Miyake L'Eau Bleu Man",
+    "category": "Pria",
+    "notes": "Green, Aromatic, Woody",
+    "personality": "Natural, Fresh, Mysterious",
+    "description": "Aroma hijau dan aromatik yang alami dengan sentuhan woody, memberikan kesan segar dan misterius.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura alami dan misteri yang menenangkan.",
+    "value": "issey-miyake-leau-bleu-man"
+  },
+  {
+    "name": "Issey Miyake L'Eau De Issey Pour Homme",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Fresh, Clean, Classic",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan woody, ikonik dalam kebersihan dan kesegarannya.",
+    "idealFor": "Sehari-hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan kemurnian yang abadi.",
+    "value": "issey-miyake-leau-de-issey-pour-homme"
+  },
+{
+    "name": "Joop! Homme",
+    "category": "Pria",
+    "notes": "Spicy, Sweet, Oriental",
+    "personality": "Bold, Seductive, Unique",
+    "description": "Aroma rempah dan manis yang berani dengan sentuhan oriental, cocok untuk pria yang menggoda dan unik.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura keberanian dan daya pikat yang tak terlupakan.",
+    "value": "joop-homme"
+  },
+  {
+    "name": "JPG 2 Gaultier",
+    "category": "Pria",
+    "notes": "Amber, Vanilla, Musky",
+    "personality": "Sensual, Warm, Bold",
+    "description": "Aroma amber dan vanila yang sensual dengan sentuhan musk, cocok untuk pria dan wanita yang berani.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura kehangatan dan daya pikat yang kuat.",
+    "value": "jpg-2-gaultier"
+  },
+  {
+    "name": "JPG Le Male Elixir For Man",
+    "category": "Pria",
+    "notes": "Vanilla, Lavender, Spicy",
+    "personality": "Intense, Seductive, Luxurious",
+    "description": "Aroma vanila dan lavender yang intens dengan sentuhan rempah, menciptakan kesan mewah dan menggoda.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura intensitas dan daya pikat yang sensual.",
+    "value": "jpg-le-male-elixir-for-man"
+  },
+  {
+    "name": "JPG Le Male Essence Man",
+    "category": "Pria",
+    "notes": "Woody, Spicy, Leather",
+    "personality": "Modern, Intense, Masculine",
+    "description": "Aroma woody dan rempah yang modern dengan sentuhan kulit, cocok untuk pria yang maskulin dan intens.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura modernitas dan maskulinitas yang kuat.",
+    "value": "jpg-le-male-essence-man"
+  },
+  {
+    "name": "JPG Le Male Summer 2010",
+    "category": "Pria",
+    "notes": "Mint, Lavender, Woody",
+    "personality": "Fresh, Casual, Lively",
+    "description": "Aroma mint dan lavender yang segar dengan sentuhan woody, cocok untuk suasana musim panas yang ceria.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan keceriaan yang hidup.",
+    "value": "jpg-le-male-summer-2010"
+  },
+  {
+    "name": "JPG Le Male",
+    "category": "Pria",
+    "notes": "Vanilla, Lavender, Mint",
+    "personality": "Classic, Confident, Playful",
+    "description": "Aroma vanila dan lavender yang klasik dengan sentuhan mint, ikonik dalam kepercayaan diri dan kesan bermainnya.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura kepercayaan diri dan pesona yang abadi.",
+    "value": "jpg-le-male"
+  },
+  {
+    "name": "JPG Scandal Pour Homme",
+    "category": "Pria",
+    "notes": "Caramel, Tonka Bean, Vetiver",
+    "personality": "Bold, Seductive, Powerful",
+    "description": "Aroma karamel dan tonka bean yang berani dengan sentuhan vetiver, menciptakan skandal yang menggoda dan kuat.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura keberanian dan daya pikat yang provokatif.",
+    "value": "jpg-scandal-pour-homme"
+  },
+  {
+    "name": "JPG Ultra Male",
+    "category": "Pria",
+    "notes": "Fruity, Vanilla, Spicy",
+    "personality": "Intense, Seductive, Sweet",
+    "description": "Aroma buah dan vanila yang intens dengan sentuhan rempah, cocok untuk pria yang menggoda dan manis.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura intensitas dan daya pikat yang kuat.",
+    "value": "jpg-ultra-male"
+  },
+  {
+    "name": "Kenzo Pour Homme",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Spicy",
+    "personality": "Natural, Calm, Sophisticated",
+    "description": "Aroma aquatic dan woody yang alami dengan sentuhan rempah, memberikan kesan tenang dan canggih.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura ketenangan dan keanggunan yang alami.",
+    "value": "kenzo-pour-homme"
+  },
+  {
+    "name": "Kenzo L'Eau 2 Kenzo Pour Homme",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Fresh, Energetic, Light",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan woody, memberikan kesan ringan dan bersemangat.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan energi yang cerah.",
+    "value": "kenzo-leau-2-kenzo-pour-homme"
+  },
+  {
+    "name": "Kenzo L'Eaupar Man",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Mint",
+    "personality": "Clean, Fresh, Pure",
+    "description": "Aroma citrus dan aquatic yang bersih dengan sentuhan mint, memberikan kesan murni dan segar.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kebersihan dan kesegaran yang murni.",
+    "value": "kenzo-leaupar-man"
+  },
+  {
+    "name": "Kenzo Homme 2010",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Marine",
+    "personality": "Classic, Masculine, Modern",
+    "description": "Aroma rempah dan woody yang klasik dengan sentuhan marine, cocok untuk pria yang maskulin dan modern.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura maskulin dan modernitas yang kuat.",
+    "value": "kenzo-homme-2010"
+  },
+  {
+    "name": "Kopiku",
+    "category": "Pria",
+    "notes": "Coffee, Spicy, Gourmand",
+    "personality": "Warm, Comforting, Unique",
+    "description": "Aroma kopi dan rempah yang hangat dengan sentuhan gourmand, memberikan kesan nyaman dan unik.",
+    "idealFor": "Sehari-hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura kehangatan dan kenyamanan yang unik.",
+    "value": "kopiku"
+  },
+  {
+    "name": "Lacoste Challenge",
+    "category": "Pria",
+    "notes": "Citrus, Ginger, Woody",
+    "personality": "Energetic, Confident, Dynamic",
+    "description": "Aroma citrus dan jahe yang energik dengan sentuhan woody, cocok untuk pria yang penuh tantangan dan percaya diri.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura energi dan kepercayaan diri yang kuat.",
+    "value": "lacoste-challenge"
+  },
+  {
+    "name": "Lacoste Cool Play",
+    "category": "Pria",
+    "notes": "Fruity, Woody, Musky",
+    "personality": "Casual, Playful, Fresh",
+    "description": "Aroma buah dan woody yang kasual dengan sentuhan musk, cocok untuk pria yang santai dan suka bermain.",
+    "idealFor": "Siang hari, santai.",
+    "enhances": "Dapat memancarkan aura keceriaan dan kesegaran yang menyenangkan.",
+    "value": "lacoste-cool-play"
+  },
+  {
+    "name": "Lacoste Elegance Man",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Elegant, Sophisticated, Refined",
+    "description": "Aroma rempah dan aromatik yang elegan dengan sentuhan woody, cocok untuk pria yang berkelas dan canggih.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kehalusan yang berkelas.",
+    "value": "lacoste-elegance-man"
+  },
+  {
+    "name": "Lacoste Essential",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Fresh, Casual, Timeless",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan woody, memberikan kesan kasual dan abadi.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang abadi.",
+    "value": "lacoste-essential"
+  },
+  {
+    "name": "Lacoste Essential Sport",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Spicy",
+    "personality": "Sporty, Energetic, Dynamic",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan rempah, cocok untuk pria yang sporty dan dinamis.",
+    "idealFor": "Olahraga, siang hari.",
+    "enhances": "Dapat memancarkan aura semangat dan dinamisme yang sporty.",
+    "value": "lacoste-essential-sport"
+  },
+  {
+    "name": "Lacoste Hot Play",
+    "category": "Pria",
+    "notes": "Fruity, Spicy, Woody",
+    "personality": "Energetic, Seductive, Bold",
+    "description": "Aroma buah dan rempah yang energik dengan sentuhan woody, cocok untuk pria yang berani dan menggoda.",
+    "idealFor": "Malam hari, pesta.",
+    "enhances": "Dapat memancarkan aura energi dan daya pikat yang kuat.",
+    "value": "lacoste-hot-play"
+  },
+  {
+    "name": "Lacoste L.12.12 Green",
+    "category": "Pria",
+    "notes": "Green, Aromatic, Woody",
+    "personality": "Natural, Fresh, Calm",
+    "description": "Aroma hijau dan aromatik yang alami dengan sentuhan woody, memberikan kesan segar dan tenang.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura alami dan ketenangan yang damai.",
+    "value": "lacoste-l12-green"
+  },
+  {
+    "name": "Lacoste L.12.12 Noir",
+    "category": "Pria",
+    "notes": "Chocolate, Woody, Spicy",
+    "personality": "Mysterious, Intense, Seductive",
+    "description": "Aroma cokelat dan woody yang misterius dengan sentuhan rempah, menciptakan kesan intens dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "lacoste-l12-noir"
+  },
+  {
+    "name": "Lacoste Magnetic Man",
+    "category": "Pria",
+    "notes": "Spicy, Aquatic, Woody",
+    "personality": "Magnetic, Seductive, Confident",
+    "description": "Aroma rempah dan aquatic yang memikat dengan sentuhan woody, cocok untuk pria yang penuh percaya diri.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura magnetisme dan daya pikat yang kuat.",
+    "value": "lacoste-magnetic-man"
+  },
+  {
+    "name": "Lacoste Match Point Man",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Sporty, Fresh, Confident",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan woody, cocok untuk pria yang sporty dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura semangat dan kepercayaan diri yang kuat.",
+    "value": "lacoste-match-point-man"
+  },
+  {
+    "name": "Lamborghini",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Leather",
+    "personality": "Luxurious, Bold, Powerful",
+    "description": "Aroma rempah dan woody yang mewah dengan sentuhan kulit, cocok untuk pria yang berani dan berkuasa.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura kemewahan dan kekuatan yang tak tertandingi.",
+    "value": "lamborghini"
+  },
+  {
+    "name": "Lancome Miracle Man",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Fresh, Confident, Modern",
+    "description": "Aroma rempah dan aromatik yang segar dengan sentuhan woody, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan kepercayaan diri yang positif.",
+    "value": "lancome-miracle-man"
+  },
+  {
+    "name": "Lattafa Asad EDP 2021",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Vanilla",
+    "personality": "Intense, Mysterious, Seductive",
+    "description": "Aroma rempah dan oriental yang intens dengan sentuhan vanila, menciptakan kesan misterius dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura intensitas dan daya pikat yang kuat.",
+    "value": "lattafa-asad-edp-2021"
+  },
+  {
+    "name": "Lionel Messi Man",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Sporty, Fresh, Determined",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan woody, cocok untuk pria yang sporty dan gigih.",
+    "idealFor": "Olahraga, sehari-hari.",
+    "enhances": "Dapat memancarkan aura semangat dan tekad yang kuat.",
+    "value": "lionel-messi-man"
+  },
+{
+    "name": "Loewe Man",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Classic, Elegant, Sophisticated",
+    "description": "Aroma citrus dan aromatik yang klasik dengan sentuhan kayu, memberikan kesan elegan dan canggih.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kepercayaan diri yang abadi.",
+    "value": "loewe-man"
+  },
+  {
+    "name": "Loewe Solo Absoluto",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Intense, Mysterious, Warm",
+    "description": "Aroma rempah dan kayu yang intens dengan sentuhan oriental, menciptakan kesan misterius dan hangat.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura intensitas dan misteri yang mendalam.",
+    "value": "loewe-solo-absoluto"
+  },
+  {
+    "name": "Loewe Solo Intense",
+    "category": "Pria",
+    "notes": "Spicy, Fruity, Woody",
+    "personality": "Bold, Powerful, Unique",
+    "description": "Aroma rempah dan buah yang berani dengan sentuhan kayu, cocok untuk pria yang kuat dan unik.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura keberanian dan kekuatan yang tak tertandingi.",
+    "value": "loewe-solo-intense"
+  },
+  {
+    "name": "Louis Vuitton Orage Man",
+    "category": "Pria",
+    "notes": "Patchouli, Iris, Woody",
+    "personality": "Sophisticated, Earthy, Elegant",
+    "description": "Aroma patchouli dan iris yang canggih dengan sentuhan kayu, memberikan kesan berkelas dan alami.",
+    "idealFor": "Acara formal, malam hari.",
+    "enhances": "Dapat memancarkan aura kecanggihan dan keanggunan yang mewah.",
+    "value": "louis-vuitton-orage-man"
+  },
+  {
+    "name": "Maison Margiela Jazz Club Man",
+    "category": "Pria",
+    "notes": "Tobacco, Rum, Vanilla",
+    "personality": "Sensual, Mysterious, Warm",
+    "description": "Aroma tembakau dan rum yang sensual dengan sentuhan vanila, cocok untuk suasana bar jazz yang hangat dan misterius.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "maison-margiela-jazz-club-man"
+  },
+  {
+    "name": "Manchester United",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Sporty, Confident, Dynamic",
+    "description": "Aroma citrus dan aromatik yang sporty dengan sentuhan kayu, cocok untuk penggemar sepak bola yang penuh semangat.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura semangat dan dinamisme yang kuat.",
+    "value": "manchester-united"
+  },
+  {
+    "name": "Mercedes Benz Club Black Man",
+    "category": "Pria",
+    "notes": "Incense, Woody, Vanilla",
+    "personality": "Luxurious, Mysterious, Intense",
+    "description": "Aroma incense dan woody yang mewah dengan sentuhan vanila, menciptakan kesan misterius dan intens.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura kemewahan dan misteri yang mendalam.",
+    "value": "mercedes-benz-club-black-man"
+  },
+  {
+    "name": "Mercedes Sign",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Elegant, Modern, Confident",
+    "description": "Aroma rempah dan aromatik yang elegan dengan sentuhan kayu, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kepercayaan diri yang berkelas.",
+    "value": "mercedes-sign"
+  },
+  {
+    "name": "Mercedes Benz Cologne Man",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Musky",
+    "personality": "Fresh, Clean, Casual",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan musk, memberikan kesan bersih dan kasual.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan kebersihan yang murni.",
+    "value": "mercedes-benz-cologne-man"
+  },
+  {
+    "name": "Mercedes Benz Sport Man",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Sporty, Energetic, Dynamic",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan kayu, cocok untuk pria yang sporty dan dinamis.",
+    "idealFor": "Olahraga, siang hari.",
+    "enhances": "Dapat memancarkan aura semangat dan dinamisme yang sporty.",
+    "value": "mercedes-benz-sport-man"
+  },
+  {
+    "name": "Mission Pour Homme",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Aromatic",
+    "personality": "Confident, Focused, Determined",
+    "description": "Aroma rempah dan woody yang kuat dengan sentuhan aromatik, cocok untuk pria yang berfokus dan bertekad.",
+    "idealFor": "Kantor, acara penting.",
+    "enhances": "Dapat memancarkan aura kepercayaan diri dan tekad yang kuat.",
+    "value": "mission-pour-homme"
+  },
+  {
+    "name": "Montblanc Emblem",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Elegant, Confident, Modern",
+    "description": "Aroma rempah dan aromatik yang elegan dengan sentuhan kayu, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kepercayaan diri yang modern.",
+    "value": "mont-blanc-emblem"
+  },
+  {
+    "name": "Montblanc Explorer",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Leather",
+    "personality": "Adventurous, Confident, Modern",
+    "description": "Aroma woody aromatik dengan sentuhan kulit, cocok untuk pria yang suka berpetualang dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura petualangan dan keberanian yang modern.",
+    "value": "mont-blanc-explorer"
+  },
+  {
+    "name": "Montblanc Individual Man",
+    "category": "Pria",
+    "notes": "Fruity, Vanilla, Musky",
+    "personality": "Unique, Casual, Confident",
+    "description": "Aroma buah dan vanila yang unik dengan sentuhan musk, cocok untuk pria yang kasual dan percaya diri.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura keunikan dan kepercayaan diri yang positif.",
+    "value": "mont-blanc-individual-man"
+  },
+  {
+    "name": "Montblanc Legend",
+    "category": "Pria",
+    "notes": "Aromatic, Fruity, Woody",
+    "personality": "Classic, Confident, Timeless",
+    "description": "Aroma aromatik dan buah yang klasik dengan sentuhan kayu, ikonik dalam kepercayaan diri dan kesan abadinya.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura kepercayaan diri dan keanggunan yang abadi.",
+    "value": "mont-blanc-legend"
+  },
+  {
+    "name": "Montblanc Legend Man",
+    "category": "Pria",
+    "notes": "Aromatic, Spicy, Woody",
+    "personality": "Classic, Masculine, Refined",
+    "description": "Aroma aromatik dan rempah yang klasik dengan sentuhan kayu, cocok untuk pria yang maskulin dan berkelas.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura maskulin dan kehalusan yang abadi.",
+    "value": "mont-blanc-legend-man"
+  },
+  {
+    "name": "Montblanc Legend Night",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Mysterious, Seductive, Elegant",
+    "description": "Aroma rempah dan aromatik yang misterius dengan sentuhan kayu, cocok untuk malam hari yang elegan dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "mont-blanc-legend-night"
+  },
+  {
+    "name": "Montblanc Legend Red",
+    "category": "Pria",
+    "notes": "Fruity, Spicy, Woody",
+    "personality": "Bold, Energetic, Passionate",
+    "description": "Aroma buah dan rempah yang berani dengan sentuhan kayu, cocok untuk pria yang bersemangat dan penuh gairah.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura keberanian dan gairah yang intens.",
+    "value": "mont-blanc-legend-red"
+  },
+  {
+    "name": "Montblanc Legend Spirit",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Citrus",
+    "personality": "Fresh, Casual, Free",
+    "description": "Aroma aquatic dan woody yang segar dengan sentuhan citrus, memberikan kesan bebas dan kasual.",
+    "idealFor": "Sehari-hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kebebasan dan kesegaran yang menyegarkan.",
+    "value": "mont-blanc-legend-spirit"
+  },
+  {
+    "name": "Montblanc Starwalker",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Aromatic",
+    "personality": "Modern, Confident, Sophisticated",
+    "description": "Aroma rempah dan woody yang modern dengan sentuhan aromatik, cocok untuk pria yang canggih dan penuh percaya diri.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura modernitas dan kecanggihan yang elegan.",
+    "value": "mont-blanc-starwalker"
+  },
+  {
+    "name": "Montblanc Explorer Platinum",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Aquatic",
+    "personality": "Adventurous, Fresh, Elegant",
+    "description": "Aroma woody aromatik yang segar dengan sentuhan aquatic, cocok untuk pria yang suka berpetualang dan elegan.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura petualangan dan keanggunan yang segar.",
+    "value": "montblanc-explorer-platinum"
+  },
+  {
+    "name": "Moschino Toy Boy Man",
+    "category": "Pria",
+    "notes": "Floral, Spicy, Woody",
+    "personality": "Playful, Unique, Modern",
+    "description": "Aroma floral dan rempah yang unik dengan sentuhan kayu, cocok untuk pria yang modern dan suka bermain.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura keunikan dan keceriaan yang modern.",
+    "value": "moschino-toy-boy-man"
+  },
+{
+    "name": "Mr Burberry Element For Man",
+    "category": "Pria",
+    "notes": "Woody, Spicy, Mineral",
+    "personality": "Natural, Confident, Modern",
+    "description": "Aroma woody dan rempah alami dengan sentuhan mineral, cocok untuk pria modern yang percaya diri.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura kepercayaan diri dan keunikan yang modern.",
+    "value": "mr-burberry-element-for-man"
+  },
+  {
+    "name": "Nautica Ocean",
+    "category": "Pria",
+    "notes": "Aquatic, Salty, Woody",
+    "personality": "Fresh, Free, Adventurous",
+    "description": "Aroma aquatic dan salty yang segar dengan sentuhan kayu, memberikan kesan bebas dan berpetualang di lautan.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kebebasan dan semangat petualangan yang tak terbatas.",
+    "value": "nautica-ocean"
+  },
+  {
+    "name": "Oriflame Ascendant Masculine",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Strong, Confident, Powerful",
+    "description": "Aroma rempah dan oriental yang kuat dengan sentuhan woody, cocok untuk pria yang dominan dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura kekuatan dan wibawa yang maskulin.",
+    "value": "oriflame-ascendant-masculine"
+  },
+  {
+    "name": "Oriflame Giordani Gold Masculine",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Elegant, Sophisticated, Timeless",
+    "description": "Aroma citrus dan aromatik yang elegan dengan sentuhan woody, memberikan kesan canggih dan abadi.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kecanggihan yang tak lekang oleh waktu.",
+    "value": "oriflame-giordani-gold-masculine"
+  },
+  {
+    "name": "Oriflame Glacier Air Masculine",
+    "category": "Pria",
+    "notes": "Mint, Aquatic, Woody",
+    "personality": "Cool, Fresh, Invigorating",
+    "description": "Aroma mint dan aquatic yang sejuk dengan sentuhan woody, memberikan kesan segar dan membangkitkan semangat.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang dingin.",
+    "value": "oriflame-glacier-air-masculine"
+  },
+  {
+    "name": "Oriflame Nordic Waters Masculine",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Spicy",
+    "personality": "Fresh, Calm, Adventurous",
+    "description": "Aroma aquatic dan woody yang segar dengan sentuhan rempah, cocok untuk pria yang tenang dan suka berpetualang.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura ketenangan dan semangat petualangan yang segar.",
+    "value": "oriflame-nordic-waters-masculine"
+  },
+  {
+    "name": "Oriflame Signature Generation Masculine",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Leather",
+    "personality": "Modern, Confident, Unique",
+    "description": "Aroma rempah dan aromatik yang modern dengan sentuhan kulit, cocok untuk pria yang percaya diri dan unik.",
+    "idealFor": "Kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura modernitas dan keunikan yang kuat.",
+    "value": "oriflame-signature-generation-masculine"
+  },
+  {
+    "name": "Paco D'Amour Man",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Romantic, Seductive, Warm",
+    "description": "Aroma rempah dan oriental yang romantis dengan sentuhan woody, menciptakan kesan hangat dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura romantis dan daya pikat yang sensual.",
+    "value": "paco-damour-man"
+  },
+  {
+    "name": "Paco Rabanne Invictus",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Aromatic",
+    "personality": "Victorious, Confident, Fresh",
+    "description": "Aroma aquatic dan woody yang segar dengan sentuhan aromatik, mencerminkan semangat seorang pemenang yang tak terkalahkan.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura kemenangan dan kepercayaan diri yang kuat.",
+    "value": "paco-rabanne-invictus"
+  },
+  {
+    "name": "Paco Rabanne Invictus Aqua",
+    "category": "Pria",
+    "notes": "Aquatic, Woody, Citrus",
+    "personality": "Fresh, Energetic, Bold",
+    "description": "Aroma aquatic dan woody yang segar dengan sentuhan citrus, cocok untuk pria yang berani dan bersemangat.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan keberanian yang cerah.",
+    "value": "paco-rabanne-invictus-aqua"
+  },
+  {
+    "name": "Paco Rabanne Invictus Legend",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Salty",
+    "personality": "Legendary, Intense, Confident",
+    "description": "Aroma rempah dan woody yang intens dengan sentuhan salty, menciptakan kesan legendaris dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura keunggulan dan intensitas yang tak tertandingi.",
+    "value": "paco-rabanne-invictus-legend"
+  },
+  {
+    "name": "Paco Rabanne Invictus Parfum",
+    "category": "Pria",
+    "notes": "Spicy, Amber, Woody",
+    "personality": "Intense, Luxurious, Seductive",
+    "description": "Aroma rempah dan amber yang intens dengan sentuhan woody, cocok untuk pria yang mewah dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura intensitas dan kemewahan yang memikat.",
+    "value": "paco-rabanne-invictus-parfum"
+  },
+  {
+    "name": "Paco Rabanne Invictus Victory 2021",
+    "category": "Pria",
+    "notes": "Vanilla, Spicy, Oriental",
+    "personality": "Victorious, Bold, Energetic",
+    "description": "Aroma vanila dan rempah yang berani dengan sentuhan oriental, merayakan kemenangan dengan energi tak terbatas.",
+    "idealFor": "Malam hari, pesta.",
+    "enhances": "Dapat memancarkan aura kemenangan dan energi yang tak terkendali.",
+    "value": "paco-rabanne-invictus-victory-2021"
+  },
+  {
+    "name": "Paco Rabanne Invictus Victory Elixir",
+    "category": "Pria",
+    "notes": "Spicy, Vanilla, Woody",
+    "personality": "Powerful, Seductive, Intense",
+    "description": "Aroma rempah dan vanila yang kuat dengan sentuhan woody, menciptakan daya tarik yang intens dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura kekuatan dan daya pikat yang sensual.",
+    "value": "paco-rabanne-invictus-victory-elixir"
+  },
+  {
+    "name": "Paco Rabanne Million Dollar Man",
+    "category": "Pria",
+    "notes": "Spicy, Leather, Woody",
+    "personality": "Luxurious, Confident, Ambitious",
+    "description": "Aroma rempah dan kulit yang mewah dengan sentuhan woody, cocok untuk pria yang ambisius dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura kemewahan dan kesuksesan yang kuat.",
+    "value": "paco-rabanne-million-dollar-man"
+  },
+  {
+    "name": "Paco Rabanne One Million",
+    "category": "Pria",
+    "notes": "Spicy, Cinnamon, Leather",
+    "personality": "Bold, Seductive, Confident",
+    "description": "Aroma rempah dan kayu manis yang berani dengan sentuhan kulit, ikonik dalam daya pikat dan kepercayaan dirinya.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura keberanian dan daya pikat yang tak terlupakan.",
+    "value": "paco-rabanne-one-million"
+  },
+  {
+    "name": "Paco Rabanne One Million Lucky",
+    "category": "Pria",
+    "notes": "Fruity, Woody, Honey",
+    "personality": "Joyful, Optimistic, Playful",
+    "description": "Aroma buah dan woody yang ceria dengan sentuhan madu, cocok untuk pria yang optimis dan suka bermain.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura keceriaan dan keberuntungan yang positif.",
+    "value": "paco-rabanne-one-million-lucky"
+  },
+  {
+    "name": "Paco Rabanne One Million Prive",
+    "category": "Pria",
+    "notes": "Tobacco, Myrrh, Cinnamon",
+    "personality": "Mysterious, Seductive, Warm",
+    "description": "Aroma tembakau dan myrrh yang misterius dengan sentuhan kayu manis, menciptakan kesan hangat dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang mendalam.",
+    "value": "paco-rabanne-one-million-prive"
+  },
+  {
+    "name": "Paco Rabanne Phantom Man",
+    "category": "Pria",
+    "notes": "Lavender, Citrus, Vanilla",
+    "personality": "Modern, Futuristic, Energetic",
+    "description": "Aroma lavender dan citrus yang modern dengan sentuhan vanila, cocok untuk pria yang bersemangat dan futuristik.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura modernitas dan energi yang unik.",
+    "value": "paco-rabanne-phantom-man"
+  },
+  {
+    "name": "Paco Rabanne Pure XS Man",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Vanilla",
+    "personality": "Seductive, Bold, Intense",
+    "description": "Aroma rempah dan oriental yang sensual dengan sentuhan vanila, cocok untuk pria yang berani dan intens.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura daya pikat dan intensitas yang kuat.",
+    "value": "paco-rabanne-pure-xs-man"
+  },
+  {
+    "name": "Paco Rabanne Ultraviolet Man",
+    "category": "Pria",
+    "notes": "Spicy, Amber, Mint",
+    "personality": "Modern, Unique, Mysterious",
+    "description": "Aroma rempah dan amber yang modern dengan sentuhan mint, memberikan kesan unik dan misterius.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura keunikan dan misteri yang modern.",
+    "value": "paco-rabanne-ultraviolet-man"
+  },
+  {
+    "name": "Paco Rabanne Pure XS By Night",
+    "category": "Pria",
+    "notes": "Ginger, Vanilla, Leather",
+    "personality": "Seductive, Mysterious, Intense",
+    "description": "Aroma jahe dan vanila yang sensual dengan sentuhan kulit, menciptakan kesan misterius dan intens.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "paco-rabanne-pure-xs-by-night"
+  },
+{
+    "name": "Paris Hilton Just Me Man",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Fresh, Casual, Energetic",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan woody, cocok untuk pria yang kasual dan bersemangat.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan energi yang cerah.",
+    "value": "paris-hilton-just-me-man"
+  },
+  {
+    "name": "Pheromone 1 Man Bvlgari Aqua Man",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Aromatic",
+    "personality": "Fresh, Masculine, Confident",
+    "description": "Aroma aquatic yang segar dengan sentuhan citrus dan aromatik, memberikan kesan maskulin dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan daya pikat yang alami.",
+    "value": "pheromone-1-man-bvlgari-aqua-man"
+  },
+  {
+    "name": "Pheromone 2 Man Davidoff Cool Water Man",
+    "category": "Pria",
+    "notes": "Aquatic, Aromatic, Woody",
+    "personality": "Fresh, Classic, Calm",
+    "description": "Aroma aquatic yang segar dengan sentuhan aromatik dan woody, memberikan kesan tenang dan klasik.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang abadi.",
+    "value": "pheromone-2-man-davidoff-cool-water-man"
+  },
+  {
+    "name": "Pheromone 3 Man Creed Aventus",
+    "category": "Pria",
+    "notes": "Fruity, Smoky, Woody",
+    "personality": "Confident, Bold, Sophisticated",
+    "description": "Aroma buah yang berani dipadukan dengan smoky dan woody, menciptakan kesan canggih dan penuh kepercayaan diri.",
+    "idealFor": "Acara spesial, kantor, malam hari.",
+    "enhances": "Dapat memancarkan aura dominasi dan kesuksesan yang kuat.",
+    "value": "pheromone-3-man-creed-aventus"
+  },
+  {
+    "name": "Pheromone 3 Man Dior Sauvage Man",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Wild, Confident, Modern",
+    "description": "Aroma rempah dan aromatik yang liar dengan sentuhan woody, memancarkan kepercayaan diri pria modern yang bebas.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura keberanian dan kepercayaan diri yang tak terkekang.",
+    "value": "pheromone-3-man-dior-sauvage-man"
+  },
+  {
+    "name": "Police The Sinner Man",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Oriental",
+    "personality": "Mysterious, Seductive, Bold",
+    "description": "Aroma rempah dan woody yang misterius dengan sentuhan oriental, menciptakan daya tarik yang menggoda dan berani.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "police-the-sinner-man"
+  },
+  {
+    "name": "Police To Be King",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Citrus",
+    "personality": "Royal, Confident, Dominant",
+    "description": "Aroma rempah dan woody yang berkelas dengan sentuhan citrus, cocok untuk pria yang dominan dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura kekuatan dan wibawa yang luar biasa.",
+    "value": "police-to-be-king"
+  },
+  {
+    "name": "Police To Be Man",
+    "category": "Pria",
+    "notes": "Spicy, Fruity, Woody",
+    "personality": "Bold, Energetic, Unique",
+    "description": "Aroma rempah dan buah yang berani dengan sentuhan woody, cocok untuk pria yang energik dan unik.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura keberanian dan keunikan yang kuat.",
+    "value": "police-to-be-man"
+  },
+  {
+    "name": "Prada Infusion D'Homme",
+    "category": "Pria",
+    "notes": "Citrus, Woody, Aromatic",
+    "personality": "Clean, Sophisticated, Elegant",
+    "description": "Aroma citrus dan woody yang bersih dengan sentuhan aromatik, memberikan kesan canggih dan elegan.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura kebersihan dan keanggunan yang berkelas.",
+    "value": "prada-infusion-dhomme"
+  },
+  {
+    "name": "Prada L'Homme",
+    "category": "Pria",
+    "notes": "Floral, Powdery, Woody",
+    "personality": "Elegant, Refined, Modern",
+    "description": "Aroma floral dan powdery yang elegan dengan sentuhan woody, cocok untuk pria yang berkelas dan modern.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kehalusan yang modern.",
+    "value": "prada-lhomme"
+  },
+  {
+    "name": "Prada L'Homme Water Splash",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Fresh, Energetic, Clean",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan woody, memberikan kesan bersih dan bersemangat.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang cerah.",
+    "value": "prada-lhomme-water-splash"
+  },
+  {
+    "name": "Ralph Lauren Polo Black",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Spicy",
+    "personality": "Modern, Confident, Mysterious",
+    "description": "Aroma woody aromatik yang modern dengan sentuhan rempah, cocok untuk pria yang misterius dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura modernitas dan misteri yang kuat.",
+    "value": "ralph-lauren-polo-black"
+  },
+  {
+    "name": "Ralph Lauren Polo Blue",
+    "category": "Pria",
+    "notes": "Aquatic, Aromatic, Citrus",
+    "personality": "Fresh, Calm, Confident",
+    "description": "Aroma aquatic dan aromatik yang segar dengan sentuhan citrus, cocok untuk pria yang tenang dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang abadi.",
+    "value": "ralph-lauren-polo-blue"
+  },
+  {
+    "name": "Ralph Lauren Polo Double Black",
+    "category": "Pria",
+    "notes": "Spicy, Fruity, Woody",
+    "personality": "Intense, Seductive, Bold",
+    "description": "Aroma rempah dan buah yang intens dengan sentuhan woody, menciptakan daya tarik yang menggoda dan berani.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura intensitas dan daya pikat yang kuat.",
+    "value": "ralph-lauren-polo-double-black"
+  },
+  {
+    "name": "Ralph Lauren Polo Explorer",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Citrus",
+    "personality": "Adventurous, Fresh, Confident",
+    "description": "Aroma rempah dan woody yang segar dengan sentuhan citrus, cocok untuk pria yang suka berpetualang dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura petualangan dan keberanian yang kuat.",
+    "value": "ralph-lauren-polo-explorer"
+  },
+  {
+    "name": "Ralph Lauren Polo Green",
+    "category": "Pria",
+    "notes": "Green, Woody, Leather",
+    "personality": "Classic, Masculine, Timeless",
+    "description": "Aroma hijau dan woody yang klasik dengan sentuhan kulit, ikonik dalam maskulinitas dan keabadiannya.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura maskulin dan wibawa yang kuat.",
+    "value": "ralph-lauren-polo-green"
+  },
+  {
+    "name": "Ralph Lauren Polo Red",
+    "category": "Pria",
+    "notes": "Spicy, Citrus, Coffee",
+    "personality": "Energetic, Bold, Dynamic",
+    "description": "Aroma rempah dan citrus yang energik dengan sentuhan kopi, cocok untuk pria yang berani dan dinamis.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura energi dan keberanian yang tak terbatas.",
+    "value": "ralph-lauren-polo-red"
+  },
+  {
+    "name": "Ralph Lauren Polo Red Rush EDT",
+    "category": "Pria",
+    "notes": "Citrus, Mint, Woody",
+    "personality": "Fresh, Energetic, Lively",
+    "description": "Aroma citrus dan mint yang segar dengan sentuhan woody, memberikan kesan bersemangat dan hidup.",
+    "idealFor": "Siang hari, olahraga.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang cerah.",
+    "value": "ralph-lauren-polo-red-rush-edt"
+  },
+  {
+    "name": "Ralph Lauren Polo Red White Blue",
+    "category": "Pria",
+    "notes": "Aquatic, Fresh, Woody",
+    "personality": "Patriotic, Fresh, Confident",
+    "description": "Aroma aquatic dan segar dengan sentuhan woody, cocok untuk pria yang percaya diri dan bersemangat.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan kepercayaan diri yang positif.",
+    "value": "ralph-lauren-polo-red-white-blue"
+  },
+  {
+    "name": "Ralph Lauren Polo Safari",
+    "category": "Pria",
+    "notes": "Green, Aromatic, Leather",
+    "personality": "Adventurous, Classic, Refined",
+    "description": "Aroma hijau dan aromatik yang klasik dengan sentuhan kulit, cocok untuk pria yang suka berpetualang dan berkelas.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura petualangan dan kehalusan yang abadi.",
+    "value": "ralph-lauren-polo-safari"
+  },
+  {
+    "name": "Ralph Lauren Polo Sport",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Mint",
+    "personality": "Sporty, Fresh, Energetic",
+    "description": "Aroma aquatic dan citrus yang segar dengan sentuhan mint, cocok untuk pria yang sporty dan bersemangat.",
+    "idealFor": "Olahraga, siang hari.",
+    "enhances": "Dapat memancarkan aura semangat dan energi yang tak terbatas.",
+    "value": "ralph-lauren-polo-sport"
+  },
+  {
+    "name": "Ralph Lauren Polo Ultra Blue",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Woody",
+    "personality": "Fresh, Clean, Intense",
+    "description": "Aroma aquatic dan citrus yang sangat segar dengan sentuhan woody, memberikan kesan bersih dan intens.",
+    "idealFor": "Siang hari, musim panas.",
+    "enhances": "Dapat memancarkan aura kesegaran dan vitalitas yang murni.",
+    "value": "ralph-lauren-polo-ultra-blue"
+  },
+  {
+    "name": "Ralph Lauren Romance Silver",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Aromatic",
+    "personality": "Romantic, Elegant, Sophisticated",
+    "description": "Aroma rempah dan woody yang romantis dengan sentuhan aromatik, cocok untuk pria yang elegan dan canggih.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura romantis dan keanggunan yang berkelas.",
+    "value": "ralph-lauren-romance-silver"
+  },
+  {
+    "name": "Roberto Cavalli Uomo",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Floral",
+    "personality": "Sensual, Seductive, Confident",
+    "description": "Aroma rempah dan oriental yang sensual dengan sentuhan floral, cocok untuk pria yang menggoda dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura daya pikat dan kepercayaan diri yang kuat.",
+    "value": "roberto-cavalli-uomo"
+  },
+{
+    "name": "Roja Dove Elysium Cologne Pour Homme Man",
+    "category": "Pria",
+    "notes": "Citrus, Fruity, Woody",
+    "personality": "Luxurious, Sophisticated, Fresh",
+    "description": "Aroma citrus dan buah yang mewah dengan sentuhan woody, memberikan kesan segar dan canggih.",
+    "idealFor": "Sehari-hari, acara formal, siang hari.",
+    "enhances": "Dapat memancarkan aura kemewahan dan keanggunan yang luar biasa.",
+    "value": "roja-dove-elysium-cologne-pour-homme-man"
+  },
+  {
+    "name": "Saint T Dupont Passenger",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Aromatic",
+    "personality": "Adventurous, Confident, Modern",
+    "description": "Aroma rempah dan woody yang modern dengan sentuhan aromatik, cocok untuk pria yang suka berpetualang dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura petualangan dan modernitas yang kuat.",
+    "value": "saint-t-dupont-passenger"
+  },
+  {
+    "name": "Salvatore Ferragamo Man",
+    "category": "Pria",
+    "notes": "Spicy, Aromatic, Woody",
+    "personality": "Elegant, Sophisticated, Confident",
+    "description": "Aroma rempah dan aromatik yang elegan dengan sentuhan woody, cocok untuk pria yang canggih dan penuh percaya diri.",
+    "idealFor": "Kantor, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kepercayaan diri yang berkelas.",
+    "value": "salvatore-ferragamo-man"
+  },
+  {
+    "name": "Salvatore Ferragamo Free Time",
+    "category": "Pria",
+    "notes": "Citrus, Aquatic, Woody",
+    "personality": "Fresh, Casual, Relaxed",
+    "description": "Aroma citrus dan aquatic yang segar dengan sentuhan woody, memberikan kesan santai dan kasual.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan ketenangan yang santai.",
+    "value": "salvatore-ferragamo-free-time"
+  },
+  {
+    "name": "Salvatore Ferragamo Uomo Urban Feel",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Aquatic",
+    "personality": "Urban, Modern, Confident",
+    "description": "Aroma rempah dan woody yang modern dengan sentuhan aquatic, cocok untuk pria urban yang penuh percaya diri.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura modernitas dan kepercayaan diri yang berkelas.",
+    "value": "salvatore-ferragamo-uomo-urban-feel"
+  },
+  {
+    "name": "Salvatore Ferragamo Intense Leather",
+    "category": "Pria",
+    "notes": "Leather, Woody, Spicy",
+    "personality": "Bold, Masculine, Luxurious",
+    "description": "Aroma kulit yang kuat dengan sentuhan woody dan rempah, cocok untuk pria yang berani dan maskulin.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura maskulin dan kemewahan yang kuat.",
+    "value": "salvatore-ferragamo-intense-leather"
+  },
+  {
+    "name": "Shawn Mendes Signature 2017",
+    "category": "Pria",
+    "notes": "Fruity, Woody, Citrus",
+    "personality": "Youthful, Fresh, Modern",
+    "description": "Aroma buah dan woody yang muda dengan sentuhan citrus, cocok untuk pria dan wanita yang modern dan segar.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura keremajaan dan kesegaran yang positif.",
+    "value": "shawn-mendes-signature-2017"
+  },
+  {
+    "name": "Swiss Army Victorinox Altitude",
+    "category": "Pria",
+    "notes": "Aromatic, Woody, Fresh",
+    "personality": "Adventurous, Confident, Natural",
+    "description": "Aroma aromatik dan woody yang alami dengan sentuhan segar, cocok untuk pria yang suka berpetualang.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura alami dan semangat petualangan yang kuat.",
+    "value": "swiss-army-victorinox-altitude"
+  },
+  {
+    "name": "Thierry Mugler Alien Man",
+    "category": "Pria",
+    "notes": "Spicy, Leather, Woody",
+    "personality": "Mysterious, Unique, Intense",
+    "description": "Aroma rempah dan kulit yang misterius dengan sentuhan woody, menciptakan kesan unik dan intens.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura misteri dan intensitas yang kuat.",
+    "value": "thierry-mugler-alien-man"
+  },
+  {
+    "name": "Thierry Mugler Angel Man",
+    "category": "Pria",
+    "notes": "Gourmand, Spicy, Coffee",
+    "personality": "Bold, Unique, Seductive",
+    "description": "Aroma gourmand dan rempah yang berani dengan sentuhan kopi, cocok untuk pria yang unik dan menggoda.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura keberanian dan daya pikat yang tak terlupakan.",
+    "value": "thierry-mugler-angel-man"
+  },
+  {
+    "name": "Tom Ford Noir",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Powdery",
+    "personality": "Elegant, Mysterious, Sophisticated",
+    "description": "Aroma rempah dan oriental yang elegan dengan sentuhan powdery, menciptakan kesan misterius dan canggih.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura misteri dan kecanggihan yang berkelas.",
+    "value": "tom-ford-noir"
+  },
+  {
+    "name": "Tom Ford Ombre Leather Parfum",
+    "category": "Pria",
+    "notes": "Leather, Woody, Spicy",
+    "personality": "Luxurious, Intense, Seductive",
+    "description": "Aroma kulit yang intens dan mewah dengan sentuhan woody dan rempah, cocok untuk pria yang menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura kemewahan dan daya pikat yang kuat.",
+    "value": "tom-ford-ombre-leather-parfum"
+  },
+  {
+    "name": "Tom Ford Oud Wood",
+    "category": "Pria",
+    "notes": "Oud, Woody, Spicy",
+    "personality": "Exotic, Luxurious, Mysterious",
+    "description": "Aroma oud dan woody yang eksotis dengan sentuhan rempah, memberikan kesan mewah dan misterius.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura misteri dan kemewahan yang eksklusif.",
+    "value": "tom-ford-oud-wood"
+  },
+  {
+    "name": "Tom Ford Tobacco Oud Man",
+    "category": "Pria",
+    "notes": "Tobacco, Oud, Spicy",
+    "personality": "Intense, Seductive, Bold",
+    "description": "Aroma tembakau dan oud yang intens dengan sentuhan rempah, menciptakan daya tarik yang menggoda dan berani.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura intensitas dan keberanian yang kuat.",
+    "value": "tom-ford-tobacco-oud-man"
+  },
+  {
+    "name": "Tom Ford Noir Extreme Parfum",
+    "category": "Pria",
+    "notes": "Spicy, Woody, Amber",
+    "personality": "Intense, Mysterious, Seductive",
+    "description": "Aroma rempah dan woody yang intens dengan sentuhan amber, cocok untuk pria yang misterius dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura misteri dan daya pikat yang kuat.",
+    "value": "tomford-noir-extreme-parfume"
+  },
+  {
+    "name": "Tommy Boy",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Green",
+    "personality": "Youthful, Fresh, Casual",
+    "description": "Aroma citrus dan aromatik yang muda dengan sentuhan hijau, memberikan kesan segar dan kasual.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura keremajaan dan kesegaran yang positif.",
+    "value": "tommy-boy"
+  },
+  {
+    "name": "Tommy Hilfiger Loud For Him",
+    "category": "Pria",
+    "notes": "Spicy, Rose, Patchouli",
+    "personality": "Bold, Energetic, Unique",
+    "description": "Aroma rempah dan mawar yang berani dengan sentuhan patchouli, cocok untuk pria yang energik dan unik.",
+    "idealFor": "Pesta, malam hari.",
+    "enhances": "Dapat memancarkan aura keberanian dan energi yang tak terkendali.",
+    "value": "tommy-hilfiger-loud-for-him"
+  },
+  {
+    "name": "Tommy Hilfiger Athletics",
+    "category": "Pria",
+    "notes": "Citrus, Spicy, Woody",
+    "personality": "Sporty, Fresh, Dynamic",
+    "description": "Aroma citrus dan rempah yang segar dengan sentuhan woody, cocok untuk pria yang sporty dan dinamis.",
+    "idealFor": "Olahraga, sehari-hari.",
+    "enhances": "Dapat memancarkan aura semangat dan dinamisme yang sporty.",
+    "value": "tommy-hilfiger-athletics"
+  },
+  {
+    "name": "Tommy Hilfiger Freedom Man",
+    "category": "Pria",
+    "notes": "Aromatic, Citrus, Woody",
+    "personality": "Free, Adventurous, Confident",
+    "description": "Aroma aromatik dan citrus yang bebas dengan sentuhan woody, cocok untuk pria yang suka berpetualang dan penuh percaya diri.",
+    "idealFor": "Sehari-hari, aktivitas outdoor.",
+    "enhances": "Dapat memancarkan aura kebebasan dan semangat yang kuat.",
+    "value": "tommy-hilfiger-freedom-man"
+  },
+  {
+    "name": "Tommy T",
+    "category": "Pria",
+    "notes": "Spicy, Citrus, Woody",
+    "personality": "Casual, Fresh, Modern",
+    "description": "Aroma rempah dan citrus yang kasual dengan sentuhan woody, cocok untuk pria yang modern dan santai.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan modernitas yang positif.",
+    "value": "tommy-t"
+  },
+{
+    "name": "Trussardi Uomo",
+    "category": "Pria",
+    "notes": "Leather, Woody, Aromatic",
+    "personality": "Elegant, Masculine, Sophisticated",
+    "description": "Aroma kulit dan woody yang elegan dengan sentuhan aromatik, memberikan kesan maskulin dan canggih.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura keanggunan dan kekuatan yang berkelas.",
+    "value": "trussardi-uomo"
+  },
+  {
+    "name": "Versace Blue Jeans",
+    "category": "Pria",
+    "notes": "Aromatic, Citrus, Woody",
+    "personality": "Casual, Youthful, Fresh",
+    "description": "Aroma aromatik dan citrus yang kasual dengan sentuhan woody, cocok untuk pria muda yang segar.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura keremajaan dan kesegaran yang positif.",
+    "value": "versace-blue-jeans"
+  },
+  {
+    "name": "Versace Dylan Blue",
+    "category": "Pria",
+    "notes": "Aquatic, Spicy, Woody",
+    "personality": "Powerful, Confident, Modern",
+    "description": "Aroma aquatic dan rempah yang kuat dengan sentuhan woody, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Sehari-hari, malam hari.",
+    "enhances": "Dapat memancarkan aura kekuatan dan kepercayaan diri yang tak terkalahkan.",
+    "value": "versace-dylan-blue"
+  },
+  {
+    "name": "Versace Eros Flame Men",
+    "category": "Pria",
+    "notes": "Spicy, Citrus, Woody",
+    "personality": "Passionate, Bold, Seductive",
+    "description": "Aroma rempah dan citrus yang penuh gairah dengan sentuhan woody, menciptakan daya tarik yang berani dan menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura gairah dan keberanian yang intens.",
+    "value": "versace-eros-flame-men"
+  },
+  {
+    "name": "Versace Eros Man",
+    "category": "Pria",
+    "notes": "Mint, Vanilla, Woody",
+    "personality": "Confident, Seductive, Energetic",
+    "description": "Aroma mint dan vanila yang percaya diri dengan sentuhan woody, cocok untuk pria yang menggoda dan bersemangat.",
+    "idealFor": "Malam hari, pesta.",
+    "enhances": "Dapat memancarkan aura kepercayaan diri dan daya pikat yang kuat.",
+    "value": "versace-eros-man"
+  },
+  {
+    "name": "Versace Pour Homme",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Fresh, Elegant, Timeless",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan woody, memberikan kesan elegan dan abadi.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura kesegaran dan keanggunan yang klasik.",
+    "value": "versace-pour-homme"
+  },
+  {
+    "name": "Versace Red Jeans",
+    "category": "Pria",
+    "notes": "Fruity, Floral, Musky",
+    "personality": "Playful, Youthful, Lively",
+    "description": "Aroma buah dan floral yang ceria dengan sentuhan musk, cocok untuk pria dan wanita yang muda dan bersemangat.",
+    "idealFor": "Sehari-hari, santai.",
+    "enhances": "Dapat memancarkan aura keceriaan dan energi yang hidup.",
+    "value": "versace-red-jeans"
+  },
+  {
+    "name": "Viktor & Rolf Spicebomb",
+    "category": "Pria",
+    "notes": "Spicy, Cinnamon, Tobacco",
+    "personality": "Bold, Intense, Seductive",
+    "description": "Aroma rempah dan kayu manis yang berani dengan sentuhan tembakau, menciptakan daya tarik yang intens dan menggoda.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura keberanian dan daya pikat yang kuat.",
+    "value": "viktor-rolf-spicebomb"
+  },
+  {
+    "name": "Viktor & Rolf Spicebomb Extreme",
+    "category": "Pria",
+    "notes": "Spicy, Vanilla, Tobacco",
+    "personality": "Intense, Seductive, Mysterious",
+    "description": "Aroma rempah dan vanila yang intens dengan sentuhan tembakau, cocok untuk pria yang misterius dan menggoda.",
+    "idealFor": "Malam hari, acara spesial.",
+    "enhances": "Dapat memancarkan aura intensitas dan misteri yang mendalam.",
+    "value": "viktor-rolf-spicebomb-extreme"
+  },
+  {
+    "name": "Wayne Rooney",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Sporty, Confident, Dynamic",
+    "description": "Aroma citrus dan aromatik yang sporty dengan sentuhan woody, cocok untuk pria yang penuh semangat dan percaya diri.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura semangat dan dinamisme yang kuat.",
+    "value": "wayne-rooney"
+  },
+  {
+    "name": "YSL Y EDP Intense Man",
+    "category": "Pria",
+    "notes": "Woody, Aromatic, Citrus",
+    "personality": "Intense, Confident, Modern",
+    "description": "Aroma woody aromatik yang intens dengan sentuhan citrus, cocok untuk pria modern yang penuh percaya diri.",
+    "idealFor": "Malam hari, acara formal.",
+    "enhances": "Dapat memancarkan aura intensitas dan kepercayaan diri yang kuat.",
+    "value": "ysl-y-edp-intense-man"
+  },
+  {
+    "name": "YSL Y Le Parfum 2021 For Men",
+    "category": "Pria",
+    "notes": "Woody, Spicy, Lavender",
+    "personality": "Sophisticated, Seductive, Intense",
+    "description": "Aroma woody dan rempah yang canggih dengan sentuhan lavender, menciptakan kesan sensual dan intens.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura kecanggihan dan daya pikat yang kuat.",
+    "value": "ysl-y-le-parfum-2021-for-men"
+  },
+  {
+    "name": "Zara 8.0 Man",
+    "category": "Pria",
+    "notes": "Aquatic, Citrus, Musky",
+    "personality": "Fresh, Casual, Clean",
+    "description": "Aroma aquatic dan citrus yang segar dengan sentuhan musk, memberikan kesan bersih dan kasual.",
+    "idealFor": "Sehari-hari, siang hari.",
+    "enhances": "Dapat memancarkan aura kesegaran dan kebersihan yang murni.",
+    "value": "zara-8-0-man"
+  },
+  {
+    "name": "Zara Gold Men",
+    "category": "Pria",
+    "notes": "Spicy, Oriental, Woody",
+    "personality": "Warm, Confident, Mysterious",
+    "description": "Aroma rempah dan oriental yang hangat dengan sentuhan woody, cocok untuk pria yang misterius dan penuh percaya diri.",
+    "idealFor": "Malam hari, acara non-formal.",
+    "enhances": "Dapat memancarkan aura kehangatan dan misteri yang kuat.",
+    "value": "zara-gold-men"
+  },
+  {
+    "name": "Zara Night Pour Homme II Sport",
+    "category": "Pria",
+    "notes": "Citrus, Aromatic, Woody",
+    "personality": "Fresh, Energetic, Casual",
+    "description": "Aroma citrus dan aromatik yang segar dengan sentuhan woody, cocok untuk pria yang bersemangat dan santai.",
+    "idealFor": "Sehari-hari, olahraga.",
+    "enhances": "Dapat memancarkan aura energi dan kesegaran yang positif.",
+    "value": "zara-night-pour-homme-ii-sport"
+  },
+  {
+    "name": "Zara Tobacco Collection Rich Warm Addictive",
+    "category": "Pria",
+    "notes": "Tobacco, Vanilla, Honey",
+    "personality": "Warm, Seductive, Unique",
+    "description": "Aroma tembakau dan vanila yang hangat dengan sentuhan madu, menciptakan kesan sensual dan unik.",
+    "idealFor": "Malam hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura kehangatan dan daya pikat yang kuat.",
+    "value": "zara-tobacco-collection-rich-warm-addictive"
+  },
+  {
+    "name": "Zara Tobacco Vanilla Collection Rich Warm 2021",
+    "category": "Pria",
+    "notes": "Tobacco, Vanilla, Woody",
+    "personality": "Intense, Seductive, Modern",
+    "description": "Aroma tembakau dan vanila yang intens dengan sentuhan woody, cocok untuk pria modern yang menggoda.",
+    "idealFor": "Malam hari, kencan.",
+    "enhances": "Dapat memancarkan aura intensitas dan daya pikat yang kuat.",
+    "value": "zara-tobacco-vanilla-collection-rich-warm-2021"
+  },
+  {
+    "name": "Zara Vibrant Leather",
+    "category": "Pria",
+    "notes": "Leather, Citrus, Woody",
+    "personality": "Modern, Confident, Versatile",
+    "description": "Aroma kulit yang modern dengan sentuhan citrus dan woody, cocok untuk pria yang percaya diri dan serbaguna.",
+    "idealFor": "Sehari-hari, kantor.",
+    "enhances": "Dapat memancarkan aura modernitas dan kepercayaan diri yang berkelas.",
+    "value": "zara-vibrant-leather"
+  },
+{
+    "name": "Zara White Warm For Men",
+    "category": "Pria",
+    "notes": "Spicy, Vanilla, Woody",
+    "personality": "Warm, Casual, Comforting",
+    "description": "Aroma rempah dan vanila yang hangat dengan sentuhan woody, memberikan kesan nyaman dan santai.",
+    "idealFor": "Sehari-hari, musim dingin.",
+    "enhances": "Dapat memancarkan aura kehangatan dan kenyamanan yang menenangkan.",
+    "value": "zara-white-warm-for-men"
+  }
 
-        function fetchDataFromSheets() {
-            catalogList.innerHTML = '<p id="loading-message">Memuat produk...</p>';
-            fetch(webAppUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    allProductsData = data;
-                    if (allProductsData.length === 0) {
-                        catalogList.innerHTML = '<p>Tidak ada produk yang tersedia saat ini.</p>';
-                    } else {
-                        filterProducts();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    catalogList.innerHTML = '<p>Gagal memuat produk. Cek koneksi atau URL Web App.</p>';
-                });
-        }
+            ];
 
-        function renderCatalog() {
-            catalogList.innerHTML = '';
-            if (filteredProducts.length === 0) {
-                catalogList.innerHTML = '<p>Tidak ada produk yang cocok dengan filter Anda.</p>';
-                return;
-            }
+            // Ambil data tambahan dari Local Storage
+            const storedProducts = JSON.parse(localStorage.getItem('addedProducts')) || [];
+            let allProductsData = [...initialProductsData, ...storedProducts];
+            
+            const productsPerPage = 6;
+            let filteredProducts = [];
+            let currentPage = 1;
 
-            const startIndex = (currentPage - 1) * productsPerPage;
-            const endIndex = startIndex + productsPerPage;
-            const productsToRender = filteredProducts.slice(startIndex, endIndex);
+            function renderCatalog() {
+                productGrid.innerHTML = '';
+                
+                const startIndex = (currentPage - 1) * productsPerPage;
+                const endIndex = startIndex + productsPerPage;
+                const productsToRender = filteredProducts.slice(startIndex, endIndex);
 
-            productsToRender.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <div class="product-info">
+                if (productsToRender.length === 0) {
+                    productGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: var(--color-text-dark);">Produk tidak ditemukan.</p>';
+                    paginationContainer.innerHTML = '';
+                    return;
+                }
+
+                productsToRender.forEach(product => {
+                    const card = document.createElement('div');
+                    card.classList.add('product-card');
+                    card.setAttribute('data-value', product.value);
+                    card.innerHTML = `
+                        <button class="delete-btn" data-value="${product.value}">✕</button>
                         <h3>${product.name}</h3>
                         <p><strong>Kategori:</strong> ${product.category}</p>
-                        <p><strong>Aroma Dominan:</strong> ${product.notes}</p>
-                        <p><strong>Kepribadian:</strong> ${product.personality}</p>
-                        <p class="description"><strong>Deskripsi:</strong> ${product.description}</p>
-                        <p><strong>Cocok untuk:</strong> ${product.idealFor}</p>
-                        <p><strong>Meningkatkan:</strong> ${product.enhances}</p>
-                        <p class="value" style="display:none;">${product.value}</p>
-                        <button class="delete-btn" data-value="${product.value}">Hapus</button>
-                    </div>
-                `;
-                catalogList.appendChild(productCard);
-            });
-        }
-
-        function filterProducts() {
-            const category = categoryFilter.value;
-            const aroma = aromaFilter.value;
-            const personality = personalityFilter.value;
-            const search = searchFilter.value.toLowerCase();
-
-            filteredProducts = allProductsData.filter(product => {
-                const matchesCategory = category === 'all' || product.category === category;
-                const matchesAroma = aroma === 'all' || product.notes.toLowerCase().includes(aroma.toLowerCase());
-                const matchesPersonality = personality === 'all' || product.personality.toLowerCase().includes(personality.toLowerCase());
-                const matchesSearch = product.name.toLowerCase().includes(search) || product.description.toLowerCase().includes(search);
-
-                return matchesCategory && matchesAroma && matchesPersonality && matchesSearch;
-            });
-            currentPage = 1;
-            renderCatalog();
-            setupPagination();
-        }
-
-        function setupPagination() {
-            const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
-            pageInfoSpan.textContent = `Halaman ${currentPage} dari ${pageCount}`;
-            prevPageBtn.disabled = currentPage === 1;
-            nextPageBtn.disabled = currentPage === pageCount;
-        }
-
-        prevPageBtn.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderCatalog();
-                setupPagination();
+                        <p><strong>Notes:</strong> ${product.notes}</p>
+                        <p><strong>Karakteristik:</strong> ${product.personality}</p>
+                        <p>${product.description}</p>
+                        <p><strong>Ideal untuk:</strong> ${product.idealFor}</p>
+                        <p><strong>Membantu memancarkan:</strong> ${product.enhances}</p>
+                        <a href="pemesanan.html?parfum=${product.value}&category=${product.category}" class="order-now-btn">Pesan Sekarang</a>
+                    `;
+                    productGrid.appendChild(card);
+                });
             }
-        });
 
-        nextPageBtn.addEventListener('click', () => {
-            const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
-            if (currentPage < pageCount) {
-                currentPage++;
-                renderCatalog();
-                setupPagination();
-            }
-        });
+            function setupPagination() {
+                paginationContainer.innerHTML = '';
+                const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
-        catalogList.addEventListener('click', (event) => {
-            if (event.target.classList.contains('delete-btn')) {
-                const productValue = event.target.dataset.value;
-                const passcode = prompt("Masukkan kode akses untuk menghapus produk:");
-                if (passcode === "parfumku123") { // Ganti dengan kode akses Anda sendiri
-                    fetch(webAppUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            'method': 'DELETE',
-                            'value': productValue
-                        }),
-                        mode: 'no-cors'
-                    })
-                    .then(() => {
-                        alert('Produk berhasil dihapus! Halaman akan dimuat ulang.');
-                        window.location.reload();
-                    })
-                    .catch(error => {
-                        console.error('Error deleting product:', error);
-                        alert('Terjadi kesalahan saat menghapus produk.');
-                    });
-                } else {
-                    alert("Kode akses salah. Produk tidak dihapus.");
+                if (totalPages <= 1) {
+                    return;
                 }
+                
+                const prevButton = document.createElement('button');
+                prevButton.textContent = 'Previous';
+                prevButton.disabled = currentPage === 1;
+                prevButton.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        renderCatalog();
+                        setupPagination();
+                    }
+                });
+                paginationContainer.appendChild(prevButton);
+                
+                const maxPagesToShow = 10;
+                let startPage = 1;
+                let endPage = totalPages;
+
+                if (totalPages > maxPagesToShow) {
+                    let half = Math.floor(maxPagesToShow / 2);
+                    startPage = Math.max(currentPage - half, 1);
+                    endPage = startPage + maxPagesToShow - 1;
+
+                    if (endPage > totalPages) {
+                        endPage = totalPages;
+                        startPage = Math.max(endPage - maxPagesToShow + 1, 1);
+                    }
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i;
+                    pageButton.classList.toggle('active', i === currentPage);
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        renderCatalog();
+                        setupPagination();
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+                
+                const nextButton = document.createElement('button');
+                nextButton.textContent = 'Next';
+                nextButton.disabled = currentPage === totalPages;
+                nextButton.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        renderCatalog();
+                        setupPagination();
+                    }
+                });
+                paginationContainer.appendChild(nextButton);
             }
+
+            function filterProducts() {
+                const category = categoryFilter.value;
+                const aroma = aromaFilter.value;
+                const personality = personalityFilter.value;
+                const search = searchFilter.value.toLowerCase();
+
+                filteredProducts = allProductsData.filter(product => {
+                    const matchesCategory = category === 'all' || product.category === category;
+                    const matchesAroma = aroma === 'all' || product.notes.toLowerCase().includes(aroma.toLowerCase());
+                    const matchesPersonality = personality === 'all' || product.personality.toLowerCase().includes(personality.toLowerCase());
+                    const matchesSearch = product.name.toLowerCase().includes(search) || product.description.toLowerCase().includes(search);
+
+                    return matchesCategory && matchesAroma && matchesPersonality && matchesSearch;
+                });
+                currentPage = 1;
+                renderCatalog();
+                setupPagination();
+            }
+
+            // Event listener untuk tombol hapus
+            productGrid.addEventListener('click', function(event) {
+                if (event.target.classList.contains('delete-btn')) {
+                    const confirmCode = prompt("Masukkan kode akses untuk menghapus produk ini:");
+                    if (confirmCode === accessCode) {
+                        const productValue = event.target.getAttribute('data-value');
+                        const productIndex = allProductsData.findIndex(p => p.value === productValue);
+
+                        if (productIndex !== -1) {
+                            allProductsData.splice(productIndex, 1);
+                            
+                            // Hapus juga dari Local Storage jika itu produk tambahan
+                            let storedProducts = JSON.parse(localStorage.getItem('addedProducts')) || [];
+                            storedProducts = storedProducts.filter(p => p.value !== productValue);
+                            localStorage.setItem('addedProducts', JSON.stringify(storedProducts));
+
+                            alert('Produk berhasil dihapus!');
+                            filterProducts(); // Perbarui tampilan katalog
+                        }
+                    } else {
+                        alert("Kode akses salah. Produk tidak dihapus.");
+                    }
+                }
+            });
+
+            categoryFilter.addEventListener('change', filterProducts);
+            aromaFilter.addEventListener('change', filterProducts);
+            personalityFilter.addEventListener('change', filterProducts);
+            searchFilter.addEventListener('input', filterProducts);
+            
+            // Panggil fungsi filterProducts pertama kali untuk menampilkan semua produk
+            filterProducts();
         });
-
-        categoryFilter.addEventListener('change', filterProducts);
-        aromaFilter.addEventListener('change', filterProducts);
-        personalityFilter.addEventListener('change', filterProducts);
-        searchFilter.addEventListener('input', filterProducts);
-
     </script>
 </body>
 </html>
