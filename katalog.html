@@ -8,14 +8,14 @@
     <style>
         /* --- Definisi Variabel Warna --- */
         :root {
-            --color-primary: #000000;
-            --color-secondary: #DAA520;
-            --color-tertiary: #FFFFFF;
-            --color-text-light: #F0F0F0;
-            --color-text-dark: #333333;
-            --color-background: #f4f4f4;
-            --color-dark-grey-bg: #1a1a1a;
-            --color-light-border: #555;
+            --color-primary: #000000; /* Hitam */
+            --color-secondary: #DAA520; /* Emas */
+            --color-tertiary: #FFFFFF; /* Putih */
+            --color-text-light: #F0F0F0; /* Abu-abu terang untuk teks di latar gelap */
+            --color-text-dark: #333333; /* Abu-abu gelap untuk teks di latar terang */
+            --color-background: #f4f4f4; /* Latar belakang halaman umum */
+            --color-dark-grey-bg: #1a1a1a; /* Latar belakang gelap untuk form/elemen tertentu */
+            --color-light-border: #555; /* Border terang untuk elemen gelap */
             --color-danger: #dc3545;
         }
         /* --- Global Styles --- */
@@ -28,581 +28,359 @@
             color: var(--color-text-dark);
             line-height: 1.6;
             scroll-behavior: smooth;
-            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
         header {
             background-color: var(--color-primary);
             color: var(--color-tertiary);
-            padding: 40px 0;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 2rem 0;
             position: relative;
-            z-index: 10;
         }
-        .logo-container {
-            position: absolute;
-            top: 17px;
-            left: 60px;
-            z-index: 11;
-            width: 135px;
-            height: 135px;
-        }
-        .logo-container img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            display: block;
-            object-fit: contain;
-            border-radius: 5px;
-        }
-        header h1 {
+        h1 {
             font-family: 'Merriweather', serif;
-            font-size: 3.5em;
+            font-size: 2.5rem;
             margin: 0;
+        }
+        header .logo {
+            font-size: 1.2rem;
             letter-spacing: 2px;
-            color: var(--color-secondary);
-            text-transform: uppercase;
-        }
-        nav {
-            background-color: var(--color-primary);
-            padding: 15px 0;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            border-top: 1px solid var(--color-secondary);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        nav a {
-            color: var(--color-tertiary);
-            text-decoration: none;
-            padding: 10px 25px;
-            margin: 0 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 1.1em;
-        }
-        nav a:hover, nav a.active-nav {
-            background-color: var(--color-secondary);
-            color: var(--color-primary);
-        }
-        .catalog-container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: var(--color-tertiary);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            color: var(--color-text-dark);
-        }
-        .catalog-container h2 {
-            font-family: 'Merriweather', serif;
-            text-align: center;
-            color: var(--color-primary);
-            margin-bottom: 30px;
-            font-size: 2.5em;
-        }
-        .add-button-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .add-product-btn {
-            background-color: var(--color-secondary);
-            color: var(--color-primary);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .add-product-btn:hover {
-            background-color: #c98c00;
+            font-weight: 300;
         }
         .filter-controls {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: var(--color-background);
-            border-radius: 8px;
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
-        }
-        .filter-controls label {
-            font-weight: bold;
-            color: var(--color-text-dark);
-            margin-right: 5px;
-            align-self: center;
-        }
-        .filter-controls select,
-        .filter-controls input[type="text"] {
-            padding: 10px 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-            width: 200px;
-            max-width: 100%;
-        }
-        .filter-controls input[type="text"] { flex-grow: 1; }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            flex-wrap: wrap;
             padding: 20px 0;
+            background-color: var(--color-dark-grey-bg);
+            color: var(--color-text-light);
+            border-bottom: 1px solid var(--color-light-border);
+        }
+        .filter-controls select, .filter-controls input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--color-light-border);
+            background-color: var(--color-primary);
+            color: var(--color-tertiary);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+        }
+        .filter-controls input[type="text"] {
+            min-width: 200px;
+        }
+        .catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 30px 0;
         }
         .product-card {
-            background-color: var(--color-dark-grey-bg);
-            padding: 25px;
+            background-color: var(--color-tertiary);
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-align: center;
-            color: var(--color-text-light);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease-in-out;
         }
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
-        .product-card h3 {
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-info h3 {
             font-family: 'Merriweather', serif;
-            color: var(--color-secondary);
+            font-size: 1.5rem;
             margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-            min-height: 2em;
-        }
-        .product-card p {
-            font-size: 0.95em;
-            margin-bottom: 10px;
-        }
-        .product-card strong { color: var(--color-secondary); }
-        .order-now-btn {
-            background-color: var(--color-secondary);
             color: var(--color-primary);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
+        }
+        .product-info p {
+            margin: 5px 0;
+            color: var(--color-text-dark);
+        }
+        .product-info .price {
             font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 15px;
-            display: block;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
+            color: var(--color-secondary);
+            font-size: 1.2rem;
         }
-        .order-now-btn:hover {
-            background-color: #c98c00;
-            transform: translateY(-2px);
+        .product-info .description {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            flex-grow: 1;
         }
-        /* --- Tombol Hapus Baru --- */
-        .delete-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 30px;
-            height: 30px;
+        .product-info .value {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 10px;
+        }
+        .product-info .delete-btn {
             background-color: var(--color-danger);
             color: var(--color-tertiary);
             border: none;
-            border-radius: 50%;
-            font-size: 1.2em;
-            line-height: 1;
+            padding: 8px 12px;
+            border-radius: 5px;
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0.7;
-            transition: opacity 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            transition: background-color 0.2s;
         }
-        .delete-btn:hover {
-            opacity: 1;
-            transform: scale(1.1);
+        .product-info .delete-btn:hover {
+            background-color: #c82333;
         }
-        /* --- Pagination Styles --- */
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 30px;
             gap: 10px;
-            flex-wrap: wrap;
+            padding: 20px 0;
+            background-color: var(--color-background);
         }
         .pagination button {
             background-color: var(--color-primary);
             color: var(--color-tertiary);
+            border: none;
             padding: 10px 15px;
-            border: 1px solid var(--color-secondary);
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-        .pagination button:hover:not(:disabled) {
-            background-color: var(--color-secondary);
-            color: var(--color-primary);
-            border-color: var(--color-primary);
-        }
-        .pagination button.active {
-            background-color: var(--color-secondary);
-            color: var(--color-primary);
-            border-color: var(--color-primary);
-            font-weight: bold;
+            font-size: 1rem;
         }
         .pagination button:disabled {
-            background-color: #ccc;
-            color: #666;
+            background-color: #888;
             cursor: not-allowed;
-            border-color: #ccc;
+        }
+        .pagination .page-info {
+            font-size: 1.1rem;
         }
         footer {
+            text-align: center;
+            padding: 20px;
             background-color: var(--color-primary);
             color: var(--color-text-light);
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 50px;
-            font-size: 0.9em;
+            font-size: 0.9rem;
         }
-        @media (max-width: 992px) {
-            .catalog-container { max-width: 90%; }
-            .product-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
-            }
-        }
+        /* Responsif */
         @media (max-width: 768px) {
-            header { padding: 30px 0; }
-            header h1 { font-size: 2.5em; margin-left: 100px; text-align: left; }
-            .logo-container { top: 15px; left: 15px; width: 70px; height: 70px; }
-            nav { padding: 10px 0; }
-            nav a { padding: 8px 15px; margin: 0 5px; font-size: 1em; }
-            .catalog-container h2 { font-size: 2em; }
-            .filter-controls { flex-direction: column; gap: 10px; }
-            .filter-controls select,
-            .filter-controls input[type="text"] { width: 100%; }
-            .product-grid {
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                gap: 15px;
+            .filter-controls {
+                flex-direction: column;
+                align-items: center;
             }
-            .product-card { padding: 20px; }
-            .product-card h3 { font-size: 1.3em; }
-        }
-        @media (max-width: 480px) {
-            header { padding: 20px 0; }
-            header h1 { font-size: 1.8em; margin-left: 90px; }
-            .logo-container { top: 10px; left: 10px; width: 50px; height: 50px; }
-            nav { flex-direction: column; padding: 10px; }
-            nav a { margin: 5px auto; width: 90%; font-size: 0.95em; }
-            .catalog-container { padding: 15px; }
-            .catalog-container h2 { font-size: 1.8em; }
-            .product-grid { grid-template-columns: 1fr; gap: 15px; }
-            .product-card h3 { font-size: 1.2em; }
-            .product-card p { font-size: 0.85em; }
-            .order-now-btn { width: 100%; }
-            .pagination button { padding: 8px 12px; font-size: 0.9em; }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Energia Aura Parfume</h1>
+        <div class="container">
+            <div class="logo">ENERGIA AURA PARFUME</div>
+            <h1>Katalog Produk</h1>
+        </div>
     </header>
 
-    <nav>
-        <a href="index.html">Beranda</a>
-        <a href="katalog.html" class="active-nav">Katalog</a>
-        <a href="pemesanan.html">Pesan Sekarang</a>
-	    <a href="index.html#contact">Kontak</a>
-    </nav>
+    <div class="filter-controls">
+        <select id="category-filter">
+            <option value="all">Semua Kategori</option>
+            <option value="Unisex">Unisex</option>
+            <option value="Men">Pria</option>
+            <option value="Women">Wanita</option>
+        </select>
+        <select id="aroma-filter">
+            <option value="all">Semua Aroma</option>
+            <option value="Fresh">Fresh</option>
+            <option value="Floral">Floral</option>
+            <option value="Spicy">Spicy</option>
+            <option value="Woody">Woody</option>
+            <option value="Sweet">Sweet</option>
+            <option value="Fruity">Fruity</option>
+            <option value="Citrus">Citrus</option>
+            <option value="Aquatic">Aquatic</option>
+        </select>
+        <select id="personality-filter">
+            <option value="all">Semua Kepribadian</option>
+            <option value="Elegant">Elegant</option>
+            <option value="Romantic">Romantic</option>
+            <option value="Confident">Confident</option>
+            <option value="Energetic">Energetic</option>
+            <option value="Calm">Calm</option>
+            <option value="Seductive">Seductive</option>
+            <option value="Fresh">Fresh</option>
+        </select>
+        <input type="text" id="search-filter" placeholder="Cari parfum...">
+    </div>
 
-    <main>
-        <div class="catalog-container">
-            <h2>Katalog Parfum Unggulan</h2>
-            <div class="add-button-container">
-                <a href="tambah_parfum.html" class="add-product-btn">Tambahkan Produk Baru</a>
-            </div>
-            <div class="filter-controls">
-                <label for="categoryFilter">Kategori:</label>
-                <select id="categoryFilter">
-                    <option value="all">Semua</option>
-                    <option value="Pria">Pria</option>
-                    <option value="Wanita">Wanita</option>
-                    <option value="Unisex">Unisex</option>
-                    <option value="Pasangan">Pasangan</option>
-                </select>
-                <label for="aromaFilter">Aroma (Notes):</label>
-                <select id="aromaFilter">
-                    <option value="all">Semua Aroma</option>
-                    <option value="Fresh">Fresh</option>
-                    <option value="Spicy">Spicy</option>
-                    <option value="Fruity">Fruity</option>
-                    <option value="Amber">Amber</option>
-                    <option value="Woody">Woody</option>
-                    <option value="Blackcurrant">Blackcurrant</option>
-                    <option value="Tangerine">Tangerine</option>
-                    <option value="Rose">Rose</option>
-                    <option value="Leather">Leather</option>
-                    <option value="Floral">Floral</option>
-                    <option value="Sweet">Sweet</option>
-                    <option value="Powdery">Powdery</option>
-                    <option value="Warm">Warm</option>
-                    <option value="Musky">Musky</option>
-                    <option value="Indian Jasmine">Indian Jasmine</option>
-                    <option value="White Flowers">White Flowers</option>
-                    <option value="Sandalwood">Sandalwood</option>
-                    <option value="Aromatic">Aromatic</option>
-                    <option value="Aquatic">Aquatic</option>
-                    <option value="Green">Green</option>
-                    <option value="Citrus">Citrus</option>
-                    <option value="Oriental">Oriental</option>
-                </select>
-                <label for="personalityFilter">Karakteristik:</label>
-                <select id="personalityFilter">
-                    <option value="all">Semua Karakteristik</option>
-                    <option value="Kharismatik">Kharismatik</option>
-                    <option value="Maskulin">Maskulin</option>
-                    <option value="Percaya Diri">Percaya Diri</option>
-                    <option value="Ceria">Ceria</option>
-                    <option value="Modern">Modern</option>
-                    <option value="Elegan">Elegan</option>
-                    <option value="Feminin">Feminin</option>
-                    <option value="Memikat">Memikat</option>
-                    <option value="Sensual">Sensual</option>
-                    <option value="Harmonis">Harmonis</option>
-                    <option value="Romantis">Romantis</option>
-                    <option value="Eksotis">Eksotis</option>
-                    <option value="Misterius">Misterius</option>
-                    <option value="Energetic">Energetic</option>
-                    <option value="Confident">Confident</option>
-                    <option value="Dynamic">Dynamic</option>
-                    <option value="Sporty">Sporty</option>
-                    <option value="Vibrant">Vibrant</option>
-                    <option value="Classic">Classic</option>
-                    <option value="Refined">Refined</option>
-                    <option value="Sophisticated">Sophisticated</option>
-                    <option value="Unique">Unique</option>
-                    <option value="Bold">Bold</option>
-                    <option value="Clean">Clean</option>
-                    <option value="Refreshing">Refreshing</option>
-                    <option value="Strong">Strong</option>
-                    <option value="Charming">Charming</option>
-                    <option value="Seductive">Seductive</option>
-                    <option value="Intense">Intense</option>
-                    <option value="Cool">Cool</option>
-                    <option value="Casual">Casual</option>
-                    <option value="Comforting">Comforting</option>
-                    <option value="Timeless">Timeless</option>
-                    <option value="Light">Light</option>
-                    <option value="Relaxed">Relaxed</option>
-                    <option value="Pleasant">Pleasant</option>
-                </select>
-                <label for="searchFilter">Cari Parfum (Nama/Deskripsi):</label>
-                <input type="text" id="searchFilter" placeholder="Ketik kata kunci...">
-            </div>
-            <div class="product-grid" id="productGrid">
-            </div>
-            <div class="pagination" id="pagination">
-            </div>
+    <div class="container">
+        <div id="catalog-list" class="catalog">
+            <p id="loading-message">Memuat produk...</p>
         </div>
-    </main>
+        <div id="pagination-controls" class="pagination">
+            <button id="prev-page" disabled>Sebelumnya</button>
+            <span id="page-info" class="page-info">Halaman 1 dari 1</span>
+            <button id="next-page" disabled>Berikutnya</button>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2024 Energia Aura Parfume. All rights reserved.</p>
+        <p>&copy; 2025 Energia Aura Parfume. Semua Hak Dilindungi.</p>
     </footer>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const productGrid = document.getElementById('productGrid');
-            const paginationContainer = document.getElementById('pagination');
-            const categoryFilter = document.getElementById('categoryFilter');
-            const aromaFilter = document.getElementById('aromaFilter');
-            const personalityFilter = document.getElementById('personalityFilter');
-            const searchFilter = document.getElementById('searchFilter');
-            
-            const accessCode = "12345";
-            const webAppUrl = "https://script.google.com/macros/s/AKfycbyLaL9S7aq6jMpt_R72a2qThmMXaRQMSYk1F-D_-2ZIvKtt8z6YXJNhTWinYyMNMVUk/exec"; // <-- GANTI URL INI!
-            
-            let allProductsData = [];
-            const productsPerPage = 6;
-            let filteredProducts = [];
-            let currentPage = 1;
-            
-            // Fungsi untuk mengambil data dari Google Sheets
-            function fetchDataFromSheets() {
-                fetch(webAppUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        allProductsData = data;
+        const webAppUrl = "URL_WEB_https://script.google.com/macros/s/AKfycbxRSNuKk2g8p-rHOunBBbrg4sy8NEi1Tv-uxo0XXmBxBfQD0pAS7VoX9xXw6czIUEZg/exec"; // <-- GANTI DENGAN URL DARI LANGKAH 3!
+        const catalogList = document.getElementById('catalog-list');
+        const categoryFilter = document.getElementById('category-filter');
+        const aromaFilter = document.getElementById('aroma-filter');
+        const personalityFilter = document.getElementById('personality-filter');
+        const searchFilter = document.getElementById('search-filter');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        const pageInfoSpan = document.getElementById('page-info');
+
+        let allProductsData = [];
+        let filteredProducts = [];
+        let currentPage = 1;
+        const productsPerPage = 8;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDataFromSheets();
+        });
+
+        function fetchDataFromSheets() {
+            catalogList.innerHTML = '<p id="loading-message">Memuat produk...</p>';
+            fetch(webAppUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    allProductsData = data;
+                    if (allProductsData.length === 0) {
+                        catalogList.innerHTML = '<p>Tidak ada produk yang tersedia saat ini.</p>';
+                    } else {
                         filterProducts();
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                        productGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: var(--color-text-dark);">Gagal memuat produk. Cek koneksi atau URL Web App.</p>';
-                    });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    catalogList.innerHTML = '<p>Gagal memuat produk. Cek koneksi atau URL Web App.</p>';
+                });
+        }
+
+        function renderCatalog() {
+            catalogList.innerHTML = '';
+            if (filteredProducts.length === 0) {
+                catalogList.innerHTML = '<p>Tidak ada produk yang cocok dengan filter Anda.</p>';
+                return;
             }
 
-            function renderCatalog() {
-                productGrid.innerHTML = '';
-                
-                const startIndex = (currentPage - 1) * productsPerPage;
-                const endIndex = startIndex + productsPerPage;
-                const productsToRender = filteredProducts.slice(startIndex, endIndex);
-                
-                if (productsToRender.length === 0) {
-                    productGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: var(--color-text-dark);">Produk tidak ditemukan.</p>';
-                    paginationContainer.innerHTML = '';
-                    return;
-                }
-                
-                productsToRender.forEach(product => {
-                    const card = document.createElement('div');
-                    card.classList.add('product-card');
-                    card.setAttribute('data-value', product.value);
-                    card.innerHTML = `
-                        <button class="delete-btn" data-value="${product.value}">✕</button>
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            const productsToRender = filteredProducts.slice(startIndex, endIndex);
+
+            productsToRender.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-info">
                         <h3>${product.name}</h3>
                         <p><strong>Kategori:</strong> ${product.category}</p>
-                        <p><strong>Notes:</strong> ${product.notes}</p>
-                        <p><strong>Karakteristik:</strong> ${product.personality}</p>
-                        <p>${product.description}</p>
-                        <p><strong>Ideal untuk:</strong> ${product.idealFor}</p>
-                        <p><strong>Membantu memancarkan:</strong> ${product.enhances}</p>
-                        <a href="pemesanan.html?parfum=${product.value}&category=${product.category}" class="order-now-btn">Pesan Sekarang</a>
-                    `;
-                    productGrid.appendChild(card);
-                });
-            }
+                        <p><strong>Aroma Dominan:</strong> ${product.notes}</p>
+                        <p><strong>Kepribadian:</strong> ${product.personality}</p>
+                        <p class="description"><strong>Deskripsi:</strong> ${product.description}</p>
+                        <p><strong>Cocok untuk:</strong> ${product.idealFor}</p>
+                        <p><strong>Meningkatkan:</strong> ${product.enhances}</p>
+                        <p class="value" style="display:none;">${product.value}</p>
+                        <button class="delete-btn" data-value="${product.value}">Hapus</button>
+                    </div>
+                `;
+                catalogList.appendChild(productCard);
+            });
+        }
 
-            function setupPagination() {
-                paginationContainer.innerHTML = '';
-                const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-                
-                if (totalPages <= 1) {
-                    return;
-                }
-                
-                const prevButton = document.createElement('button');
-                prevButton.textContent = 'Previous';
-                prevButton.disabled = currentPage === 1;
-                prevButton.addEventListener('click', () => {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        renderCatalog();
-                        setupPagination();
-                    }
-                });
-                paginationContainer.appendChild(prevButton);
-                
-                const maxPagesToShow = 10;
-                let startPage = 1;
-                let endPage = totalPages;
-                
-                if (totalPages > maxPagesToShow) {
-                    let half = Math.floor(maxPagesToShow / 2);
-                    startPage = Math.max(currentPage - half, 1);
-                    endPage = startPage + maxPagesToShow - 1;
-                    
-                    if (endPage > totalPages) {
-                        endPage = totalPages;
-                        startPage = Math.max(endPage - maxPagesToShow + 1, 1);
-                    }
-                }
-                
-                for (let i = startPage; i <= endPage; i++) {
-                    const pageButton = document.createElement('button');
-                    pageButton.textContent = i;
-                    pageButton.classList.toggle('active', i === currentPage);
-                    pageButton.addEventListener('click', () => {
-                        currentPage = i;
-                        renderCatalog();
-                        setupPagination();
-                    });
-                    paginationContainer.appendChild(pageButton);
-                }
-                
-                const nextButton = document.createElement('button');
-                nextButton.textContent = 'Next';
-                nextButton.disabled = currentPage === totalPages;
-                nextButton.addEventListener('click', () => {
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        renderCatalog();
-                        setupPagination();
-                    }
-                });
-                paginationContainer.appendChild(nextButton);
-            }
-            
-            function filterProducts() {
-                const category = categoryFilter.value;
-                const aroma = aromaFilter.value;
-                const personality = personalityFilter.value;
-                const search = searchFilter.value.toLowerCase();
-                
-                filteredProducts = allProductsData.filter(product => {
-                    const matchesCategory = category === 'all' || product.category === category;
-                    const matchesAroma = aroma === 'all' || (product.notes && product.notes.toLowerCase().includes(aroma.toLowerCase()));
-                    const matchesPersonality = personality === 'all' || (product.personality && product.personality.toLowerCase().includes(personality.toLowerCase()));
-                    const matchesSearch = product.name.toLowerCase().includes(search) || (product.description && product.description.toLowerCase().includes(search));
-                    
-                    return matchesCategory && matchesAroma && matchesPersonality && matchesSearch;
-                });
-                currentPage = 1;
+        function filterProducts() {
+            const category = categoryFilter.value;
+            const aroma = aromaFilter.value;
+            const personality = personalityFilter.value;
+            const search = searchFilter.value.toLowerCase();
+
+            filteredProducts = allProductsData.filter(product => {
+                const matchesCategory = category === 'all' || product.category === category;
+                const matchesAroma = aroma === 'all' || product.notes.toLowerCase().includes(aroma.toLowerCase());
+                const matchesPersonality = personality === 'all' || product.personality.toLowerCase().includes(personality.toLowerCase());
+                const matchesSearch = product.name.toLowerCase().includes(search) || product.description.toLowerCase().includes(search);
+
+                return matchesCategory && matchesAroma && matchesPersonality && matchesSearch;
+            });
+            currentPage = 1;
+            renderCatalog();
+            setupPagination();
+        }
+
+        function setupPagination() {
+            const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
+            pageInfoSpan.textContent = `Halaman ${currentPage} dari ${pageCount}`;
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === pageCount;
+        }
+
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
                 renderCatalog();
                 setupPagination();
             }
-
-            // Event listener untuk tombol hapus
-            productGrid.addEventListener('click', function(event) {
-                if (event.target.classList.contains('delete-btn')) {
-                    const confirmCode = prompt("Masukkan kode akses untuk menghapus produk ini:");
-                    if (confirmCode === accessCode) {
-                        const productValue = event.target.getAttribute('data-value');
-                        
-                        // Kirim permintaan hapus ke Web App
-                        fetch(webAppUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: new URLSearchParams({
-                                'method': 'DELETE',
-                                'value': productValue
-                            }),
-                            mode: 'no-cors'
-                        })
-                        .then(() => {
-                            alert('Produk berhasil dihapus! Halaman akan dimuat ulang.');
-                            window.location.reload();
-                        })
-                        .catch(error => {
-                            console.error('Error deleting product:', error);
-                            alert('Terjadi kesalahan saat menghapus produk.');
-                        });
-                    } else {
-                        alert("Kode akses salah. Produk tidak dihapus.");
-                    }
-                }
-            });
-
-            categoryFilter.addEventListener('change', filterProducts);
-            aromaFilter.addEventListener('change', filterProducts);
-            personalityFilter.addEventListener('change', filterProducts);
-            searchFilter.addEventListener('input', filterProducts);
-            
-            fetchDataFromSheets();
         });
+
+        nextPageBtn.addEventListener('click', () => {
+            const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
+            if (currentPage < pageCount) {
+                currentPage++;
+                renderCatalog();
+                setupPagination();
+            }
+        });
+
+        catalogList.addEventListener('click', (event) => {
+            if (event.target.classList.contains('delete-btn')) {
+                const productValue = event.target.dataset.value;
+                const passcode = prompt("Masukkan kode akses untuk menghapus produk:");
+                if (passcode === "parfumku123") { // Ganti dengan kode akses Anda sendiri
+                    fetch(webAppUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            'method': 'DELETE',
+                            'value': productValue
+                        }),
+                        mode: 'no-cors'
+                    })
+                    .then(() => {
+                        alert('Produk berhasil dihapus! Halaman akan dimuat ulang.');
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Error deleting product:', error);
+                        alert('Terjadi kesalahan saat menghapus produk.');
+                    });
+                } else {
+                    alert("Kode akses salah. Produk tidak dihapus.");
+                }
+            }
+        });
+
+        categoryFilter.addEventListener('change', filterProducts);
+        aromaFilter.addEventListener('change', filterProducts);
+        personalityFilter.addEventListener('change', filterProducts);
+        searchFilter.addEventListener('input', filterProducts);
+
     </script>
 </body>
 </html>
-
-
-
