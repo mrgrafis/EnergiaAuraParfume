@@ -105,11 +105,11 @@
     <form id="addProductForm">
         <div class="form-group">
             <label for="productName">Nama Parfum:</label>
-            <input type="text" id="productName" required>
+            <input type="text" id="productName" name="name" required>
         </div>
         <div class="form-group">
             <label for="productCategory">Kategori:</label>
-            <select id="productCategory" required>
+            <select id="productCategory" name="category" required>
                 <option value="Pria">Pria</option>
                 <option value="Wanita">Wanita</option>
                 <option value="Unisex">Unisex</option>
@@ -118,23 +118,23 @@
         </div>
         <div class="form-group">
             <label for="productNotes">Notes (pisahkan dengan koma):</label>
-            <input type="text" id="productNotes" required>
+            <input type="text" id="productNotes" name="notes" required>
         </div>
         <div class="form-group">
             <label for="productPersonality">Karakteristik (pisahkan dengan koma):</label>
-            <input type="text" id="productPersonality" required>
+            <input type="text" id="productPersonality" name="personality" required>
         </div>
         <div class="form-group">
             <label for="productDescription">Deskripsi:</label>
-            <textarea id="productDescription" required></textarea>
+            <textarea id="productDescription" name="description" required></textarea>
         </div>
         <div class="form-group">
             <label for="productIdealFor">Ideal untuk:</label>
-            <input type="text" id="productIdealFor" required>
+            <input type="text" id="productIdealFor" name="idealFor" required>
         </div>
         <div class="form-group">
             <label for="productEnhances">Membantu memancarkan:</label>
-            <input type="text" id="productEnhances" required>
+            <input type="text" id="productEnhances" name="enhances" required>
         </div>
         <div class="button-group">
             <button type="submit">Tambah Produk</button>
@@ -148,7 +148,7 @@
     <p>Salin dan tempelkan data produk di bawah ini. Anda bisa menempelkan satu objek produk atau sebuah array (daftar) objek produk.</p>
     <form id="addJsonForm">
         <div class="form-group">
-            <textarea id="jsonInput" placeholder='Contoh format: &#10;{ "name": "Nama Parfum", "category": "Pria", "notes": "notes", "personality": "karakteristik", "description": "deskripsi", "idealFor": "ideal", "enhances": "memancarkan", "value": "nama-parfum" }&#10;&#10;Atau untuk beberapa produk:&#10;[&#10; { "name": "Parfum A", ... },&#10; { "name": "Parfum B", ... }&#10;]&#10;' required></textarea>
+            <textarea id="jsonInput" name="jsonPayload" placeholder='Contoh format: &#10;{ "name": "Nama Parfum", "category": "Pria", "notes": "notes", "personality": "karakteristik", "description": "deskripsi", "idealFor": "ideal", "enhances": "memancarkan", "value": "nama-parfum" }&#10;&#10;Atau untuk beberapa produk:&#10;[&#10; { "name": "Parfum A", ... },&#10; { "name": "Parfum B", ... }&#10;]&#10;' required></textarea>
         </div>
         <button type="submit">Tambah Produk via JSON</button>
     </form>
@@ -156,44 +156,101 @@
 
 <script>
     const accessCode = "12345";
-const webAppUrl = "https://script.google.com/macros/s/AKfycbwJXvNcs3MHIApp-xdaZItBjuIhq2Xp1zAj_iIgSYgnH1wC7h0N3Qht0R9fR_rDWIRwEw/exec"; // GANTI DENGAN URL DARI GOOGLE APPS SCRIPT
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbxifgXW3TfefL2_Hewp7cCzs4PrJSs7BuJfHmQDPzg_tccqgHU6znPRxVbv2cUz4fps/exec"; // <-- GANTI URL INI!
 
-const userCode = prompt("Masukkan kode akses:");
+    const userCode = prompt("Masukkan kode akses:");
 
-if (userCode !== accessCode) {
-    alert("Kode akses salah. Anda tidak memiliki izin.");
-    window.location.href = "katalog.html";
-}
+    if (userCode !== accessCode) {
+        alert("Kode akses salah. Anda tidak memiliki izin.");
+        window.location.href = "katalog.html";
+    }
 
-document.getElementById('addProductForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    function createSlug(text) {
+        return text.toString().toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]+/g, '')
+            .replace(/--+/g, '-')
+            .replace(/^-+/, '')
+            .replace(/-+$/, '');
+    }
 
-    const form = event.target;
-    const formData = new FormData(form);
+    // Handle form input manual
+    document.getElementById('addProductForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    // Ubah data form menjadi objek JSON
-    const data = {};
-    formData.forEach((value, key) => (data[key] = value));
+        const form = event.target;
+        const formData = new FormData(form);
+        
+        // Tambahkan value yang dibuat dari nama
+        formData.append('value', createSlug(formData.get('name')));
 
-    fetch(webAppUrl, {
-        method: 'POST',
-        mode: 'no-cors', // Penting untuk menghindari masalah CORS
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(data),
-    })
-    .then(response => {
-        alert('Produk baru berhasil ditambahkan! Mohon tunggu sebentar untuk sinkronisasi.');
-        form.reset();
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan saat menambahkan produk.');
+        fetch(webAppUrl, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+        })
+        .then(() => {
+            alert('Produk baru berhasil ditambahkan! Mohon tunggu sebentar untuk sinkronisasi.');
+            form.reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat menambahkan produk.');
+        });
     });
-});
+
+    // Handle form input JSON
+    document.getElementById('addJsonForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const jsonInput = document.getElementById('jsonInput').value;
+        let products = [];
+        try {
+            const parsedInput = JSON.parse(jsonInput);
+            if (Array.isArray(parsedInput)) {
+                products = parsedInput;
+            } else if (typeof parsedInput === 'object' && parsedInput !== null) {
+                products = [parsedInput];
+            } else {
+                alert('Format JSON tidak valid. Mohon periksa kembali.');
+                return;
+            }
+        } catch (e) {
+            alert('Terjadi kesalahan saat memproses JSON. Pastikan formatnya benar.');
+            console.error(e);
+            return;
+        }
+
+        let addedCount = 0;
+        products.forEach(product => {
+            if (!product.value) {
+                product.value = createSlug(product.name);
+            }
+            
+            // Mengirim setiap produk satu per satu
+            const formData = new FormData();
+            for (const key in product) {
+                formData.append(key, product[key]);
+            }
+            
+            fetch(webAppUrl, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            })
+            .then(() => {
+                addedCount++;
+                if (addedCount === products.length) {
+                    alert(`${products.length} produk berhasil ditambahkan!`);
+                    document.getElementById('addJsonForm').reset();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menambahkan produk.');
+            });
+        });
+    });
 </script>
 </body>
-
 </html>
-
