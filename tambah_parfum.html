@@ -156,82 +156,43 @@
 
 <script>
     const accessCode = "12345";
-    const userCode = prompt("Masukkan kode akses:");
+const webAppUrl = "URL-WEB-APP-ANDA-DI-SINI"; // GANTI DENGAN URL DARI GOOGLE APPS SCRIPT
 
-    if (userCode !== accessCode) {
-        alert("Kode akses salah. Anda tidak memiliki izin.");
-        window.location.href = "katalog.html";
-    }
+const userCode = prompt("Masukkan kode akses:");
 
-    function createSlug(text) {
-        return text.toString().toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w-]+/g, '')
-            .replace(/--+/g, '-')
-            .replace(/^-+/, '')
-            .replace(/-+$/, '');
-    }
+if (userCode !== accessCode) {
+    alert("Kode akses salah. Anda tidak memiliki izin.");
+    window.location.href = "katalog.html";
+}
 
-    // Handle form input manual
-    document.getElementById('addProductForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+document.getElementById('addProductForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-        const newProduct = {
-            name: document.getElementById('productName').value,
-            category: document.getElementById('productCategory').value,
-            notes: document.getElementById('productNotes').value,
-            personality: document.getElementById('productPersonality').value,
-            description: document.getElementById('productDescription').value,
-            idealFor: document.getElementById('productIdealFor').value,
-            enhances: document.getElementById('productEnhances').value,
-            value: createSlug(document.getElementById('productName').value)
-        };
+    const form = event.target;
+    const formData = new FormData(form);
 
-        let storedProducts = JSON.parse(localStorage.getItem('addedProducts')) || [];
-        storedProducts.push(newProduct);
-        localStorage.setItem('addedProducts', JSON.stringify(storedProducts));
+    // Ubah data form menjadi objek JSON
+    const data = {};
+    formData.forEach((value, key) => (data[key] = value));
 
-        alert('Produk baru berhasil ditambahkan!');
-        this.reset();
+    fetch(webAppUrl, {
+        method: 'POST',
+        mode: 'no-cors', // Penting untuk menghindari masalah CORS
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(data),
+    })
+    .then(response => {
+        alert('Produk baru berhasil ditambahkan! Mohon tunggu sebentar untuk sinkronisasi.');
+        form.reset();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat menambahkan produk.');
     });
-
-    // Handle form input JSON
-    document.getElementById('addJsonForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const jsonInput = document.getElementById('jsonInput').value;
-        try {
-            const newProducts = JSON.parse(jsonInput);
-            let storedProducts = JSON.parse(localStorage.getItem('addedProducts')) || [];
-
-            if (Array.isArray(newProducts)) {
-                // Jika inputnya adalah array, tambahkan semua produk dari array
-                newProducts.forEach(product => {
-                    if (!product.value) {
-                        product.value = createSlug(product.name);
-                    }
-                    storedProducts.push(product);
-                });
-                alert(`${newProducts.length} produk baru berhasil ditambahkan!`);
-            } else if (typeof newProducts === 'object' && newProducts !== null) {
-                // Jika inputnya adalah objek tunggal, tambahkan satu produk
-                if (!newProducts.value) {
-                    newProducts.value = createSlug(newProducts.name);
-                }
-                storedProducts.push(newProducts);
-                alert('Produk baru berhasil ditambahkan!');
-            } else {
-                alert('Format JSON tidak valid. Mohon periksa kembali.');
-                return;
-            }
-            
-            localStorage.setItem('addedProducts', JSON.stringify(storedProducts));
-            this.reset();
-        } catch (e) {
-            alert('Terjadi kesalahan saat memproses JSON. Pastikan formatnya benar.');
-            console.error(e);
-        }
-    });
+});
 </script>
 </body>
+
 </html>
