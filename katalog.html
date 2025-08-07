@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Parfum - Energia Aura Parfume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Definisi Variabel Warna --- */
+        :root {
+            --color-primary: #000000;
+            --color-secondary: #DAA520;
+            --color-tertiary: #FFFFFF;
+            --color-text-light: #F0F0F0;
+            --color-text-dark: #333333;
+            --color-background: #f4f4f4;
+            --color-dark-grey-bg: #1a1a1a;
+            --color-light-border: #555;
+            --color-danger: #dc3545;
+        }
+        /* --- Global Styles --- */
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-background);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        header {
+            background-color: var(--color-primary);
+            color: var(--color-tertiary);
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+        .logo-container {
+            position: absolute;
+            top: 17px;
+            left: 60px;
+            z-index: 11;
+            width: 135px;
+            height: 135px;
+        }
+        .logo-container img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        header h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 3.5em;
+            margin: 0;
+            letter-spacing: 2px;
+            color: var(--color-secondary);
+            text-transform: uppercase;
+        }
+        nav {
+            background-color: var(--color-primary);
+            padding: 15px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--color-secondary);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: var(--color-tertiary);
+            text-decoration: none;
+            padding: 10px 25px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1em;
+        }
+        nav a:hover, nav a.active-nav {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+        }
+        .catalog-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: var(--color-tertiary);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: var(--color-text-dark);
+        }
+        .catalog-container h2 {
+            font-family: 'Merriweather', serif;
+            text-align: center;
+            color: var(--color-primary);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .add-button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .add-product-btn {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .add-product-btn:hover {
+            background-color: #c98c00;
+        }
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: var(--color-background);
+            border-radius: 8px;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+        }
+        .filter-controls label {
+            font-weight: bold;
+            color: var(--color-text-dark);
+            margin-right: 5px;
+            align-self: center;
+        }
+        .filter-controls select,
+        .filter-controls input[type="text"] {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 200px;
+            max-width: 100%;
+        }
+        .filter-controls input[type="text"] { flex-grow: 1; }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+        .product-card {
+            background-color: var(--color-dark-grey-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            color: var(--color-text-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* Penting untuk penempatan tombol hapus */
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .product-card h3 {
+            font-family: 'Merriweather', serif;
+            color: var(--color-secondary);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            min-height: 2em;
+        }
+        .product-card p {
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+        .product-card strong { color: var(--color-secondary); }
+        .order-now-btn {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 15px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+        }
+        .order-now-btn:hover {
+            background-color: #c98c00;
+            transform: translateY(-2px);
+        }
+        /* --- Tombol Hapus Baru --- */
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: var(--color-danger);
+            color: var(--color-tertiary);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2em;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+        .delete-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        /* --- Pagination Styles --- */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .pagination button {
+            background-color: var(--color-primary);
+            color: var(--color-tertiary);
+            padding: 10px 15px;
+            border: 1px solid var(--color-secondary);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .pagination button:hover:not(:disabled) {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        .pagination button.active {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            font-weight: bold;
+        }
+        .pagination button:disabled {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
+            border-color: #ccc;
+        }
+        footer {
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+            font-size: 0.9em;
+        }
+        @media (max-width: 992px) {
+            .catalog-container { max-width: 90%; }
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+        }
+        @media (max-width: 768px) {
+            header { padding: 30px 0; }
+            header h1 { font-size: 2.5em; margin-left: 100px; text-align: left; }
+            .logo-container { top: 15px; left: 15px; width: 70px; height: 70px; }
+            nav { padding: 10px 0; }
+            nav a { padding: 8px 15px; margin: 0 5px; font-size: 1em; }
+            .catalog-container h2 { font-size: 2em; }
+            .filter-controls { flex-direction: column; gap: 10px; }
+            .filter-controls select,
+            .filter-controls input[type="text"] { width: 100%; }
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 15px;
+            }
+            .product-card { padding: 20px; }
+            .product-card h3 { font-size: 1.3em; }
+        }
+        @media (max-width: 480px) {
+            header { padding: 20px 0; }
+            header h1 { font-size: 1.8em; margin-left: 90px; }
+            .logo-container { top: 10px; left: 10px; width: 50px; height: 50px; }
+            nav { flex-direction: column; padding: 10px; }
+            nav a { margin: 5px auto; width: 90%; font-size: 0.95em; }
+            .catalog-container { padding: 15px; }
+            .catalog-container h2 { font-size: 1.8em; }
+            .product-grid { grid-template-columns: 1fr; gap: 15px; }
+            .product-card h3 { font-size: 1.2em; }
+            .product-card p { font-size: 0.85em; }
+            .order-now-btn { width: 100%; }
+            .pagination button { padding: 8px 12px; font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Energia Aura Parfume</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Beranda</a>
+        <a href="katalog.html" class="active-nav">Katalog</a>
+        <a href="pemesanan.html">Pesan Sekarang</a>
+	    <a href="index.html#contact">Kontak</a>
+    </nav>
+
+    <main>
+        <div class="catalog-container">
+            <h2>Katalog Parfum Unggulan</h2>
+
+            <div class="add-button-container">
+                <a href="tambah_parfum.html" class="add-product-btn">Tambahkan Produk Baru</a>
+            </div>
+
+            <div class="filter-controls">
+                <label for="categoryFilter">Kategori:</label>
+                <select id="categoryFilter">
+                    <option value="all">Semua</option>
+                    <option value="Pria">Pria</option>
+                    <option value="Wanita">Wanita</option>
+                    <option value="Unisex">Unisex</option>
+                    <option value="Pasangan">Pasangan</option>
+                </select>
+
+                <label for="aromaFilter">Aroma (Notes):</label>
+                <select id="aromaFilter">
+                    <option value="all">Semua Aroma</option>
+                    <option value="Fresh">Fresh</option>
+                    <option value="Spicy">Spicy</option>
+                    <option value="Fruity">Fruity</option>
+                    <option value="Amber">Amber</option>
+                    <option value="Woody">Woody</option>
+                    <option value="Blackcurrant">Blackcurrant</option>
+                    <option value="Tangerine">Tangerine</option>
+                    <option value="Rose">Rose</option>
+                    <option value="Leather">Leather</option>
+                    <option value="Floral">Floral</option>
+                    <option value="Sweet">Sweet</option>
+                    <option value="Powdery">Powdery</option>
+                    <option value="Warm">Warm</option>
+                    <option value="Musky">Musky</option>
+                    <option value="Indian Jasmine">Indian Jasmine</option>
+                    <option value="White Flowers">White Flowers</option>
+                    <option value="Sandalwood">Sandalwood</option>
+                    <option value="Aromatic">Aromatic</option>
+                    <option value="Aquatic">Aquatic</option>
+                    <option value="Green">Green</option>
+                    <option value="Citrus">Citrus</option>
+                    <option value="Oriental">Oriental</option>
+                </select>
+
+                <label for="personalityFilter">Karakteristik:</label>
+                <select id="personalityFilter">
+                    <option value="all">Semua Karakteristik</option>
+                    <option value="Kharismatik">Kharismatik</option>
+                    <option value="Maskulin">Maskulin</option>
+                    <option value="Percaya Diri">Percaya Diri</option>
+                    <option value="Ceria">Ceria</option>
+                    <option value="Modern">Modern</option>
+                    <option value="Elegan">Elegan</option>
+                    <option value="Feminin">Feminin</option>
+                    <option value="Memikat">Memikat</option>
+                    <option value="Sensual">Sensual</option>
+                    <option value="Harmonis">Harmonis</option>
+                    <option value="Romantis">Romantis</option>
+                    <option value="Eksotis">Eksotis</option>
+                    <option value="Misterius">Misterius</option>
+                    <option value="Energetic">Energetic</option>
+                    <option value="Confident">Confident</option>
+                    <option value="Dynamic">Dynamic</option>
+                    <option value="Sporty">Sporty</option>
+                    <option value="Vibrant">Vibrant</option>
+                    <option value="Classic">Classic</option>
+                    <option value="Refined">Refined</option>
+                    <option value="Sophisticated">Sophisticated</option>
+                    <option value="Unique">Unique</option>
+                    <option value="Bold">Bold</option>
+                    <option value="Clean">Clean</option>
+                    <option value="Refreshing">Refreshing</option>
+                    <option value="Strong">Strong</option>
+                    <option value="Charming">Charming</option>
+                    <option value="Seductive">Seductive</option>
+                    <option value="Intense">Intense</option>
+                    <option value="Cool">Cool</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Comforting">Comforting</option>
+                    <option value="Timeless">Timeless</option>
+                    <option value="Light">Light</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Pleasant">Pleasant</option>
+                </select>
+
+                <label for="searchFilter">Cari Parfum (Nama/Deskripsi):</label>
+                <input type="text" id="searchFilter" placeholder="Ketik kata kunci...">
+            </div>
+
+            <div class="product-grid" id="productGrid">
+            </div>
+
+            <div class="pagination" id="pagination">
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Energia Aura Parfume. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productGrid = document.getElementById('productGrid');
+            const paginationContainer = document.getElementById('pagination');
+            const categoryFilter = document.getElementById('categoryFilter');
+            const aromaFilter = document.getElementById('aromaFilter');
+            const personalityFilter = document.getElementById('personalityFilter');
+            const searchFilter = document.getElementById('searchFilter');
+
+            const accessCode = "12345"; // Kode akses untuk menghapus
+
+            // Data parfum awal
+            const initialProductsData = [
+                {
+                    "name": "Zara White Warm For Men",
+                    "category": "Pria",
+                    "notes": "Spicy, Vanilla, Woody",
+                    "personality": "Warm, Casual, Comforting",
+                    "description": "Aroma rempah dan vanila yang hangat dengan sentuhan woody, memberikan kesan nyaman dan santai.",
+                    "idealFor": "Sehari-hari, musim dingin.",
+                    "enhances": "Dapat memancarkan aura kehangatan dan kenyamanan yang menenangkan.",
+                    "value": "zara-white-warm-for-men"
+                }
+            ];
+
+            // Ambil data tambahan dari Local Storage
+            const storedProducts = JSON.parse(localStorage.getItem('addedProducts')) || [];
+            let allProductsData = [...initialProductsData, ...storedProducts];
+            
+            const productsPerPage = 6;
+            let filteredProducts = [];
+            let currentPage = 1;
+
+            function renderCatalog() {
+                productGrid.innerHTML = '';
+                
+                const startIndex = (currentPage - 1) * productsPerPage;
+                const endIndex = startIndex + productsPerPage;
+                const productsToRender = filteredProducts.slice(startIndex, endIndex);
+
+                if (productsToRender.length === 0) {
+                    productGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: var(--color-text-dark);">Produk tidak ditemukan.</p>';
+                    paginationContainer.innerHTML = '';
+                    return;
+                }
+
+                productsToRender.forEach(product => {
+                    const card = document.createElement('div');
+                    card.classList.add('product-card');
+                    card.setAttribute('data-value', product.value);
+                    card.innerHTML = `
+                        <button class="delete-btn" data-value="${product.value}">✕</button>
+                        <h3>${product.name}</h3>
+                        <p><strong>Kategori:</strong> ${product.category}</p>
+                        <p><strong>Notes:</strong> ${product.notes}</p>
+                        <p><strong>Karakteristik:</strong> ${product.personality}</p>
+                        <p>${product.description}</p>
+                        <p><strong>Ideal untuk:</strong> ${product.idealFor}</p>
+                        <p><strong>Membantu memancarkan:</strong> ${product.enhances}</p>
+                        <a href="pemesanan.html?parfum=${product.value}&category=${product.category}" class="order-now-btn">Pesan Sekarang</a>
+                    `;
+                    productGrid.appendChild(card);
+                });
+            }
+
+            function setupPagination() {
+                paginationContainer.innerHTML = '';
+                const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+                if (totalPages <= 1) {
+                    return;
+                }
+                
+                const prevButton = document.createElement('button');
+                prevButton.textContent = 'Previous';
+                prevButton.disabled = currentPage === 1;
+                prevButton.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        renderCatalog();
+                        setupPagination();
+                    }
+                });
+                paginationContainer.appendChild(prevButton);
+                
+                const maxPagesToShow = 10;
+                let startPage = 1;
+                let endPage = totalPages;
+
+                if (totalPages > maxPagesToShow) {
+                    let half = Math.floor(maxPagesToShow / 2);
+                    startPage = Math.max(currentPage - half, 1);
+                    endPage = startPage + maxPagesToShow - 1;
+
+                    if (endPage > totalPages) {
+                        endPage = totalPages;
+                        startPage = Math.max(endPage - maxPagesToShow + 1, 1);
+                    }
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i;
+                    pageButton.classList.toggle('active', i === currentPage);
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        renderCatalog();
+                        setupPagination();
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+                
+                const nextButton = document.createElement('button');
+                nextButton.textContent = 'Next';
+                nextButton.disabled = currentPage === totalPages;
+                nextButton.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        renderCatalog();
+                        setupPagination();
+                    }
+                });
+                paginationContainer.appendChild(nextButton);
+            }
+
+            function filterProducts() {
+                const category = categoryFilter.value;
+                const aroma = aromaFilter.value;
+                const personality = personalityFilter.value;
+                const search = searchFilter.value.toLowerCase();
+
+                filteredProducts = allProductsData.filter(product => {
+                    const matchesCategory = category === 'all' || product.category === category;
+                    const matchesAroma = aroma === 'all' || product.notes.toLowerCase().includes(aroma.toLowerCase());
+                    const matchesPersonality = personality === 'all' || product.personality.toLowerCase().includes(personality.toLowerCase());
+                    const matchesSearch = product.name.toLowerCase().includes(search) || product.description.toLowerCase().includes(search);
+
+                    return matchesCategory && matchesAroma && matchesPersonality && matchesSearch;
+                });
+                currentPage = 1;
+                renderCatalog();
+                setupPagination();
+            }
+
+            // Event listener untuk tombol hapus
+            productGrid.addEventListener('click', function(event) {
+                if (event.target.classList.contains('delete-btn')) {
+                    const confirmCode = prompt("Masukkan kode akses untuk menghapus produk ini:");
+                    if (confirmCode === accessCode) {
+                        const productValue = event.target.getAttribute('data-value');
+                        const productIndex = allProductsData.findIndex(p => p.value === productValue);
+
+                        if (productIndex !== -1) {
+                            allProductsData.splice(productIndex, 1);
+                            
+                            // Hapus juga dari Local Storage jika itu produk tambahan
+                            let storedProducts = JSON.parse(localStorage.getItem('addedProducts')) || [];
+                            storedProducts = storedProducts.filter(p => p.value !== productValue);
+                            localStorage.setItem('addedProducts', JSON.stringify(storedProducts));
+
+                            alert('Produk berhasil dihapus!');
+                            filterProducts(); // Perbarui tampilan katalog
+                        }
+                    } else {
+                        alert("Kode akses salah. Produk tidak dihapus.");
+                    }
+                }
+            });
+
+            categoryFilter.addEventListener('change', filterProducts);
+            aromaFilter.addEventListener('change', filterProducts);
+            personalityFilter.addEventListener('change', filterProducts);
+            searchFilter.addEventListener('input', filterProducts);
+            
+            // Panggil fungsi filterProducts pertama kali untuk menampilkan semua produk
+            filterProducts();
+        });
+    </script>
+</body>
+</html>

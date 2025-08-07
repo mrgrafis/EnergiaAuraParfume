@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Parfum - Aura Perfumery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Definisi Variabel Warna --- */
+        :root {
+            --color-primary: #000000; /* Hitam */
+            --color-secondary: #DAA520; /* Emas */
+            --color-tertiary: #FFFFFF; /* Putih */
+            --color-text-light: #F0F0F0; /* Abu-abu terang untuk teks di latar gelap */
+            --color-text-dark: #333333; /* Abu-abu gelap untuk teks di latar terang */
+            --color-background: #f4f4f4; /* Latar belakang halaman umum */
+            --color-dark-grey-bg: #1a1a1a; /* Latar belakang gelap untuk form/elemen tertentu */
+            --color-light-border: #555; /* Border terang untuk elemen gelap */
+        }
+
+        /* --- Global Styles --- */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-background);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Mencegah scrollbar horizontal yang tidak diinginkan */
+        }
+
+        /* --- Header Styles --- */
+        header {
+            background-color: var(--color-primary);
+            color: var(--color-tertiary);
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 17px;
+            left: 60px;
+            z-index: 11;
+            width: 135px; /* Lebar tetap untuk container logo di desktop */
+            height: 135px; /* Tinggi tetap untuk container logo di desktop */
+        }
+
+        .logo-container img {
+            max-width: 100%; /* Gambar tidak melebihi lebar container */
+            max-height: 100%; /* Gambar tidak melebihi tinggi container */
+            width: auto; /* Jaga rasio aspek */
+            height: auto; /* Jaga rasio aspek */
+            display: block; /* Menghilangkan spasi bawah */
+            object-fit: contain; /* Memastikan gambar pas tanpa terpotong/distorsi */
+            border-radius: 5px;
+        }
+
+        header h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 3.5em;
+            margin: 0;
+            letter-spacing: 2px;
+            color: var(--color-secondary);
+            text-transform: uppercase;
+        }
+
+        /* --- Navigasi Styles --- */
+        nav {
+            background-color: var(--color-primary);
+            padding: 15px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Izinkan wrap pada layar kecil */
+            border-top: 1px solid var(--color-secondary);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: var(--color-tertiary);
+            text-decoration: none;
+            padding: 10px 25px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1em;
+        }
+
+        nav a:hover, nav a.active-nav {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+        }
+
+        /* --- Social Links Above Form Styles (untuk di atas formulir) --- */
+        .social-links-above-form {
+            text-align: center;
+            margin: 30px auto 20px auto; /* Jarak atas, tengah horizontal, jarak bawah ke formulir */
+            max-width: 960px; /* Sesuaikan dengan lebar container utama */
+            display: flex;
+            justify-content: center;
+            gap: 30px; /* Jarak antar logo yang lebih lebar */
+        }
+
+        .social-links-above-form a img {
+            height: 60px; /* Ukuran tinggi logo yang lebih besar */
+            width: auto; /* Lebar otomatis sesuai rasio */
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .social-links-above-form a img:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- Main Content Container --- */
+        .container {
+            max-width: 960px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: var(--color-tertiary);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: var(--color-text-dark);
+        }
+
+        /* --- Formulir Pemesanan (Order Form) Styles --- */
+        #order-form {
+            background-color: var(--color-dark-grey-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-align: center;
+            color: var(--color-text-light);
+        }
+
+        #order-form h2 {
+            font-family: 'Merriweather', serif;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+        }
+
+        #order-form p {
+            font-size: 1.1em; /* Ukuran default paragraf */
+            margin-bottom: 25px;
+            color: var(--color-text-light);
+        }
+
+        #order-form form {
+            display: block;
+            text-align: left;
+            width: 100%;
+        }
+
+        #order-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        #order-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--color-text-light);
+        }
+
+        #order-form input[type="text"],
+        #order-form input[type="tel"],
+        #order-form input[type="date"], /* Tambahkan styling untuk input type="date" */
+        #order-form select,
+        #order-form textarea {
+            width: calc(100% - 22px); /* 100% lebar dikurangi padding */
+            padding: 10px;
+            border: 1px solid var(--color-light-border);
+            border-radius: 5px;
+            box-sizing: border-box; /* Pastikan padding masuk hitungan width */
+            font-size: 1em;
+            color: var(--color-tertiary);
+            background-color: var(--color-primary);
+            /* Styling khusus untuk input date */
+            -webkit-appearance: none; /* Menghilangkan styling default di Webkit/Chrome */
+            -moz-appearance: none;    /* Menghilangkan styling default di Firefox */
+            appearance: none;         /* Menghilangkan styling default di browser lain */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%23DAA520"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>'); /* Icon kalender */
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Placeholder styling */
+        #order-form input::placeholder,
+        #order-form textarea::placeholder {
+            color: #888;
+        }
+
+        #order-form select option,
+        #order-form select optgroup {
+            background-color: var(--color-primary);
+            color: var(--color-tertiary);
+        }
+
+        #order-form select optgroup {
+            font-weight: bold;
+            padding-top: 10px;
+        }
+
+        #order-form textarea {
+            resize: vertical;
+        }
+
+        #order-form button[type="submit"] {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #order-form button[type="submit"]:hover {
+            background-color: #c98c00;
+            color: var(--color-tertiary);
+        }
+
+        /* --- Footer Styles --- */
+        footer {
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+            font-size: 0.9em;
+        }
+
+        /* --- Responsive Design --- */
+
+        /* Untuk layar tablet dan desktop kecil (max-width: 768px) */
+        @media (max-width: 768px) {
+            header {
+                padding: 30px 0;
+            }
+            header h1 {
+                font-size: 2.5em;
+                margin-left: 100px;
+                text-align: left;
+            }
+            .logo-container {
+                top: 15px;
+                left: 15px;
+                width: 70px;
+                height: 70px;
+            }
+            .logo-container img {
+                border-radius: 3px;
+            }
+
+            nav {
+                padding: 10px 0;
+            }
+            nav a {
+                padding: 8px 15px;
+                margin: 0 5px;
+                font-size: 1em;
+            }
+
+            .social-links-above-form {
+                margin: 20px auto 15px auto;
+                gap: 20px;
+            }
+            .social-links-above-form a img {
+                height: 50px;
+            }
+
+            .container {
+                width: 95%;
+                padding: 20px;
+                margin-top: 20px;
+            }
+            #order-form h2 {
+                font-size: 2em;
+            }
+            #order-form p {
+                font-size: 1em;
+            }
+            #order-form input[type="text"],
+            #order-form input[type="tel"],
+            #order-form input[type="date"], /* Sesuaikan juga untuk type="date" */
+            #order-form select,
+            #order-form textarea {
+                font-size: 0.95em;
+            }
+            #order-form button[type="submit"] {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+
+        /* Untuk layar ponsel (max-width: 480px) */
+        @media (max-width: 480px) {
+            header {
+                padding: 20px 0;
+            }
+            header h1 {
+                font-size: 1.8em;
+                margin-left: 90px;
+            }
+            .logo-container {
+                top: 10px;
+                left: 10px;
+                width: 50px;
+                height: 50px;
+            }
+            nav {
+                flex-direction: column;
+                padding: 10px;
+            }
+            nav a {
+                margin: 5px auto;
+                width: 90%;
+                font-size: 0.95em;
+            }
+            .social-links-above-form {
+                margin: 15px auto 10px auto;
+                gap: 15px;
+            }
+            .social-links-above-form a img {
+                height: 40px;
+            }
+            .container {
+                width: 98%;
+                padding: 15px;
+                margin-top: 15px;
+            }
+            #order-form h2 {
+                font-size: 1.8em;
+            }
+            #order-form p {
+                font-size: 0.9em;
+            }
+            #order-form input[type="text"],
+            #order-form input[type="tel"],
+            #order-form input[type="date"], /* Sesuaikan juga untuk type="date" */
+            #order-form select,
+            #order-form textarea {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+            #order-form button[type="submit"] {
+                padding: 10px 15px;
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+                <h1>Energia Aura Parfume</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Beranda</a>
+        <a href="katalog.html">Katalog</a>
+        <a href="pemesanan.html" class="active-nav">Pesan Sekarang</a>
+	<a href="index.html#contact">Kontak</a>
+    </nav>
+
+    <main>
+        <div class="social-links-above-form">
+		<p>(Klik = Untuk Pemesanan di Shopee ==>>>></p>
+            <a href="https://shopee.co.id/majait_shop" target="_blank" aria-label="Kunjungi Toko Shopee">
+                <img src="https://i.pinimg.com/736x/77/7d/c8/777dc8f47b66af05caff4015d5f416d8.jpg" alt="Logo Shopee">
+            </a>
+		<p><<<<== Klik = Untuk Pemesanan di Shopee)</p>
+                    </div>
+        <div class="container">
+            <div id="order-form">
+                <h2>Formulir Pemesanan</h2>
+                <p>Isi formulir di bawah ini untuk melakukan pemesanan parfum favorit Anda.</p>
+
+                <form id="orderForm" action="#" method="POST">
+                    <div class="form-group">
+                        <label for="nama">Nama Lengkap:</label>
+                        <input type="text" id="nama" name="nama" placeholder="Contoh: Andreas Budi" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telepon">Nomor Telepon (WhatsApp):</label>
+                        <input type="tel" id="telepon" name="telepon" placeholder="Contoh: 081234567890" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tanggalLahir">Tanggal Lahir (Opsional):</label>
+                        <input type="date" id="tanggalLahir" name="tanggalLahir">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alamat">Alamat Lengkap:</label>
+                        <textarea id="alamat" name="alamat" rows="4" placeholder="Contoh : nama jalan, nomor rumah, RT/RW, kelurahan/desa, kecamatan, kota/kabupaten, provinsi, dan kode pos" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jenisParfum">Jenis Parfum:</label>
+                        <select id="jenisParfum" name="jenisParfum" required>
+                            <option value="Semua">-- Pilih Semua Jenis --</option>
+                            <option value="Pria">Pria</option>
+                            <option value="Wanita">Wanita</option>
+                            <option value="Unisex">Unisex</option>
+                            <option value="Pasangan">Pasangan</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="searchParfum">Cari Parfum:</label>
+                        <input type="text" id="searchParfum" placeholder="Ketik nama parfum untuk mencari..." style="margin-bottom: 10px;">
+                        
+                        <label for="parfum">Pilih Parfum:</label>
+                        <select id="parfum" name="parfum" required>
+                            <option value="">-- Pilih Parfum --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ukuran">Ukuran (ml):</label>
+                        <select id="ukuran" name="ukuran" required>
+                            <option value="">-- Pilih Ukuran --</option>
+                            <option value="30">35 ml (Tersedia)</option>
+                            <option value="50">50 ml (Pemesanan)</option>
+                            <option value="100">100 ml (Pemesanan)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="keinginan">Ungkapkan Keinginan Anda (Optional):</label>
+                        <textarea id="keinginan" name="keinginan" rows="5" 
+                                  placeholder="Contoh: Saya ingin parfum ini membantu meningkatkan karisma dan daya tarik saya dalam pekerjaan, serta memberikan energi positif setiap hari. Atau, saya ingin parfum ini mendukung fokus dan ketenangan batin saya."></textarea>
+                    </div>
+
+                    <button type="submit">Pesan Sekarang</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Energia Aura Parfume. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const jenisParfumSelect = document.getElementById('jenisParfum');
+            const searchParfumInput = document.getElementById('searchParfum');
+            const parfumSelect = document.getElementById('parfum');
+
+            // Data parfum lengkap dengan kategori (DIUPDATE DENGAN DATA DARI ANDA)
+            const allPerfumes = [
+  {
+    "value": "abercrombie-fierce-confidence-man",
+    "text": "Abercrombie Fierce Confidence Man",
+    "category": "Pria"
+  },
+  {
+    "value": "adidas-adventure-explorer",
+    "text": "Adidas Adventure Explorer",
+    "category": "Pria"
+  },
+  {
+    "value": "adidas-deep-energy",
+    "text": "Adidas Deep Energy",
+    "category": "Pria"
+  },
+  {
+    "value": "adidas-fair-play-special-2008",
+    "text": "Adidas Fair Play Special 2008",
+    "category": "Pria"
+  },
+  {
+    "value": "adidas-pure-game",
+    "text": "Adidas Pure Game",
+    "category": "Pria"
+  },
+  {
+    "value": "adidas-team-force",
+    "text": "Adidas Team Force",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-black-man",
+    "text": "Aigner Black Man",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-clear-day-man",
+    "text": "Aigner Clear Day Man",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-evolution-man",
+    "text": "Aigner Evolution Man",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-in-leather-man",
+    "text": "Aigner In Leather Man",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-man-two",
+    "text": "Aigner Man Two",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-no-1",
+    "text": "Aigner No 1",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-no-1-sport",
+    "text": "Aigner No 1 Sport",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-suede-edition-man",
+    "text": "Aigner Suede Edition Man",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-white-man",
+    "text": "Aigner White Man",
+    "category": "Pria"
+  },
+  {
+    "value": "aigner-x-limited",
+    "text": "Aigner X Limited",
+    "category": "Pria"
+  }
+            ];
+
+            function populatePerfumes(category = 'Semua') {
+                parfumSelect.innerHTML = '<option value="">-- Pilih Parfum --</option>'; // Reset options
+
+                const filteredPerfumes = allPerfumes.filter(perfume => {
+                    return category === 'Semua' || perfume.category === category;
+                });
+
+                filteredPerfumes.forEach(perfume => {
+                    const option = document.createElement('option');
+                    option.value = perfume.value;
+                    option.textContent = perfume.text;
+                    parfumSelect.appendChild(option);
+                });
+            }
+
+            function filterPerfumesBySearch(searchTerm) {
+                parfumSelect.innerHTML = '<option value="">-- Pilih Parfum --</option>'; // Reset options
+
+                const lowerCaseSearchTerm = searchTerm.toLowerCase();
+                const currentCategory = jenisParfumSelect.value;
+
+                const filteredPerfumes = allPerfumes.filter(perfume => {
+                    const matchesCategory = currentCategory === 'Semua' || perfume.category === currentCategory;
+                    const matchesSearch = perfume.text.toLowerCase().includes(lowerCaseSearchTerm);
+                    return matchesCategory && matchesSearch;
+                });
+
+                if (filteredPerfumes.length === 0 && searchTerm !== "") {
+                    const noResultOption = document.createElement('option');
+                    noResultOption.value = "";
+                    noResultOption.textContent = "Tidak ada parfum ditemukan.";
+                    noResultOption.disabled = true;
+                    parfumSelect.appendChild(noResultOption);
+                } else {
+                    filteredPerfumes.forEach(perfume => {
+                        const option = document.createElement('option');
+                        option.value = perfume.value;
+                        option.textContent = perfume.text;
+                        parfumSelect.appendChild(option);
+                    });
+                }
+            }
+
+            // --- Logika Baru: Baca URL parameter dan pre-select formulir ---
+            const urlParams = new URLSearchParams(window.location.search);
+            const preselectedPerfumeValue = urlParams.get('parfum');
+            const preselectedCategory = urlParams.get('category');
+
+            if (preselectedCategory) {
+                // Set dropdown kategori terlebih dahulu
+                jenisParfumSelect.value = preselectedCategory;
+                
+                // Kemudian, populate dropdown parfum berdasarkan kategori yang sudah dipilih
+                populatePerfumes(preselectedCategory);
+                
+                // Jika ada parfum spesifik yang diminta, pilih parfum tersebut
+                if (preselectedPerfumeValue) {
+                    // Beri sedikit jeda agar DOM diperbarui sebelum mencoba memilih nilai
+                    setTimeout(() => {
+                        parfumSelect.value = preselectedPerfumeValue;
+                        searchParfumInput.value = ''; // Hapus teks di input search jika parfum sudah dipilih
+                    }, 100); // Penundaan 100ms
+                }
+            } else {
+                // Jika tidak ada parameter di URL, jalankan populasi normal (misal: tampilkan semua parfum)
+                populatePerfumes(jenisParfumSelect.value);
+            }
+
+            // Event listeners (pastikan setelah logika pre-selection agar tidak menimpa)
+            jenisParfumSelect.addEventListener('change', function() {
+                populatePerfumes(this.value);
+                searchParfumInput.value = ''; // Clear search when category changes
+            });
+
+            searchParfumInput.addEventListener('input', function() {
+                filterPerfumesBySearch(this.value);
+            });
+
+            // Tandai navigasi aktif untuk halaman ini
+            document.querySelector('nav a[href="pemesanan.html"]').classList.add('active-nav');
+
+
+            // Handle form submission
+            const orderForm = document.getElementById('orderForm');
+            orderForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const nama = document.getElementById('nama').value;
+                const telepon = document.getElementById('telepon').value;
+                const tanggalLahir = document.getElementById('tanggalLahir').value; // Ambil nilai tanggal lahir
+                const alamat = document.getElementById('alamat').value;
+                const jenisParfum = jenisParfumSelect.value;
+                const parfum = parfumSelect.options[parfumSelect.selectedIndex].text;
+                const ukuran = document.getElementById('ukuran').value; // Mengambil nilai dari <select>
+                const keinginan = document.getElementById('keinginan').value; // Ambil nilai keinginan
+
+                if (!parfum || parfum === "-- Pilih Parfum --" || parfum === "Tidak ada parfum ditemukan.") {
+                    alert("Mohon pilih parfum yang valid.");
+                    return;
+                }
+                if (!ukuran) { // Validasi jika ukuran belum dipilih
+                    alert("Mohon pilih ukuran parfum.");
+                    return;
+                }
+
+                const message = `Halo, saya ingin memesan parfum dengan detail sebagai berikut:\n\n` +
+                                `Nama: ${nama}\n` +
+                                `No. Telepon: ${telepon}\n` +
+                                `Tanggal Lahir: ${tanggalLahir || 'Tidak disebutkan'}\n` + // Tambahkan tanggal lahir
+                                `Alamat: ${alamat}\n` +
+                                `Jenis Parfum: ${jenisParfum}\n` +
+                                `Parfum: ${parfum}\n` +
+                                `Ukuran: ${ukuran} ml\n` + // Menggunakan nilai ukuran yang dipilih
+                                `Keinginan: ${keinginan || 'Tidak disebutkan'}\n\n` + // Tambahkan keinginan
+                                `Terima kasih.`;
+
+                // Ganti nomor WhatsApp di sini jika perlu
+                const whatsappUrl = `https://wa.me/6285263156641?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
